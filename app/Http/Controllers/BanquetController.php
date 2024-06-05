@@ -25,6 +25,7 @@ class BanquetController extends Controller
      */
     public function create(evento $evento)
     {
+        
         $banquet = $evento->banquet()->first();
  /*        dd($banquet); */
         return view('banquets.create')

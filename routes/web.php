@@ -1,5 +1,4 @@
 <?php
-
 use App\Discount;
 use Livewire\Livewire;
 use Illuminate\Support\Facades\Auth;
