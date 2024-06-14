@@ -15,7 +15,7 @@
             background-repeat: no-repeat;
             margin: 0;
             height: 100vh;
-            background-image: url({{public_path('image/FondoCarta.jpeg')}});
+            background-image: url({{public_path('image/fondoCarta.jpeg')}});
            {{--  background-size: 100%;
             background-position: center center; --}}
         }

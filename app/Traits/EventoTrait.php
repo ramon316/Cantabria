@@ -5,6 +5,7 @@ use App\pago;
 use App\evento;
 use App\Precio;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 
@@ -84,6 +85,14 @@ Trait EventoTrait{
     return false;
    }
 
+   public function banquetEvento(evento $evento){
+        $servicioBanquete = $evento->servicio()->where('nombre','LIKE','%'. "Banquete".'%')->get();
+    /* Realizamos la consulta */
+        $cantidad  = DB::table('evento_servicio')->where('evento_id', $evento->id)->where('servicio_id', $servicioBanquete[0]->id)->first();
+       /*  dd($cantidad); */
+        return $cantidad->cantidad;
+   }
+
    public function bocadillosExistTrait(evento $evento){
     $servicios = $evento->servicio()->get();
     /* Validamos si hay un servicio de banquete */
@@ -93,5 +102,7 @@ Trait EventoTrait{
     }
     return false;
    }
+
+
 
 }

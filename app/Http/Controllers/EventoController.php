@@ -383,7 +383,7 @@ class EventoController extends Controller
              * si el registro nos regresa uno quiere decir que si tiene anticipo.
              */
             $name = $evento->id . '_' . $evento->cliente->nombre . '_contrato.pdf';
-            $pdf = PDF::loadView('/eventos/contrato3', compact('evento', 'fecha', 'servicios'));
+            $pdf = PDF::loadView('/eventos/contrato', compact('evento', 'fecha', 'servicios'));
 
             return $pdf->setPaper('a4')->stream($name);
                 -/* >setPaper('letter')

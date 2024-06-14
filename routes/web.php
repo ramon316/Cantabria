@@ -149,6 +149,7 @@ Route::put('/roles/{Role}',[RoleController::class, 'update'])->middleware('can:r
 Route::delete('/roles/{Role}', [RoleController::class, 'destroy'])->middleware('can:roles.destroy')->name('roles.destroy');
 
 /* Banquets */
+Route::get('/banquetes/{evento}/formato', [BanquetController::class, 'formato'])->name('banquetes.formato');
 Route::get('/banquetes/{evento}', [BanquetController::class, 'create'])->middleware('can:banquetes.create')->name('banquetes.create');
 
 /* Inventory */

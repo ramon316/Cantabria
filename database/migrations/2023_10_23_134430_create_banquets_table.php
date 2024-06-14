@@ -21,6 +21,7 @@ class CreateBanquetsTable extends Migration
             $table->string('sauce');
             $table->text('others')->nullable();
             $table->string('fitting');
+            $table->string('fitting2')->nullable();
             $table->text('notes')->nullable();
             $table->timestamps();
         });
