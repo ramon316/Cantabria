@@ -45,7 +45,8 @@
         Detalles del Banquete
     </div>
     <div class="card-body">
-        <p>Apreciable <strong>{{$evento->cliente->nombre}}</strong>, me permito informarle que en base a la pasada reunion por motivo del banquete contratado para su evento el día {{ $fechaEvent->isoFormat('dddd D [de] MMMM [del] YYYY')}} se ha registrado la siguiente  información sobre el banquete:</p>
+        <p>Hola <strong>{{$evento->cliente->nombre}}!</strong>, Te comparto la elección de platillo que hicieron en su degustación:
+        </p>
     </div>
     <div class="information">
         <label>Entrada:</label> {{$banquet->entry}}<br>
@@ -60,7 +61,7 @@
         @endif
     </div>
     <div  class="card-footer">
-        Si existe un error en la información por favor de hacerlo saber, estamos a sus ordenes para cualquier duda o aclaración.
+        ¡Espero que hayan disfrutado de la experiencia! Si tienen alguna pregunta o comentario, no duden en hacérmelo saber. Gracias por su confianza.
     </div>
 </div>
 </body>
