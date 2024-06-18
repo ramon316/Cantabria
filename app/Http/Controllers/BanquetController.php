@@ -6,8 +6,11 @@ use App\Banquet;
 use App\evento;
 use Illuminate\Http\Request;
 
+use App\Traits\EventoTrait;
+
 class BanquetController extends Controller
 {
+    use EventoTrait;
     /**
      * Display a listing of the resource.
      *
@@ -25,12 +28,17 @@ class BanquetController extends Controller
      */
     public function create(evento $evento)
     {
-        
-        $banquet = $evento->banquet()->first();
- /*        dd($banquet); */
+        /* Obtener el  */
+        $banquet = $this->banquetExistTrait($evento);
+        /* dd($banquet); */
+
+        if ($banquet == true) {
+            $cantidad = $this->banquetEvento($evento);
+        }
         return view('banquets.create')
         ->with('evento',$evento)
-        ->with('banquet',$banquet);
+        ->with('banquet',$banquet)
+        ->with('cantidad',$cantidad);
     }
 
     /**

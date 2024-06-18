@@ -23,10 +23,7 @@
                 {{$evento->banquet->updated_at->format('d-m-Y')}}
                 @endisset
             </label><br>
-            <label for="">Cantidad de platillos:
-                @foreach ($evento->servicio as $item)
-                {{$item->pivot->cantidad}}
-                @endforeach
+            <label for="">Cantidad de platillos:{{$cantidad }}
             </label><br>
         </div>
 
