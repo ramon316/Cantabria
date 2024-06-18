@@ -10,8 +10,6 @@ use Carbon\Carbon;
 
 use App\Traits\EventoTrait;
 
-use App\Traits\EventoTrait;
-
 class BanquetController extends Controller
 {
     use EventoTrait;
@@ -33,6 +31,7 @@ class BanquetController extends Controller
     public function create(evento $evento)
     {
         /* Obtener el  */
+        $cantidad = 0;
         $banquet = $this->banquetExistTrait($evento);
 
         if ($banquet == true) {
