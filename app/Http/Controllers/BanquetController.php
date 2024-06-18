@@ -34,10 +34,6 @@ class BanquetController extends Controller
     {
         /* Obtener el  */
         $banquet = $this->banquetExistTrait($evento);
-<<<<<<< HEAD
-        /* dd($banquet); */
-=======
->>>>>>> 75417a40b202df7ed5734fcdea04d45711533b38
 
         if ($banquet == true) {
             $cantidad = $this->banquetEvento($evento);
