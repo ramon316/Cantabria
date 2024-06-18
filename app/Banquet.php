@@ -16,6 +16,7 @@ class Banquet extends Model
         'sauce',
         'others',
         'fitting',
+        'fitting2',
         'notes'
     ];
 

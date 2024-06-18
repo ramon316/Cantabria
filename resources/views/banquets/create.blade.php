@@ -27,21 +27,6 @@
             </label><br>
         </div>
 
-        @if ($evento->banquet()->count()>0)
-        <div class="card">
-            <div class="card-header">
-                <div class="card-title">Banquete</div>
-                <div class="card-tools">
-                    <a href="" class="btn btn-danger">Eliminar</a>
-                </div>
-            </div>
-            <div class="card-body">
-                Entrada:{{$banquet->entry}}
-                Corte: {{$banquet->steak}}
-                Salsa: {{$banquet->sauce}}
-            </div>
-        </div>
-        @endif
     </div>
     @livewire('banquet-index', ['evento' => $evento])
 </div>

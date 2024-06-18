@@ -17,9 +17,10 @@ class BanquetIndex extends Component
     public $steak;
     public $sauce;
     public $fitting;
-    public $others;
+    public $fitting2;
+    public $showSecondfitting = false;
     public $notes;
-    public $entrys = ['Elote', 'Chilaca', 'Champiñones', 'All red grill'];
+    public $entrys = ['Crema de Elote', 'Crema de Chilaca', 'Crema de Champiñones', 'Crema de All red grill'];
     public $steaks = ['Fajita de pollo', 'Rollo de pollo Relleno (Jamón y Queso)'];
     public $sauces = ['Salsa a base de Chabacano y chipotle', 'Salsa en 3 quesos', 'Salsa poblana con elote', 'Salsa de tocino'];
     public $fittings = ['Ensalada frutal', 
@@ -53,15 +54,19 @@ class BanquetIndex extends Component
             $this->entry = $this->banquet->entry;
             $this->steak = $this->banquet->steak;
             $this->sauce = $this->banquet->sauce;
-            $this->others = $this->banquet->others;
             $this->fitting = $this->banquet->fitting;
+            $this->fitting2 = $this->banquet->fitting2;
             $this->notes = $this->banquet->notes;
         }
+    }
 
+    public function format(){
+        return redirect()->route('banquetes.formato',$this->evento->id);
     }
 
     public function render()
     {
+        
         return view('livewire.banquet-index')
         ->with('entrys',$this->entrys)
         ->with('steaks', $this->steaks)
@@ -71,15 +76,15 @@ class BanquetIndex extends Component
 
     public function saveBanquet(){
         $data = $this->validate();
-
+        
         /* Validar si ya existe el registro. */
         if ($this->banquet) {
             $this->banquetUpdate = $this->banquet->update([
                 'entry'     =>  $data['entry'],
                 'steak'     =>  $data['steak'],
                 'sauce'     =>  $data['sauce'],
-                'others'    =>  $this->others,
                 'fitting'   =>  $data['fitting'],
+                'fitting2'  =>  $this->fitting2,
                 'notes'     =>  $this->notes
             ]);
         }
@@ -89,12 +94,14 @@ class BanquetIndex extends Component
                 'entry'     =>  $data['entry'],
                 'steak'     =>  $data['steak'],
                 'sauce'     =>  $data['sauce'],
-                'others'    =>  $this->others,
                 'fitting'   =>  $data['fitting'],
+                'fitting2'  =>  $this->fitting2,
                 'notes'     =>  $this->notes
             ]);
 
         }
+
+        $this->banquet = $this->evento->banquet()->first();
 
 
         if ($this->banquetCreate) {
@@ -104,5 +111,9 @@ class BanquetIndex extends Component
             flash('El registro se ha actualizado');
         }
 
+    }
+
+    public function updatingFitting(){
+        $this->showSecondfitting = true;
     }
 }

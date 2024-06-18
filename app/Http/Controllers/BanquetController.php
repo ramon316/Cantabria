@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 use App\Banquet;
 use App\evento;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Carbon\Carbon;
+
+use App\Traits\EventoTrait;
 
 use App\Traits\EventoTrait;
 
@@ -30,7 +34,10 @@ class BanquetController extends Controller
     {
         /* Obtener el  */
         $banquet = $this->banquetExistTrait($evento);
+<<<<<<< HEAD
         /* dd($banquet); */
+=======
+>>>>>>> 75417a40b202df7ed5734fcdea04d45711533b38
 
         if ($banquet == true) {
             $cantidad = $this->banquetEvento($evento);
@@ -95,5 +102,13 @@ class BanquetController extends Controller
     public function destroy(Banquet $banquet)
     {
         //
+    }
+
+    public function formato(evento $evento){
+        $banquet = $evento->banquet()->first();
+        $fechaEvent = Carbon::parse($evento->start);;
+
+        $pdf = PDF::loadView('banquets.format',compact('evento','banquet','fechaEvent'));
+        return $pdf->setPaper(array(0, 0, 528, 410))->stream('formato.pdf');
     }
 }

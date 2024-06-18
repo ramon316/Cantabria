@@ -18,6 +18,7 @@ class CreateEventosTable extends Migration
             $table->foreignId("cliente_id")->reference('id')->on('clientes')->constrained()->onDelete('cascade');
             $table->foreignId("user_id")->reference('id')->on('users')->constrained()->onDelete('cascade');
             $table->string("title");
+            $table->string('subtitle');
             $table->integer("horas");
             $table->date('start')->unique();
             $table->date('end');
