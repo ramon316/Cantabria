@@ -2,13 +2,12 @@
 
 namespace App\Http\Livewire;
 
-use App\evento;
 use App\cliente;
+use App\cotizacion;
 use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
 
-
-class CreateEvent extends Component
+class CreateQuoter extends Component
 {
     public $cliente;
     public $clientesAll = [];
@@ -40,7 +39,7 @@ class CreateEvent extends Component
     ];
 
     public function mount(){
-        $this->clientesAll = cliente::all();
+        $this->clientesAll = cliente::orderBy('nombre','asc')->get();
 
     }
 
@@ -57,7 +56,7 @@ class CreateEvent extends Component
     public function save(){
 
         $this->validate();
-        evento::create([
+          $cotizacion =  cotizacion::create([
             'cliente_id' => $this->cliente,
             'user_id' => Auth::user()->id,
             'title' => $this->title,
@@ -67,11 +66,12 @@ class CreateEvent extends Component
             'invitados' => $this->invitados,
         ]);
 
-        flasher('Evento creado', 'success');
+        return redirect('/cotizacion/'.$cotizacion->id);
     }
+
     public function render()
     {
 
-        return view('livewire.create-event');
+        return view('livewire.create-quoter');
     }
 }

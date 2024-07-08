@@ -18,11 +18,11 @@ class CreateCotizacionsTable extends Migration
             $table->foreignId("cliente_id")->references('id')->on('clientes')->constrained()->onDelete('cascade');
             $table->foreignId("user_id")->references('id')->on('users')->constrained()->onDelete('cascade');
             $table->string("title");
-            $table->integer("horas");
-            $table->date("start");
-            $table->date('end');
+            $table->string("subtitle");
+            $table->dateTime("start");
+            $table->dateTime('end');
             $table->integer('invitados');
-            $table->date('validez');
+            $table->date('validez')->nullable();
             $table->timestamps();
         });
     }

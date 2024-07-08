@@ -12,10 +12,15 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 class evento extends Model
 {
     use Notifiable;
+
+    // Define los colores que quieres usar
+    const COLOR_EMPRESARIAL = '#FF0000'; // Rojo
+    const COLOR_SOCIAL = '#0000FF'; // Azul
+
     protected $dates = ['start', 'end'];
 
     protected $fillable = [
-        'id', 'cliente_id', 'user_id', 'title', 'suubtitle', 'horas', 'start', 'end', 'invitados', 'color', 'layout', 'contrat', 'closed_at',
+        'id', 'cliente_id', 'user_id', 'title', 'subtitle', 'horas', 'start', 'end', 'invitados', 'color', 'layout', 'contrat', 'closed_at',
     ];
 
     protected $casts = [
@@ -47,10 +52,26 @@ class evento extends Model
     protected static function boot()
     {
         parent::boot();
-        static::created(function($evento){
-           //dd($evento);
+        static::creating(function($evento){
+           $evento->setColorBaseOnTitle();
 
         });
+
+        static::updating(function($evento){
+            $evento->setColorBaseOnTitle();
+        });
+    }
+
+    public function setColorBaseOnTitle(){
+        if ($this->title == "Empresarial") {
+            $this->color = self::COLOR_EMPRESARIAL;
+        }
+        elseif ($this->title == "Social") {
+            $this->color = self::COLOR_SOCIAL;
+        }
+        else {
+            $this->color = "008f39";
+        }
     }
 
     public function cliente()

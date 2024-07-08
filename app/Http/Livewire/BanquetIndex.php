@@ -20,16 +20,16 @@ class BanquetIndex extends Component
     public $fitting2;
     public $showSecondfitting = false;
     public $notes;
-    public $entrys = ['Crema de Elote', 'Crema de Chilaca', 'Crema de Champiñones', 'Crema de All red grill'];
+    public $entrys = ['Crema de Elote', 'Crema de Chilaca', 'Crema de Champiñones', 'Crema de All red grill','N/A'];
     public $steaks = ['Fajita de pollo', 'Rollo de pollo Relleno (Jamón y Queso)'];
     public $sauces = ['Salsa a base de Chabacano y chipotle', 'Salsa en 3 quesos', 'Salsa poblana con elote', 'Salsa de tocino'];
-    public $fittings = ['Ensalada frutal', 
-                        'Ejotes a la española', 
-                        'Papa abanico Black Cheff al horno', 
-                        'Tallarines a la Mantequilla', 
-                        'Pasta garden', 
-                        'Verduras al vapor', 
-                        'Perla de papa bañada en salsa BBQ naranja', 
+    public $fittings = ['Ensalada frutal',
+                        'Ejotes a la española',
+                        'Papa abanico Black Cheff al horno',
+                        'Tallarines a la Mantequilla',
+                        'Pasta garden',
+                        'Verduras al vapor',
+                        'Perla de papa bañada en salsa BBQ naranja',
                         'Pure de papa artesanal'];
 
     /* Reglas de validación */
@@ -66,7 +66,7 @@ class BanquetIndex extends Component
 
     public function render()
     {
-        
+
         return view('livewire.banquet-index')
         ->with('entrys',$this->entrys)
         ->with('steaks', $this->steaks)
@@ -76,7 +76,7 @@ class BanquetIndex extends Component
 
     public function saveBanquet(){
         $data = $this->validate();
-        
+
         /* Validar si ya existe el registro. */
         if ($this->banquet) {
             $this->banquetUpdate = $this->banquet->update([

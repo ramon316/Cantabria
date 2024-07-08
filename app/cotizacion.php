@@ -9,7 +9,7 @@ class cotizacion extends Model
 {
     //
     protected $fillable =[
-        'cliente_id', 'user_id', 'title', 'horas', 'start', 'end', 'invitados', 'validez'
+        'cliente_id', 'user_id', 'title', 'subtitle', 'start', 'end', 'invitados'
     ];
 
     protected $dates = [

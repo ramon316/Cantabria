@@ -103,6 +103,19 @@ Trait EventoTrait{
     return false;
    }
 
+   public function decoracionExistTrait(evento $evento){
+    $servicios = $evento->servicio()->get();
+    /* Validamos si hay un servicio de banquete */
+    foreach ($servicios as $servicio) {
+        $existe = strpos(Str::upper($servicio->nombre), 'DECORACIÓN')
+        or strpos($servicio->nombre, 'Decoración')
+        or strpos($servicio->nombre, 'Decoracion')
+        or strpos($servicio->nombre, 'DECORACION');
+        return $servicio;
+    }
+    return 0;
+   }
+
 
 
 }

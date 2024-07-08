@@ -30,6 +30,7 @@
             <div class="col-md-3 bg-white shadow p-3 mb-5  rounded">
                 <h4>Información del evento</h4>
                 <strong>Tipo: </strong>{{$evento->title}}<br>
+                <strong>Subtipo: </strong>{{$evento->subtitle}}<br>
                 <strong>Horas: </strong>{{$evento->horas}} horas<br>
                 <strong>Fecha: </strong>{{$evento->start->format('d-m-Y')}}<br>
                 <strong>Invitados: </strong>{{$evento->invitados}}<br>

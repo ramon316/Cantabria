@@ -17,6 +17,7 @@
     <div class="row">
         <div class="col-md-6">
             <label for="">Cliente: {{$evento->cliente->nombre}}</label><br>
+            <label for="">Evento: {{$evento->title}} - {{$evento->subtitle}}</label><br>
             <label for="">Fecha del evento: {{$evento->start->format('d-m-Y')}}</label><br>
             <label for="">Fecha de degustación:
                 @isset($evento->banquet)

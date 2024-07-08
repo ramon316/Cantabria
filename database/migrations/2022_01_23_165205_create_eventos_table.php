@@ -19,9 +19,8 @@ class CreateEventosTable extends Migration
             $table->foreignId("user_id")->reference('id')->on('users')->constrained()->onDelete('cascade');
             $table->string("title");
             $table->string('subtitle');
-            $table->integer("horas");
-            $table->date('start')->unique();
-            $table->date('end');
+            $table->dateTime('start')->unique();
+            $table->dateTime('end');
             $table->integer('invitados');
             $table->string('color');
             $table->string('layout')->nullable();

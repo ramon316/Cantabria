@@ -7,16 +7,17 @@ import esLocale from '@fullcalendar/core/locales/es'
 import route from '../../../vendor/tightenco/ziggy/src/js'
 
 export default {
-  
+
   components: {
     FullCalendar // make the <FullCalendar> tag available
   },
   mounted(){
-    
+
   },
   data() {
     return {
       calendarOptions: {
+        timeZone: 'UTC',
         plugins: [ dayGridPlugin, interactionPlugin ],
         initialView: 'dayGridMonth',
         dateClick: this.handleDateClick,
@@ -32,7 +33,7 @@ export default {
             url: '/eventos/list',
           }
         ],
-        
+
       },
     }
   },
@@ -50,7 +51,7 @@ export default {
 </script>
 <template>
   <div class="container">
-    <FullCalendar 
+    <FullCalendar
     :options="calendarOptions"
     ></FullCalendar>
   </div>
