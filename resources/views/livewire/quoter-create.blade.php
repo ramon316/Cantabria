@@ -46,6 +46,7 @@
                 </div>
                 <div class="card-footer">
                     <h3>Inversión del Evento: $@dinero($costQuoter)</h3>
+                    <a href="{{route('cotizacion.cotizacion', ['cotizacion' => $cotizacion->id])}}}" class="btn btn-primary">Generar Cotización</a>
                 </div>
             </div>
         </div>
