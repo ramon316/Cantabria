@@ -20,6 +20,7 @@ use Tightenco\Ziggy\Ziggy;
 use App\Traits\EventoTrait;
 use Illuminate\Support\Str;
 use App\Events\EventCreated;
+use App\meet;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\DB;
@@ -243,10 +244,21 @@ class EventoController extends Controller
     {
         //Se muestras solo sus eventos creados, se utiliza eventos por que asi se llamo a la función del metodo USER.
         $eventos = evento::where('start', '>=', date('Y-m-d'))->get();
-        dd($eventos);
+        /* Obtenemos la colección de meets */
+        $meets = meet::where('start', '>=', date('Y-m-d'))->get();
 
+        foreach ($meets as $meet) {
+            $_array[] = array(
+                'id' => $meet->id,
+                'start' => Carbon::parse($meet->start)->format('Y-m-d'),
+                'end'   =>  '',
+                'title' =>  $meet->start->format('H:i') . ' - ' . $meet->reason->reason,
+                'url'   =>  '/meets/' . $meet->id,
+                'color' =>  $meet->user->color,
+            );
+        }
+ 
         foreach ($eventos as $evento) {
-
             $_array[] = array(
                 'id' => $evento->id,
                 'start' => Carbon::parse($evento->start)->format('Y-m-d'),
@@ -256,6 +268,7 @@ class EventoController extends Controller
                 'color' =>  $evento->color,
             );
         }
+
 
         return response()->json($_array);
         //Pasamos los argumentos json

@@ -48,6 +48,17 @@
             </div>
 
             <div class="form-group">
+                <label for="color">Color del usuario:</label>
+                <input type="color" class="form-control @error('color') is-invalid @enderror" name="color" id="color" placeholder=""
+                value="{{old('color')}}"
+                >
+                @error('email')
+                    <div class="invalid-feedback d-block" role="alert"> {{$message}}</div>
+                @enderror
+                <small id="helpNombre" class="form-text text-muted">Ingresa el correo del usuario.</small>
+            </div>
+
+            <div class="form-group">
                 <label for="password">Contraseña:</label>
                 <input type="password" class="form-control @error('password') is-invalid @enderror" name="password" id="password" placeholder="">
                 @error('password')

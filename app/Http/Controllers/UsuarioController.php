@@ -40,6 +40,7 @@ class UsuarioController extends Controller
         User::create([
             'name'=>$usuario['name'],
             'email'=>$usuario['email'],
+            'color'=>$request['color'],
             'password'=>Hash::make($usuario['password']),
         ]);
 

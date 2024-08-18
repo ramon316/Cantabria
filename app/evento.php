@@ -24,8 +24,8 @@ class evento extends Model
     ];
 
     protected $casts = [
-        'start' => 'datetime:d-m-Y',
-        'end'   =>  'datetime:d-m-Y',
+        'start'         => 'datetime:d-m-Y H:m',
+        'end'           =>  'datetime:d-m-Y H:m',
         'created_at'    =>  'datetime:d-m-Y H:m',
         'updated_at'    =>  'datetime:d-m-Y H:m',
     ];

@@ -163,14 +163,25 @@ class CotizacionController extends Controller
 
     /**Generamos el contrato y lo almacenamos en /storage/contratos/id_cliente-id_eventos-fecha */
     public function cotizacion(cotizacion $cotizacion){
+        /* Verificamos servicios */
+        /* Verificamos la deccoración, si existe retornamos el servicio */
+        $ExistDecoracion = $this->decoracionExistTrait($cotizacion);
 
+        /* Obtenemos el precio de la cotización */
         $costo = $this->costoCotizacion($cotizacion);
+
         /* obtenemos los servicios del evento */
         $servicios = $this->serviciosTrait($cotizacion);
 
-        $costoTexto = NumerosALetras::convertir($costo,'Pesos',false,'Centavos'); 
+        /* obtener los servicios de cortesia */
+        $servicesCortesy = $this->servicesCortesyTrait($cotizacion);
+
+        $costoTexto = NumerosALetras::convertir($costo,'Pesos',false,'Centavos');
+        $today = Carbon::parse(date('d-m-Y'))->translatedFormat('l j \d\e F \d\e Y');
+        $eventDay = Carbon::parse($cotizacion->start)->translatedFormat('l j \d\e F \d\e Y');
+        $end  = Carbon::parse($cotizacion->end)->translatedFormat('l j \d\e F \d\e Y');
         // return $cotizacion;
-        $pdf=PDF::loadView('/cotizacion/cotizacion',compact('cotizacion','costo','costoTexto','servicios'));
+        $pdf=PDF::loadView('/cotizacion/cotizacion',compact('cotizacion','costo','costoTexto','servicios','today','eventDay', 'end','ExistDecoracion','servicesCortesy'));
         $pdf->setPaper('letter','portrait');
         $name = $cotizacion->id.'_'.$cotizacion->cliente->nombre.'_cotizacion.pdf';
         /**return $pdf->download($name); en caso de que deseamos descargarlo directamente */

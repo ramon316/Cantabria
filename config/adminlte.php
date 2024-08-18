@@ -259,6 +259,12 @@ return [
             'can'           =>  'eventos.index',
         ],
         [
+            'text'        => 'Reuniónes',
+            'url'         => '/meets',
+            'icon'        => 'fas fa-handshake',
+            //'can'         =>  '',
+        ],
+        [
             'text'        => 'Servicios',
             'url'         => 'servicios',
             'icon'        => 'fas fa-trailer',

@@ -7,6 +7,8 @@ use Database\Seeders\daysSeeder;
 use Database\Seeders\event_tablecloth_seeder;
 use Database\Seeders\event_tableclothbase_seeder;
 use Database\Seeders\floralbaseSeeder;
+use Database\Seeders\MeetSeeder;
+use Database\Seeders\ReasonSeeder;
 use Database\Seeders\RecommendationSeeder;
 use Database\Seeders\RoleSeeder;
 use Database\Seeders\tableclothbaseSeeder;
@@ -38,6 +40,8 @@ class DatabaseSeeder extends Seeder
         $this->call(tipoSeeder::class);
         $this->call(ChecklistSeeder::class);
         $this->call(daysSeeder::class);
+        $this->call(ReasonSeeder::class);
+        $this->call(MeetSeeder::class);
         /* Mandamos llamar el roles */
     }
 }

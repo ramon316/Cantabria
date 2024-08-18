@@ -29,4 +29,8 @@ class cliente extends Model
     {
         return $this->hasMany(cotizacion::class);
     }
+
+    public function meet(){
+        return $this->hasMany(meet::class);
+    }
 }

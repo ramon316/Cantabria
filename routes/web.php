@@ -31,6 +31,7 @@ use App\Http\Controllers\EventoServicioController;
 use App\Http\Controllers\RecommendationController;
 use App\Http\Controllers\tableclothbaseController;
 use App\Http\Controllers\CotizacionServicioController;
+use App\Http\Controllers\MeetController;
 
 /*
 |--------------------------------------------------------------------------
@@ -195,6 +196,13 @@ Route::get('/recommendations', [RecommendationController::class,'index'])->name(
 
 /* Encuesta */
 Route::get('/encuesta', [SurveyController::class, 'index']);
+
+/* Meets */
+Route::get('/meets', [MeetController::class, 'index'])->name('meets.index');
+Route::get('/meets/create', [MeetController::class, 'create'])->name('meets.create');
+Route::post('/meets', [MeetController::class, 'store'])->name('meets.store');
+Route::get('/meets/{meet}', [MeetController::class, 'show'])->name('meets.show');
+Route::put('/meets/{meet}', [MeetController::class, 'update'])->name('meets.update');
 
 /**Eliminar cache de servicio */
 Route::get('/clear-cache', function() {
