@@ -28,20 +28,20 @@ class DatabaseSeeder extends Seeder
         // $this->call(UsersTableSeeder::class);
         $this->call(RoleSeeder::class);
         $this->call(UserSeeder::class);
-        $this->call(ClienteSeeder::class);
-        $this->call(EventoSeeder::class);
-        $this->call(ServicioSeeder::class);
+        /* $this->call(ClienteSeeder::class);
+        $this->call(EventoSeeder::class); */
+        /* $this->call(ServicioSeeder::class); */
         $this->call(tableclothbaseSeeder::class);
         $this->call(tableclothSeeder::class);
         $this->call(floralbaseSeeder::class);
-        $this->call(AcountSeeder::class);
+        /* $this->call(AcountSeeder::class); */
         $this->call(ChairSeeder::class);
         $this->call(RecommendationSeeder::class);
         $this->call(tipoSeeder::class);
-        $this->call(ChecklistSeeder::class);
+        /* $this->call(ChecklistSeeder::class); */
         $this->call(daysSeeder::class);
         $this->call(ReasonSeeder::class);
-        $this->call(MeetSeeder::class);
+       /*  $this->call(MeetSeeder::class); */
         /* Mandamos llamar el roles */
     }
 }

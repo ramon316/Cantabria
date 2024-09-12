@@ -25,10 +25,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-       
+
         /* Mandamos llamar al paginador de bootstrap */
       /*   Paginator::useBootstrap(); */
-        //generamos un gate de los roles 
+        //generamos un gate de los roles
         $this->register();
 
         Gate::define('Administrador', function ($user) {

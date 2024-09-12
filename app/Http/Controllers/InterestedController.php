@@ -9,12 +9,11 @@ class InterestedController extends Controller
 {
 
     public function store(Request $request){
-        
+
        $this->validate($request,[
             'name' => 'required',
             'email' =>  'required|email',
             'message'   =>  'required|min:5',
-            'captcha' => 'required|captcha'
         ],
         [
             'name.required' =>  'El nombre es necesario',
@@ -42,7 +41,7 @@ class InterestedController extends Controller
 
         /* Esto es un envio inmediato */
        /*  $interested->notify(new MessageInfo()); */
-        
+
         /* opcion dos utilizando el facade de notification este nos permite enviar a varios interesados o usuarios.*/
        /*  Notification::send(User::all(), new MessageInfo()); */
 
@@ -51,8 +50,8 @@ class InterestedController extends Controller
         return back();
     }
 
-    public function reloadCaptcha()
+    /* public function reloadCaptcha()
     {
         return response()->json(['captcha'=> captcha_img()]);
-    }
+    } */
 }

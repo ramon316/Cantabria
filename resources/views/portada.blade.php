@@ -43,17 +43,14 @@ https://www.tooplate.com/view/2117-infinite-loop
             <li class="nav-item">
               <a class="nav-link tm-nav-link" href="#whatwedo">¿Quiénes somos?</a>
             </li>
-            <li class="nav-item">
+            {{-- <li class="nav-item">
               <a class="nav-link tm-nav-link" href="#testimonials">Nos recomiendan</a>
-            </li>
+            </li> --}}
             <li class="nav-item">
               <a class="nav-link tm-nav-link" href="#gallery">Galería</a>
             </li>
             <li class="nav-item">
               <a class="nav-link tm-nav-link" href="#contact">Contactanos</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link tm-nav-link" href="cantabriaeventos.com/login">Login</a>
             </li>
 
           </ul>
@@ -145,10 +142,6 @@ https://www.tooplate.com/view/2117-infinite-loop
               Te podemos garantizar que nuestros <strong>productos y moviliarios</strong> mas reciente en el mercado,
               por lo que puedes estar tranquilo que tu evento será de la mejor calidad.
             </p>
-
-            <div class="tm-continue">
-              <a href="#testimonials" class="tm-intro-text tm-btn-primary">Learn More</a>
-            </div>
           </div>
         </div>
 
@@ -166,10 +159,6 @@ https://www.tooplate.com/view/2117-infinite-loop
               Tenemos todo para tu evento para que tú solo te preocupes por disfrutarlo,te garantizamos que contamos con
               nuestro sello de satisfacción total.
             </p>
-
-            <div class="tm-continue">
-              <a href="#testimonials" class="tm-intro-text tm-btn-primary">Details</a>
-            </div>
           </div>
         </div>
 
@@ -179,7 +168,7 @@ https://www.tooplate.com/view/2117-infinite-loop
 
   </section>
 
-  <section id="testimonials" class="tm-section-pad-top tm-parallax-2">
+{{--   <section id="testimonials" class="tm-section-pad-top tm-parallax-2">
     <div class="container tm-testimonials-content">
       <div class="row">
         <div class="col-lg-12 tm-content-box">
@@ -202,7 +191,7 @@ https://www.tooplate.com/view/2117-infinite-loop
       </div>
     </div>
     <div class="tm-bg-overlay"></div>
-  </section>
+  </section> --}}
 
   <section id="gallery" class="tm-section-pad-top">
     <div class="container tm-container-gallery">
@@ -281,7 +270,7 @@ https://www.tooplate.com/view/2117-infinite-loop
         </div>
 
         <div class="col-sm-12 col-md-6">
-          <form action="{{ route('interested.store')}}" method="POST" novalidate>
+{{--           <form action="{{ route('interested.store')}}" method="POST" novalidate>
             @csrf
             <input id="name" name="name" type="text" placeholder="Tu nombre" class="tm-input" />
             @error('name')
@@ -301,7 +290,7 @@ https://www.tooplate.com/view/2117-infinite-loop
               {{$message}}
           </div>
             @enderror
-            <span>Ingresa el siguiente Captcha por seguridad</span>
+            {{-- <span>Ingresa el siguiente Captcha por seguridad</span>
             <div class="captcha mb-3">
               <span>{!! captcha_img()!!}</span>
               <a type="button" class="btn btn-danger" id="reload" >
@@ -313,9 +302,9 @@ https://www.tooplate.com/view/2117-infinite-loop
             <div class="alert alert-danger mt-2" role="alert">
               {{$message}}
           </div>
-            @enderror
-            <button type="submit" class="btn tm-btn-submit">Enviar</button>
-          </form>
+            @enderror --}}
+            {{-- <button type="submit" class="btn tm-btn-submit">Enviar</button>
+          </form> --}}
         </div>
 
         <div class="col-sm-12 col-md-6">
@@ -359,24 +348,12 @@ https://www.tooplate.com/view/2117-infinite-loop
 
     <footer class="text-center small tm-footer">
       <p class="mb-0">
-        Copyright &copy; Cantabria Eventos 2023
+        Copyright &copy; Cantabria Eventos 2024
       </p>
     </footer>
 
   </section>
   <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-
-  <script type="text/javascript">
-    $('#reload').click(function () {
-          $.ajax({
-              type: 'GET',
-              url: 'reload-captcha',
-              success: function (data) {
-                  $(".captcha span").html(data.captcha);
-              }
-          });
-      });
-  </script>
 
   <script src="js/jquery-1.9.1.min.js"></script>
   <script src="slick/slick.min.js"></script>

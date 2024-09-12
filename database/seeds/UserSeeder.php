@@ -22,19 +22,10 @@ class UserSeeder extends Seeder
             'name' => 'Ramon316',
             'email' => 'ramon316@hotmail.com',
             'color' => '#cb3414',
-            'password' => Hash::make('rMARQUEZ316'),
+            'password' => Hash::make('IkKkEoqg(Sh51iWL'),
             'created_at' => date('Y-m-d H:i:s'),
             'updated_at' => date('Y-m-d H:i:s'),
         ])->assignRole('Administrador');
-
-        User::create([
-            'name' => 'Evelin316',
-            'email' => 'Evelin@hotmail.com',
-            'color' => '#FF0000',
-            'password' => Hash::make('Evelin'),
-            'created_at' => date('Y-m-d H:i:s'),
-            'updated_at' => date('Y-m-d H:i:s'),
-        ])->assignRole('Usuario');
 
         User::create([
             'name' => 'Yuliana Anaya',
