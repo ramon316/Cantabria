@@ -257,7 +257,7 @@ class EventoController extends Controller
                 'color' =>  $meet->user->color,
             );
         }
- 
+
         foreach ($eventos as $evento) {
             $_array[] = array(
                 'id' => $evento->id,
@@ -476,8 +476,8 @@ class EventoController extends Controller
             Storage::delete($evento->layout);
         }
         /* Guardamos la imagen nueva y obtenermos el nombre  */
-        $path = $request->file('layout')->store('public/layouts');
-        dd($path);
+        $path = $request->layout->store('layouts');
+       /*  dd($path); */
 
         /* Actualizamos nuestro registro */
         $evento->update([

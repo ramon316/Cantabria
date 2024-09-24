@@ -72,6 +72,10 @@ return [
             'url' => env('AWS_URL'),
         ],
 
+        'public_upload' => [
+            'driver' => 'local',
+            'root' => app_path('public_html/storage'),
+        ],
     ],
 
     /*

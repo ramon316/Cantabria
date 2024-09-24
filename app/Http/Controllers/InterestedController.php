@@ -13,17 +13,20 @@ class InterestedController extends Controller
        $this->validate($request,[
             'name' => 'required',
             'email' =>  'required|email',
+            'phone' =>  'required|numeric|digits:10',
             'message'   =>  'required|min:5',
         ],
         [
             'name.required' =>  'El nombre es necesario',
             'email.required'    =>  'El correo electrónico es necesario',
+            'phone.required'    =>  'El telefono es necesario',
             'message.required'  =>  'Tienes que agregar un mensaje'
         ]);
 
         $interested = interested::create([
             'name' => $request['name'],
             'email' =>  $request['email'],
+            'phone' =>  $request['phone'],
             'message'   => $request['message'],
         ]);
 

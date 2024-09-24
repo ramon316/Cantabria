@@ -11,5 +11,5 @@ class interested extends Model
     use HasFactory;
     use Notifiable;
 
-    protected $fillable = ['name', 'email', 'message', 'captcha'];
+    protected $fillable = ['name', 'email', 'phone', 'message'];
 }

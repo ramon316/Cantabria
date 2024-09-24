@@ -84,6 +84,7 @@ class PerfilController extends Controller
      */
     public function update(Request $request, Perfil $perfil)
     {
+        /* dd($request->all()); */
         /**Validamos la información
          * En el nombre estamos que sea unico pero que no sea el mismo que editamos
         */
@@ -98,8 +99,9 @@ class PerfilController extends Controller
         if (!empty($perfil->imagen)) {
             Storage::delete($perfil->imagen);
         }
+        /* dd(env('APP_ENV')); */
         /* Guardamos los datos  */
-        $path = $request->file('imagen')->store('upload-perfiles', 'public');
+        $path = $request->imagen->store('upload-perfiles');
        /*  dd($path); */
         $perfil->update([
             'imagen' => $path,
