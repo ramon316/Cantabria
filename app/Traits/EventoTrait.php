@@ -76,17 +76,22 @@ Trait EventoTrait{
 
    /* Validamos si hay un servicio de banquete  */
    public function banquetExistTrait(evento $evento){
-    $servicios = $evento->servicio()->get();
+    /* $servicios = $evento->servicio()->get(); */
     /* Validamos si hay un servicio de banquete */
-    foreach ($servicios as $servicio) {
+    /* foreach ($servicios as $servicio) {
         $existe = strpos(Str::upper($servicio->nombre), 'BANQUETE') or strpos($servicio->nombre, 'Banquete');
-        return true;
-    }
-    return false;
+        return $existe;
+    } */
+    $existe = $evento->servicio->first(function ($servicio) {
+        return strpos(strtolower($servicio->nombre), 'banquete') !== false;
+     });
+     return $existe;
    }
+
 
    public function banquetEvento(evento $evento){
         $servicioBanquete = $evento->servicio()->where('nombre','LIKE','%'. "Banquete".'%')->get();
+
     /* Realizamos la consulta */
         $cantidad  = DB::table('evento_servicio')->where('evento_id', $evento->id)->where('servicio_id', $servicioBanquete[0]->id)->first();
        /*  dd($cantidad); */

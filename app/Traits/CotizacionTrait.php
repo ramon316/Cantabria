@@ -52,11 +52,9 @@ trait CotizacionTrait
 
    public function decoracionExistTrait(cotizacion $cotizacion)
    {
-      $servicios = $cotizacion->servicio()->get();
-      $decorationService = $cotizacion->servicio->first(function ($servicio) {
-         return strpos(strtolower($servicio->nombre), 'decoración') !== false;
+      $decorationService = $cotizacion->servicio->first(function ($servicios) {
+         return strpos(strtolower($servicios->nombre), 'decoración') !== false;
       });
-      
       return $decorationService;
    }
 
@@ -66,15 +64,16 @@ trait CotizacionTrait
       $rentaService = $cotizacion->servicio->first(function ($servicio) {
          return strpos(strtolower($servicio->nombre), 'renta') !== false;
       });
-      
       return $rentaService;
+
    }
 
    public function serviciosTrait(cotizacion $cotizacion)
    {
       $allServices = $cotizacion->servicio;
       $decorationService = $this->decoracionExistTrait($cotizacion);
-      
+      /* dd($decorationService); */
+
       /* obtenemos  los serviccios sin decoración y renta */
       /* Si existe tenemos que encontrar todos los servicios pero si no entonces los obtenemos  */
       if ($decorationService == null) {

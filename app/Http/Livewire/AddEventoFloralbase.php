@@ -75,9 +75,9 @@ class AddEventoFloralbase extends Component
 
 
          /* Actualizamos el checklist */
-         $this->evento->Checklist->update([
+         /* $this->evento->Checklist->update([
             'floral'  =>  true,
-        ]);
+        ]); */
 
         /* Mostramos mensajede confirmacion */
         flasher('Registro agregado', 'success');

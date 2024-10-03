@@ -8,7 +8,7 @@
                 @foreach ($comments as $comment)
                 <div class="row border-bottom align-items-center mb-1">
                     <div class="col-md-3">
-                        <img src=" {{ asset('/upload-perfiles/' . $comment->user->perfil->imagen) }}" wirth="50"
+                        <img src=" {{ Storage::url($comment->user->perfil->imagen) }}" wirth="50"
                             height="50" class="img-circle float-start mt-1">
                         <p class="text-start">{{$comment->user->name}}</p>
                     </div>

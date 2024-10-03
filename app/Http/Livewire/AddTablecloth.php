@@ -147,9 +147,9 @@ class AddTablecloth extends Component
 
             /* Actualizamos a tru el checklist manteleria */
              /* Actualizamos el checklist */
-             $this->evento->Checklist->update([
+             /* $this->evento->Checklist->update([
                 'manteleria'  =>  true,
-            ]);
+            ]); */
 
             $this->amount = '';
             $this->type = '';
