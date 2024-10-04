@@ -192,17 +192,17 @@ Route::delete('discount/{discount}', [DiscountController::class,'destroy'])->nam
 Route::get('reports',[reportController::class, 'index'])->middleware('can:reports.index')->name('reports.index');
 
 /* Recommendations */
-Route::get('/recommendations', [RecommendationController::class,'index'])->name('recommendations.index');
+Route::get('/recommendations', [RecommendationController::class,'index'])->middleware('can:recommendations.index')->name('recommendations.index');
 
 /* Encuesta */
 Route::get('/encuesta', [SurveyController::class, 'index']);
 
 /* Meets */
-Route::get('/meets', [MeetController::class, 'index'])->name('meets.index');
-Route::get('/meets/create', [MeetController::class, 'create'])->name('meets.create');
-Route::post('/meets', [MeetController::class, 'store'])->name('meets.store');
-Route::get('/meets/{meet}', [MeetController::class, 'show'])->name('meets.show');
-Route::put('/meets/{meet}', [MeetController::class, 'update'])->name('meets.update');
+Route::get('/meets', [MeetController::class, 'index'])->middleware('can:meets.index')->name('meets.index');
+Route::get('/meets/create', [MeetController::class, 'create'])->middleware('can:meets.create')->name('meets.create');
+Route::post('/meets', [MeetController::class, 'store'])->middleware('can:meets.store')->name('meets.store');
+Route::get('/meets/{meet}', [MeetController::class, 'show'])->middleware('can:meets.show')->name('meets.show');
+Route::put('/meets/{meet}', [MeetController::class, 'update'])->middleware('can:meets.update')->name('meets.update');
 
 /**Eliminar cache de servicio */
 Route::get('/clear-cache', function() {
