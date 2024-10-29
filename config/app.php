@@ -162,7 +162,7 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
         //Agregamos DomPDF
-        
+
 
         /*
          * Package Service Providers...
@@ -237,7 +237,7 @@ return [
         /* captcha */
         'Captcha' => Mews\Captcha\Facades\Captcha::class,
 
-        
+
 
     ],
 

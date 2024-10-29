@@ -60,7 +60,7 @@
         }
 
         hr {
-            color: red;
+            color: black;
         }
 
         .centrado {
@@ -69,8 +69,6 @@
             margin-right: 5rem;
             margin-bottom: 1rem;
             text-align: center;
-            font-weight: 700;
-
         }
 
         .primeralinea {
@@ -87,12 +85,18 @@
             margin-left: 5rem;
         }
 
+        .espacio{
+            margin-buttom: 5rem;
+        }
+
         .flexbox-container {
             display: -ms-flex;
             display: -webkit-flex;
             display: flex;
-            margin-top: 100px;
+            margin-top: 50px;
             text-align: center;
+            margin-left: 200px;
+            margin-right: 200px;
         }
 
         .flexbox-container>div {
@@ -112,9 +116,8 @@
     <div class="fondo">
         <div class="pagina">{{-- Pagina 1 --}}
             <div class="row">
-                <label>En la ciudad de Chihuahua, estado de Chihuahua, a los {{$fecha->diaActual}} días del mes de
-                    {{$fecha->mesActual}} del año {{$fecha->añoActual}} {{$fecha->añoActualLetras}}, comparece
-                    <strong>CANTABRIA EVENTOS Y SERVICIOS S.A. DE C.V.</strong> por medio de s apoderado legal
+                <label>En la ciudad de Chihuahua, estado de Chihuahua, a {{$fecha->fechaActual}}, comparece
+                    <strong>CANTABRIA EVENTOS Y SERVICIOS S.A. DE C.V.</strong> por medio de su apoderado legal
                     <strong>C. YULIANA ELISA ANAYA ESTRADA</strong>, a quien en lo sucesivo se le designará por su
                     nombre o como <strong>"EL ARRENDADOR”</strong>, y por otra parte <strong>C.
                         {{Str::upper($evento->cliente->nombre)}}</strong>, a quien en lo sucesivo se le designará como
@@ -173,8 +176,7 @@
                     obligarse en los términos de este contrato. </label>
             </div>
             <div class="row primeralinea">
-                <label><strong>b) </strong>Tener nacionalidad Mexicana, con domicilio en Calle
-                    {{$evento->cliente->calle}} no. {{$evento->cliente->numero}}, {{$evento->cliente->colonia}},
+                <label><strong>b) </strong>Tener nacionalidad Mexicana, con domicilio en {{$evento->cliente->calle}} no. {{$evento->cliente->numero}}, {{$evento->cliente->colonia}},
                     Chihuahua Chih.
                 </label>
             </div>
@@ -238,7 +240,7 @@
                     {{-- Mostramos el servicio de decoración si es que existe --}}
                     <div class="row centrado">
                         @if($servicesExist->decor)
-                        <label><strong>PRODUCCIÓN FLORAL HÍDRICA:</strong></label>
+                        <label>PRODUCCIÓN FLORAL HÍDRICA:</label>
                         <ul>
                             <li>Centros de Mesa con base floral</li>
                             <li>Mesa Principal</li>
@@ -251,8 +253,10 @@
                             <li>Tres Bouttonier</li>
                         </ul>
                         <small>(No incluye flor ni follaje extrafino)</small>
-                        @endif
-                        <br><label>Los servicios que fueron incluidos son los siguientes:</label><br>
+                    </div>
+                    @endif
+                    <div class="sangria">
+                        <label>Los servicios que fueron incluidos son los siguientes:</label><br>
                         @foreach ($servicios as $servicio)
                         @if($servicio->pivot->regalo === 0)
                         {{$servicio->nombre}}<br>
@@ -263,19 +267,8 @@
                         {{$servicio->nombre}}<br> - Servicios de regalo
                         @endif
                         @endforeach
-
-
-                        {{-- @foreach ($servicios as $servicio)
-                        @if($servicio->nombre == 'Decoración')
+                        <br>
                     </div>
-                    <div class="page-break">
-                        <div class="pagina">
-                            @endif
-                            @endforeach --}}
-
-
-
-                        </div>
                         <div class="row primeralinea">
                             <label><strong>TERCERA.-</strong> El precio del arrendamiento es por la cantidad de
                                 <strong>$@dinero($evento->costo) ({{$evento->costoTexto}} 00/100)</strong>, más
@@ -318,6 +311,10 @@
                                 circunstancia se podrá realizar aumento de número de asistentes el día del
                                 evento.</label>
                         </div>
+                    </div>
+                </div>
+                <div class="page-break">
+                    <div class="pagina">
                         <div class="row primeralinea">
                             <label><strong>SEPTIMA.-</STRONG>Si el ARRENDATARIO desea aumentar el número de horas
                                 contratadas para el evento, podrá solicitarlo a más tardar el día
@@ -334,9 +331,7 @@
                             <label><strong>NOVENA.-</strong> En ningún caso El ARRENDATARIO puede cambiar la fecha del
                                 evento previamente contratado.</label>
                         </div>
-                    </div>
-                    <div class="page-break">
-                        <div class="pagina">{{--Página 4 --}}
+
                             <div class="row primeralinea">
                                 <label><strong>DECIMA.-</STRONG>.- En el supuesto de que el ARRENDATARIO desee cancelar
                                     el presente contrato, deberá pagar una penalización consistente en el 80% (ochenta
@@ -381,7 +376,6 @@
                                     ARRENDADOR, manifestando que en ningún caso procede el reembolso del importe pagado
                                     en favor del ARRENDATARIO.</label>
                             </div>
-                        </div>
                         <div class="page-break">
                             <div class="pagina">{{-- Página 5 --}}
                                 <div class="row primeralinea">
@@ -481,10 +475,6 @@
                                             pudiere corresponderles en virtud de sus domicilios presentes y futuros, la
                                             ubicación de sus bienes o por cualquier otra razón.</label>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="page-break">
-                                <div class="pagina">{{-- Página 7 --}}
                                     <div class="flexbox-container">
                                         <div>
                                             <hr>

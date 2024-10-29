@@ -34,9 +34,16 @@
         }
 
         .fondo {}
+        
+        .espacio{
+            margin-bottom: 2rem;
+        }
 
         .pagina {
             margin-top: 120px;
+        }
+        .arrendatario {
+            margin-top: 90px;
         }
 
         h3 {
@@ -60,7 +67,7 @@
         }
 
         hr {
-            color: red;
+            color: black;
         }
 
         .centrado {
@@ -69,7 +76,7 @@
             margin-right: 5rem;
             margin-bottom: 1rem;
             text-align: center;
-            font-weight: 700;
+        
 
         }
 
@@ -91,8 +98,10 @@
             display: -ms-flex;
             display: -webkit-flex;
             display: flex;
-            margin-top: 100px;
+            margin-top: 50px;
             text-align: center;
+            margin-left: 200px;
+            margin-right: 200px;
         }
 
         .flexbox-container>div {
@@ -113,8 +122,7 @@
         <div class="pagina">{{-- Pagina 1 --}}
             <div class="row">
                 <label for="cliente">Social</label>
-                <label>En la ciudad de Chihuahua, estado de Chihuahua, a los {{$fecha->diaActual}} días del mes de
-                    {{$fecha->mesActual}} del año {{$fecha->añoActual}} {{$fecha->añoActualLetras}}, comparece
+                <label>En la ciudad de Chihuahua, estado de Chihuahua, a {{$fecha->fechaActual}}, comparece
                     <strong>CANTABRIA EVENTOS Y SERVICIOS S.A. DE C.V.</strong> por medio de su representante legal y
                     administrador único <strong>DAVID FABIAN REYES DELGADO</strong>, a quien en lo sucesivo se le
                     designará por su nombre o como <strong>“LA ARRENDADORA”</strong>, y por otra parte
@@ -174,8 +182,8 @@
                     obligarse en los términos de este contrato. </label>
             </div>
             <div class="row primeralinea">
-                <label><strong>b) </strong>Tener nacionalidad Mexicana, con domicilio en Calle
-                    {{$evento->cliente->calle}} no. {{$evento->cliente->numero}}, Col. {{$evento->cliente->colonia}}.
+                <label><strong>b) </strong>Tener nacionalidad Mexicana, con domicilio en 
+            <strong>{{$evento->cliente->calle}} no. {{$evento->cliente->numero}},  {{$evento->cliente->colonia}}.</strong>
                 </label>
             </div>
             <div class="row primeralinea">
@@ -238,7 +246,7 @@
                     {{-- Mostramos el servicio de decoración si es que existe --}}
                     <div class="row centrado">
                         @if($servicesExist->decor)
-                        <label><strong>PRODUCCIÓN FLORAL HÍDRICA:</strong></label>
+                        <label>PRODUCCIÓN FLORAL HÍDRICA:</label>
                         <ul>
                             <li>Centros de Mesa con base floral</li>
                             <li>Mesa Principal</li>
@@ -252,7 +260,9 @@
                         </ul>
                         <small>(No incluye flor ni follaje extrafino)</small>
                         @endif
-                        <br><label>Los servicios que fueron incluidos son los siguientes:</label><br>
+                    </div>
+                    <div class="sangria espacio">
+                        <label>Los servicios que fueron incluidos son los siguientes:</label><br>
                         @foreach ($servicios as $servicio)
                         @if($servicio->pivot->regalo === 0)
                         {{$servicio->nombre}}<br>
@@ -263,8 +273,6 @@
                         {{$servicio->nombre}}<br> - Servicios de regalo
                         @endif
                         @endforeach
-
-
                         @foreach ($servicios as $servicio)
                         @if($servicio->nombre == 'Decoración')
                     </div>
@@ -310,6 +318,11 @@
                                 ARRENDADORA sin responsabilidad alguna por parte de este último de regresar dicho
                                 importe. </label>
                         </div>
+
+                    </div>
+                </div>
+                <div class="page-break">
+                    <div class="pagina">
                         <div class="row primeralinea">
                             <label><strong>SEXTA.-</strong> Si el ARRENDATARIO desea aumentar el número de personas asistentes al evento, podrá solicitarlo a más tardar el día <strong>{{$fecha->fecha1diaantes}}</strong> con un costo adicional, para la cuál tambien se le agregará el costo adicional de la decoración floral para cada mesa, los cuales se cotizarán al momento de realizar la solicitud de aumento de invitados. No se agregará mesa adicional sin decoración floral. Bajo ninguna circunstancia se podrá realizar aumento de número de asistentes el día del evento ni agregar mesas adicionales.
                         </div>
@@ -319,18 +332,18 @@
                         <div class="row primeralinea">
                             <label><strong>OCTAVA.-</strong> En caso de que el ARRENDATARIO contrate servicios adicionales a los descritos en la cláusula segunda, se anexarán en un adendum las descripciones, cotizaciones, costos etc. Fungiendo el mismo como parte integrante del presente instrumento.</label>
                         </div>
-                        <div class="row primeralinea">
+                        <di class="row primeralinea">
                             <label><strong>NOVENA.-</strong> El ARRENDATARIO podrá cambiar la fecha de su evento a mas tardar el <strong>{{$fecha->fecha6meses}}</strong> para lo cual, deberá quedar liquidado el 100% (cien por ciento) de su evento descrito en la cláusula tercera, así como pagar una penalización consistente en el 30%(treinta por ciento) del precio establecido en la cláusula tercera, el 30%(treinta por ciento) de la cantidad establecida como costo total  por servicios adicionales establecidos en el adendum (en caso de que hubiesen sido  contratados) y el costo del incremento correspondiente al ajuste de precios que se tenga establecido en el momento de la solicitud; EL ARRENDADOR realizará la recalendarización del evento de acuerdo a las fechas disponibles en CANTABRIA EVENTOS y servicios adicionales mencionados en este contrato y/o ademdums y el ARRENDATARIO deberá firmar un nuevo contrato de ARRENDAMIENTO para el cambio de fecha con los ajustes de precios y realizar los pagos descritos anteriormente en las instalaciones de CANTABRIA EVENTOS. En ningún caso se puede cambiar la fecha del evento previamente contratado sin el pago del 100% (cien por ciento) del presente contrato, la realización del pago de las penalizaciones descritas y la firma del nuevo contrato de ARRENDAMIENTO con los ajustes de precios.</label>
                         </div>
-                    </div>
-                    <div class="page-break">
-                        <div class="pagina">{{--Página 4 --}}
                             <div class="row primeralinea">
                                 <label><strong>DECIMA.-</STRONG>El ARRENDATARIO podrá cambiar la fecha de su evento después del <strong>{{$fecha->fecha6meses}}</strong>  y hasta el <strong>{{$fecha->fecha3meses}}</strong> para lo cual deberá quedar liquidado el 100% (cien por ciento) de su evento descrito en la cláusula tercera, así como pagar una penalización consistente en el 50%(cincuenta por ciento) del precio establecido en la cláusula tercera, el 50%(cincuenta por ciento) de la cantidad establecida como costo total  por servicios adicionales establecidos en el adendum (en caso de que hubiesen sido  contratados) y el costo del incremento correspondiente al ajuste de precios que se tenga establecido en el momento de la solicitud; EL ARRENDADOR realizará la recalendarización del evento de acuerdo a las fechas disponibles en CANTABRIA EVENTOS y servicios adicionales mencionados en este contrato y/o ademdums y el ARRENDATARIO deberá firmar un nuevo contrato de ARRENDAMIENTO para el cambio de fecha con los ajustes de precios y realizar los pagos descritos anteriormente en las instalaciones de CANTABRIA EVENTOS. Para realizar el cambio de fecha del evento previamente contratado deberá quedar liquidado el 100% (cien por ciento) del presente contrato, la realización del pago de las penalizaciones descritas y la firma del nuevo contrato de ARRENDAMIENTO con los ajustes de precios. En ningún caso se podrá cambiar la fecha del evento después del <strong>{{$fecha->fecha3meses}}</strong>.</label>
                             </div>
                             <div class="row primeralinea">
                                 <label><strong>DECIMA PRIMERA.-</strong>En el supuesto de que el ARRENDATARIO desee cancelar el presente contrato antes del <strong>{{$fecha->fecha6meses}}</strong>, deberá pagar una penalización consistente en el 80%  (ochenta por ciento) del precio establecido en la cláusula tercera, así como del 80% (ochenta por ciento) de la cantidad establecida como costo total  por servicios adicionales establecidos en el adendum (en caso de que hubiesen sido  contratados).</label>
                             </div>
+                </div>
+                <div class="page-break">
+                    <div class="pagina">
                             <div class="row primeralinea">
                                 <label><strong>DECIMA SEGUNDA.-</strong> En el supuesto de que el ARRENDATARIO desee cancelar el presente contrato despues del <strong>{{$fecha->fecha6meses}}</strong> deberá pagar una penalización consistente en el 100%  (cien por ciento) del precio establecido en la cláusula tercera, así como del 100% (cien por ciento) de la cantidad establecida como costo total  por servicios adicionales establecidos en el adendum (en caso de que hubiesen sido  contratados)..</label>
                             </div>
@@ -338,9 +351,8 @@
                             <div class="row primeralinea">
                                 <label><strong>DECIMA TERCERA.-</strong>El ARRENDATARIO se obliga a dejar un depósito de $5,000.00 (cinco mil pesos 00/100 m.n.) a más tardar el día <strong>{{$fecha->fecha1diaantes}}</strong>, en calidad de garantía por los posibles daños causados a las instalaciones de CANTABRIA EVENTOS, ya sea por el mismo ARRENDATARIO, algun proveedor o invitado. En el supuesto de que no se genere ningún daño o el mismo sea inferior a la cantidad otorgada en concepto de depósito,  el depósito o cantidad restante será devuelto a más tardar cinco días hábiles posteriores al evento, en el supuesto de que los daños superen la cantidad entregada como depósito, El ARRENDATARIO se compromete a pagar la cantidad restante a más tardar 7 (siete) días hábiles a partir del evento, por lo cual desde ese momento el ARRENDATARIO se compromete a cubrir los daños y/o perjuicios ocasionados a la infraestructura, mobiliario, cristalería, mantelería y decoración interior y exterior e iluminación, cometido por sus invitados y/o proveedores. No se podrá dar inicio al evento en caso de que el ARRENDATARIO no deje el déposito mencionado.</label>
                             </div>
-                        </div>
-                        <div class="page-break">
-                            <div class="pagina">{{-- Página 5 --}}
+
+
                                 <div class="row primeralinea">
                                     <label><strong>DECIMA CUARTA.-</strong> El ARRENDATARIO asignará una persona para que tenga acceso 15 (quince) minutos antes del inicio del evento para que reciba las condiciones del inmueble. En caso de no asignar alguna persona, se dará por enterado de las buenas condiciones del inmueble. El acceso de los invitados será según la hora señalada en la  claúsula primera de este contrato.</label>
                                 </div>
@@ -362,6 +374,10 @@
                                 <div class="row primeralinea">
                                     <label><strong>VIGÉSIMA.-</strong> .- El ARRENDATARIO podrá hacer uso de las instalaciones arrendadas solo el día del evento, se podrán hacer pruebas de montaje y/o ensayos algunos días antes del evento de acuerdo a la disponibilidad de EL ARRENDADOR y bajo la responsabilidad del ARRENDATARIO. Al término de dicha prueba o montaje, las instalaciones regresaran a su montaje anterior y el ARRENDATARIO se hará responable del cuidado y limpieza de las instalaciones, equipo y mobiliario del salón.</label>
                                 </div>
+                    </div>
+                </div>
+                <div class="page-break">
+                    <div class="pagina">
                                 <div class="row primeralinea">
                                     <label><strong>VIGÉSIMA PRIMERA.-</strong> El día del evento el ARRENDATARIO y sus invitados podrán ingresar a las instalaciones arrendadas a la hora establecida en la clausula primera de este contrato. Por ningun motivo se les dará acceso antes de la hora establecida.</label>
                                 </div>
@@ -371,9 +387,6 @@
                                 <div class="row primeralinea">
                                     <label><strong>VIGÉSIMA TERCERA.-</strong>EL ARRENDADOR por conducto de quien ella tenga a bien designar se reserva el derecho de admisión, prohibiendo la entrada a personas con vestimenta informal como tenis, pantalonera, gorra, short y/o playera de cualquier tipo. También se prohíbe la entrada a personas con indicios de intoxicación, armas de fuego, objetos punzocortantes, explosivos o todo aquello que EL ARRENDADOR considere peligroso para los invitados en el evento. El ARRENDATARIO acepta la restricción de acceso a personas (invitados y proveedores) que se presenten según los casos descritos en ésta claúsula. </label>
                                 </div>
-                            </div>
-                            <div class="page-break">
-                                <div class="pagina">{{-- Página 6 --}}
                                     <div class="row primeralinea">
                                         <label><strong>VIGÉSIMA CUARTA.-</strong> El ARRENDATARIO acepta que no se servirá bebidas alcohólicas a menores de edad y/o proveedores. En dado caso de sorprender a alguien drogándose, o a algún menor de edad tomando bebidas embriagantes estos serán puestos a disposición de las autoridades competentes.</label>
                                     </div>
@@ -390,8 +403,9 @@
                                         <label><strong>VIGÉSIMA OCTAVA.-</strong> Para todo lo relativo a la interpretación y cumplimiento del presente instrumento (incluyendo los formatos derivados del mismo), en este acto las partes se someten de manera expresa e irrevocable, a las leyes aplicables de esta Ciudad de Chihuahua y a la jurisdicción de los tribunales competentes de Chihuahua, Chih., y renuncian de manera expresa e irrevocable, a cualquier jurisdicción que pudiere corresponderles en virtud de sus domicilios presentes y futuros, la ubicación de sus bienes o por cualquier otra razón.</label>
                                     </div>
                                 </div>
-                                <div class="page-break">
-                                    <div class="pagina">{{-- Página 7 --}}
+                </div>
+            </div>
+
                                         <div class="flexbox-container">
                                             <div>
                                                 <hr>
@@ -400,7 +414,7 @@
                                                 apoderado legal <br>
                                                 <strong>C. YULIANA ELISA ANAYA ESTRADA</strong><br>
                                             </div>
-                                            <div class="pagina">
+                                            <div class="arrendatario">
                                                 <HR>
                                                 ARRENDATARIO<br>
                                                 <strong>{{Str::upper($evento->cliente->nombre)}}</strong>

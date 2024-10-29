@@ -24,8 +24,8 @@
                 <strong>Cliente: </strong>{{$evento->cliente->nombre}}<br>
                 <strong>Teléfino: </strong>{{$evento->cliente->telefono}}<br>
                 <strong>Email: </strong>{{$evento->cliente->email}}<br>
-                <strong>Dirección: </strong>C. {{$evento->cliente->calle}} #{{$evento->cliente->numero}}<br>
-                Col.{{$evento->cliente->colonia}} C.P. {{$evento->cliente->cp}}<br>
+                <strong>Dirección: </strong>{{$evento->cliente->calle}} #{{$evento->cliente->numero}}<br>
+                {{$evento->cliente->colonia}} C.P. {{$evento->cliente->cp}}<br>
             </div>
             <div class="col-md-3 bg-white shadow p-3 mb-5  rounded">
                 <h4>Información del evento</h4>
@@ -187,7 +187,7 @@
             </div>
 
             @if(count($evento->servicio))
-            <div class="col-md-3 bg-white shadow p-3 mb-5 rounded text-center">
+            <div class="col-md-6 bg-white shadow p-3 mb-5 rounded text-center">
                 {{-- Realicamos el listado de los servicios --}}
                 <table class="table table-sm">
                     <thead>
@@ -215,8 +215,10 @@
                 </table>
             </div>
             @endif
+        </div>
+        <div class="row justify-content-around">
             @if (count($pagos))
-            <div class="col-md-3 bg-white shadow p-3 mb-5 rounded text-center">
+            <div class="col-md-6 bg-white shadow p-3 mb-5 rounded text-center">
                 {{-- Realicamos el listado de los servicios --}}
                 <table class="table table-sm">
                     <thead>

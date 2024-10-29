@@ -30,7 +30,9 @@ use Illuminate\Auth\Events\Validated;
 use Intervention\Image\Facades\Image;
 use Illuminate\Session\SessionManager;
 use Illuminate\Console\Scheduling\Event;
+use Illuminate\Support\Carbon as SupportCarbon;
 use Illuminate\Support\Facades\Storage;
+use NumberFormatter;
 
 class EventoController extends Controller
 {
@@ -292,27 +294,15 @@ class EventoController extends Controller
         $servicios = $this->serviciosTrait($evento);
 
         if (count($anticipo) >= 1) {
-            //dd($anticipo['0']['anticipo']['monto']);
-            /**Vamos a usar la libreria de carbon que nos permite manipular la fecha */
-            //Fecha actual
-            carbon::setLocale('es');
-
-            /* Vamos a trabajar con CARBON */
-            $eventStart = Carbon::parse($evento->start);
-            $eventEnd = Carbon::parse($evento->end);
+            //dd($anticipo['0']['anticipo']['monto'])
 
             /* format the date */
-            $fechaInicio = Carbon::parse($eventStart)->translatedFormat('h i A \d\e\l l j \d\e F \d\e Y');
-            $fechaFin = Carbon::parse($eventEnd)->translatedFormat('h i A \d\e\l l j \d\e F \d\e Y');
-            $hours = $eventStart->diffInHours($eventEnd);
+            $fechaInicio = $this->formatearFecha($evento->start,true);
+            $fechaFin = $this->formatearFecha($evento->end,true);
+            $hours = $evento->start->diffInHours($evento->end);
+            $fechaActual = $this->formatearFecha(Carbon::now());
 
-            /* genarate the object to pass to the view */
-            $fechas = new \stdClass();
-            $fechas->fechaInicio = $fechaInicio;
-            $fechas->fechaFin = $fechaFin;
-            $fechas->hours = $hours;
-
-            /* EXIST SERVICES */
+            /* EXIST SERVICEs */
             /* if exist return service, else 0 */
             $decor = $this->decoracionExistTrait($evento);
 
@@ -320,50 +310,40 @@ class EventoController extends Controller
             $servicesExist = new stdClass();
             $servicesExist->decor = $decor;
 
-
-            $fecha = Carbon::now();
-            //separacion de meses y dias y aos
-            $fechaActual = Carbon::parse($fecha)->translatedFormat('l j \d\e F \d\e Y');
-            $diaActual = $fecha->isoFormat('DD');
-            $mesActual = $fecha->isoFormat('MMMM');
-            $añoActual = $fecha->isoFormat('YYYY');
-            $añoActualLetras = NumerosALetras::convertir($añoActual, '', false, '');
-
-
-            $fechaEventoManana = Carbon::parse($eventStart);
+            $fechaEventoManana = Carbon::parse($evento->start);
             $fechaEventoManana  = $fechaEventoManana->addDay();
             $fechaEventoManana = Carbon::parse($fechaEventoManana)->translatedFormat('l j \d\e F \d\e Y');
 
 
             /**Seis meses antes */
-            $fecha6meses = Carbon::parse($eventStart);
+            $fecha6meses = Carbon::parse($evento->start);
             $fecha6meses = $fecha6meses->subMonth(6);
-            $fecha6meses = Carbon::parse($fecha6meses)->translatedFormat('l j \d\e F \d\e Y');
+            $fecha6meses = $this->formatearFecha($fecha6meses);
             /**Tres meses antes */
-            $fecha3meses = Carbon::parse($eventStart);
+            $fecha3meses = Carbon::parse($evento->start);
             $fecha3meses = $fecha3meses->subMonth(3);
-            $fecha3meses = Carbon::parse($fecha3meses)->translatedFormat('l j \d\e F \d\e Y');
+            $fecha3meses = $this->formatearFecha($fecha3meses);
             /**Un mes antes */
-            $fecha1mes = Carbon::parse($eventStart);
+            $fecha1mes = Carbon::parse($evento->start);
             $fecha1mes = $fecha1mes->subMonth(1);
-            $fecha1mes = Carbon::parse($fecha1mes)->translatedFormat('l j \d\e F \d\e Y');
+            $fecha1mes = $this->formatearFecha($fecha1mes);
             /**un día antes */
-            $fecha1diaantes = Carbon::parse($eventStart);
+            $fecha1diaantes = Carbon::parse($evento->start);
             $fecha1diaantes = $fecha1diaantes->subDay(1);
-            $fecha1diaantes = Carbon::parse($fecha1diaantes)->translatedFormat('l j \d\e F \d\e Y');
+            $fecha1diaantes = $this->formatearFecha($fecha1diaantes);
             /**cinco dias antes */
-            $fecha5diasantes = Carbon::parse($eventStart);
+            $fecha5diasantes = Carbon::parse($evento->start);
             $fecha5diasantes = $fecha5diasantes->subDay(5);
-            $fecha5diasantes = Carbon::parse($fecha5diasantes)->translatedFormat('l j \d\e F \d\e Y');
+            $fecha5diasantes = $this->formatearFecha($fecha5diasantes);
 
             /**7 dias antess */
-            $fecha7diasantes = Carbon::parse($eventStart);
+            $fecha7diasantes = Carbon::parse($evento->start);
             $fecha7diasantes = $fecha7diasantes->subDay(7);
-            $fecha7diasantes = Carbon::parse($fecha7diasantes)->translatedFormat('l j \d\e F \d\e Y');
+            $fecha7diasantes = $this->formatearFecha($fecha7diasantes);
             /**15 dias antess */
-            $fecha15diasantes = Carbon::parse($eventStart);
+            $fecha15diasantes = Carbon::parse($evento->start);
             $fecha15diasantes = $fecha15diasantes->subDay(15);
-            $fecha15diasantes = Carbon::parse($fecha15diasantes)->translatedFormat('l j \d\e F \d\e Y');
+            $fecha15diasantes = $this->formatearFecha($fecha15diasantes);  
 
             /**Evento */
             $invitadosLetra = NumerosALetras::convertir($evento->invitados, '', false, '');
@@ -393,12 +373,13 @@ class EventoController extends Controller
              *
              **/
             /**Creamos nuestro objeto para pasar los valores por el mismo  */
+            /* genarate the object to pass to the view */
             $fecha = new stdClass();
+            $fechas = new stdClass();
+            $fechas->fechaInicio = $fechaInicio;
+            $fechas->fechaFin = $fechaFin;
+            $fechas->hours = $hours;
             $fecha->fechaActual = $fechaActual;
-            $fecha->diaActual = $diaActual;
-            $fecha->mesActual = $mesActual;
-            $fecha->añoActual = $añoActual;
-            $fecha->añoActualLetras = $añoActualLetras;
             $fecha->fechaEventoManana = $fechaEventoManana;
             $fecha->fecha6meses = $fecha6meses;
             $fecha->fecha1mes = $fecha1mes;
@@ -419,33 +400,30 @@ class EventoController extends Controller
              */
             $name = $evento->id . '_' . $evento->cliente->nombre . '_contrato.pdf';
             if ($evento->title == "Social") {
-                $pdf = PDF::loadView('/eventos/contrato', compact('evento', 'fecha', 'fechas','servicios', 'servicesExist'));
-            }
-            else{
+                $pdf = PDF::loadView('/eventos/contrato', compact('evento', 'fecha', 'fechas', 'servicios', 'servicesExist'));
+            } else {
                 $pdf = PDF::loadView('/eventos/contratoEmpresa', compact('evento', 'fechas', 'fecha',  'servicios', 'servicesExist'));
             }
 
 
 
             return $pdf->setPaper('a4')->stream($name);
-                -/* >setPaper('letter')
+            -/* >setPaper('letter')
                 ->stream($name) */
-                /* ->download()->getOriginalContent() *
+            /* ->download()->getOriginalContent() *
 
             Storage::disk('local')->put('contratos' . '/' . $name, $pdf);
 
             $eventoUpdate = evento::find($evento->id)->first();
 
             /* guardamos el nombre del contrato  */
-           /*  $registro = $eventoUpdate->update([
+            /*  $registro = $eventoUpdate->update([
                 'contrat'  =>  $name,
             ]); */
             /* Actualizamos el checklist */
             /* $eventoUpdate->Checklist->update([
                 'contrato'  =>  true,
-            ]); */
-
-            flash('Contrato generado');
+            ]); */flash('Contrato generado');
             return back();
         } else {
             return back();
@@ -477,7 +455,7 @@ class EventoController extends Controller
         }
         /* Guardamos la imagen nueva y obtenermos el nombre  */
         $path = $request->layout->store('layouts');
-       /*  dd($path); */
+        /*  dd($path); */
 
         /* Actualizamos nuestro registro */
         $evento->update([
@@ -485,5 +463,43 @@ class EventoController extends Controller
         ]);
 
         return back();
+    }
+
+    function convertirNumeroATexto($number)
+    {
+        $f = new \NumberFormatter("es", \NumberFormatter::SPELLOUT);
+        return $f->format($number);
+    }
+
+    /**
+     * Convierte una fecha al formato deseado.
+     *
+     * @param string $fecha
+     * @return string
+     */
+    public function formatearFecha($fecha, $incluirHora = false)
+    {
+        // Crear una instancia de Carbon a partir de la fecha
+        $carbonFecha = Carbon::parse($fecha);
+
+        // Obtener las partes de la fecha en formato numérico
+        $diaNumero = $carbonFecha->day;
+        $mesNombre = $carbonFecha->translatedFormat('F'); // Nombre del mes en español
+        $anioNumero = $carbonFecha->year;
+
+        // Convertir las partes de la fecha en texto
+        $diaTexto = $this->convertirNumeroATexto($diaNumero);
+        $anioTexto = $this->convertirNumeroATexto($anioNumero);
+
+        // Construir el formato con o sin hora
+        if ($incluirHora) {
+            // Formatear la hora y convertirla a texto
+            $hora = $carbonFecha->format('H:i');
+            $horaTexto = $this->convertirNumeroATexto($carbonFecha->hour) . " horas";
+            return "{$hora} horas del {$carbonFecha->day} de {$mesNombre} del {$carbonFecha->year} ({$horaTexto} del {$diaTexto} de {$mesNombre} del {$anioTexto})";
+        }
+
+        // Formato sin hora
+        return "{$carbonFecha->day} de {$mesNombre} del {$carbonFecha->year} ({$diaTexto} de {$mesNombre} del {$anioTexto})";
     }
 }
