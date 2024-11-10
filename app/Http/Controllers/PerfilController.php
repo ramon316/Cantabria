@@ -92,45 +92,22 @@ class PerfilController extends Controller
         $this->validate($request,[
             'nombre'    => ['required','min:8','unique:users,name,'. auth()->user()->id,],
             'telefono'  =>  'numeric|digits:10',
-            'imagen'    =>  'required|image|max:2048',
+            'imagen'    =>  'image|max:2048',
         ]);
 
         /* Eliminamos la imagen si existe*/
-        if (!empty($perfil->imagen)) {
-            Storage::delete($perfil->imagen);
+        if (!empty($perfil->imagen) && $request->imagen) {
+            $flag = Storage::delete($perfil->imagen);
+            $path = $request->imagen->store('upload-perfiles');
+            $perfil->imagen = $path;
+            $perfil->save();
         }
-        /* dd(env('APP_ENV')); */
-        /* Guardamos los datos  */
-        $path = $request->imagen->store('upload-perfiles');
-       /*  dd($path); */
-        $perfil->update([
-            'imagen' => $path,
-            'telefono' => $request->telefono
-        ]);
 
-        /*Realizamos la lógica para manipular la imagen*/
-
-        /* if ($request->imagen) {
-            $imagen = $request->file('imagen');
-            $nombreImagen = Str::uuid() . "." . $imagen->extension();
-            $imagenServidor = Image::make($imagen);
-            $imagenServidor->fit(300,300);
-            $imagenPath = public_path('upload-perfiles') . '/' . $nombreImagen;
-            $imagenServidor->save($imagenPath);
-
-            if ($perfil->imagen <> null) {
-                unlink( public_path('upload-perfiles'). '/'. $perfil->imagen);
-            }
-        } */
-        /* Buscamos a nuestro usuario  y lo modificamos*/
-        /* $user = User::find(auth()->user()->id);
-        $user->name = $request->nombre;
-        $user->save();
- */
-        /* Guardamos la información, si no existe el request de l aimagen lo dejamos con la anterior o vacio*/
-       /*  $perfil->telefono = $request->telefono;
-        $perfil->imagen = $nombreImagen ?? Auth::user()->perfil->imagen ?? '';
-        $perfil->save(); */
+        if ($request->nombre) {
+            $user = User::find(auth()->user()->id);
+            $user->name = $request->nombre;
+            $user->save();
+        }
 
 
         flash('Se actualizo el perfil');

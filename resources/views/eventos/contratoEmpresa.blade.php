@@ -271,7 +271,7 @@
                     </div>
                         <div class="row primeralinea">
                             <label><strong>TERCERA.-</strong> El precio del arrendamiento es por la cantidad de
-                                <strong>$@dinero($evento->costo) ({{$evento->costoTexto}} 00/100)</strong>, más
+                                <strong>$@dinero($valores->costo) ({{$valores->costoTexto}} 00/100)</strong>, más
                                 impuesto del valor agregado en caso de requerir factura. </label>
                         </div>
                         <div class="row primeralinea">
@@ -279,7 +279,7 @@
                                 cláusula que antecede es de la siguiente manera: </label>
                         </div>
                         <div class="row sangria">
-                            <label>a) <strong>$@dinero($evento->costoAnticipo) ({{$evento->costoAnticipoTexto}}
+                            <label>a) <strong>$@dinero($valores->costoAnticipo) ({{$valores->costoAnticipoTexto}}
                                     00/100)</strong> al momento de la firma del presente contrato, fungiendo el
                                 mismo como el más amplio recibo que en derecho proceda. </label>
                         </div>

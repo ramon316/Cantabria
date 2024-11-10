@@ -21,6 +21,7 @@ use App\Traits\EventoTrait;
 use Illuminate\Support\Str;
 use App\Events\EventCreated;
 use App\meet;
+use App\Notifications\contractInformation;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\DB;
@@ -32,7 +33,11 @@ use Illuminate\Session\SessionManager;
 use Illuminate\Console\Scheduling\Event;
 use Illuminate\Support\Carbon as SupportCarbon;
 use Illuminate\Support\Facades\Storage;
+use League\CommonMark\Normalizer\SlugNormalizer;
 use NumberFormatter;
+
+
+use function PHPUnit\Framework\isEmpty;
 
 class EventoController extends Controller
 {
@@ -60,6 +65,7 @@ class EventoController extends Controller
      */
     public function create()
     {
+
         //DB::table('clientes')->get()->pluck('id','nombre')->dd();
         $clientes = DB::table('clientes')->orderBy('nombre')->get()->pluck('nombre', 'id');
         $tipos = Tipo::OrderBy('tipo', 'asc')->get();
@@ -282,6 +288,10 @@ class EventoController extends Controller
     /**Generamos el contrato y lo almacenamos en /storage/contratos/id_cliente-id_eventos-fecha */
     public function contrato(evento $evento)
     {
+        /* this date is for name */
+        $today = Carbon::now()->format('d_m_Y');
+        $slugName = str::slug($evento->cliente->nombre, '_');
+
         /**Validamos que el evento ya cuente con un pago de anticipo */
         $anticipo = DB::table('pagos')
             ->where('tipo', '=', 'anticipo')
@@ -343,7 +353,7 @@ class EventoController extends Controller
             /**15 dias antess */
             $fecha15diasantes = Carbon::parse($evento->start);
             $fecha15diasantes = $fecha15diasantes->subDay(15);
-            $fecha15diasantes = $this->formatearFecha($fecha15diasantes);  
+            $fecha15diasantes = $this->formatearFecha($fecha15diasantes);
 
             /**Evento */
             $invitadosLetra = NumerosALetras::convertir($evento->invitados, '', false, '');
@@ -351,10 +361,11 @@ class EventoController extends Controller
             /***Costo en texto */
             $costo = $this->costoEvento($evento);
             $costoTexto = NumerosALetras::convertir($costo, 'Pesos', false, 'Centavos');
-            $evento->costo = $costo;
-            $evento->costoTexto = $costoTexto;
-            $evento->costoAnticipo = $anticipo[0]['monto'];
-            $evento->costoAnticipoTexto = NumerosALetras::convertir($evento->costoAnticipo, 'Pesos', false, 'Centavos');
+            $valores = new stdClass();
+            $valores->costo = $costo;
+            $valores->costoTexto = $costoTexto;
+            $valores->costoAnticipo = $anticipo[0]['monto'];
+            $valores->costoAnticipoTexto = NumerosALetras::convertir($evento->costoAnticipo, 'Pesos', false, 'Centavos');
 
 
 
@@ -390,7 +401,18 @@ class EventoController extends Controller
             $fecha->fecha3meses = $fecha3meses;
 
 
-            $evento->invitadosLetra = $invitadosLetra;
+            $valores->invitadosLetra = $invitadosLetra;
+
+            /* !empty($evento->cliente?->email)
+            Trabaja verificando si la relación existe y aparte
+            que la propiedad no sea vacia. */
+            // if (isEmpty($evento->contract) && !empty($evento->cliente?->email)) {
+                /* Procedemos a mandar el correo  */
+                /* $cliente = cliente::find($evento->cliente_id);
+                $cliente->notify(new contractInformation());
+                $evento->contract = Carbon::now()->format('Y-m-d H:i:s');
+                $evento->save();
+            } */
 
             /* Servicios de paga */
 
@@ -398,13 +420,20 @@ class EventoController extends Controller
              * de lo contrario no
              * si el registro nos regresa uno quiere decir que si tiene anticipo.
              */
-            $name = $evento->id . '_' . $evento->cliente->nombre . '_contrato.pdf';
+            $name = $evento->id . '_' . $slugName . '_' . $today . '_contrato.pdf';
             if ($evento->title == "Social") {
-                $pdf = PDF::loadView('/eventos/contrato', compact('evento', 'fecha', 'fechas', 'servicios', 'servicesExist'));
+                $pdf = PDF::loadView('/eventos/contrato', compact('evento', 'fecha', 'fechas', 'servicios', 'servicesExist','valores'));
             } else {
-                $pdf = PDF::loadView('/eventos/contratoEmpresa', compact('evento', 'fechas', 'fecha',  'servicios', 'servicesExist'));
+                $pdf = PDF::loadView('/eventos/contratoEmpresa', compact('evento', 'fechas', 'fecha',  'servicios', 'servicesExist','valores'));
             }
 
+            /* storage pdf */
+            $content = $pdf->download()->getOriginalContent();
+            $save = Storage::disk('local')->put('contracts' . '/' . $name, $content);
+
+            /* storage pdf  verifiar si es neesario guardar ese nombre*/
+            /* $save == true ? $evento->contract = $name : null;
+            $evento->save(); */
 
 
             return $pdf->setPaper('a4')->stream($name);
@@ -455,7 +484,6 @@ class EventoController extends Controller
         }
         /* Guardamos la imagen nueva y obtenermos el nombre  */
         $path = $request->layout->store('layouts');
-        /*  dd($path); */
 
         /* Actualizamos nuestro registro */
         $evento->update([
@@ -502,4 +530,5 @@ class EventoController extends Controller
         // Formato sin hora
         return "{$carbonFecha->day} de {$mesNombre} del {$carbonFecha->year} ({$diaTexto} de {$mesNombre} del {$anioTexto})";
     }
+
 }

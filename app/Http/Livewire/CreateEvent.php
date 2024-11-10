@@ -26,7 +26,7 @@ class CreateEvent extends Component
         'cliente' => 'required',
         'title' => 'required',
         'subtitle' => 'required',
-        'start' => 'required',
+        'start' => 'required|unique:eventos',
         'end' => 'required',
         'invitados' => 'required|min:1',
     ];

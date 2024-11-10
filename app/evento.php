@@ -20,7 +20,7 @@ class evento extends Model
     protected $dates = ['start', 'end'];
 
     protected $fillable = [
-        'id', 'cliente_id', 'user_id', 'title', 'subtitle', 'horas', 'start', 'end', 'invitados', 'color', 'layout', 'contrat', 'closed_at',
+        'id', 'cliente_id', 'user_id', 'title', 'subtitle', 'horas', 'start', 'end', 'invitados', 'color', 'layout', 'contract', 'closed_at',
     ];
 
     protected $casts = [

@@ -11,7 +11,7 @@
     <div class="row">
         <div class="col-md-6">
             @if(Auth::user()->perfil->imagen)
-                <img src="{{ asset('upload-perfiles') . '/' . Auth::user()->perfil->imagen}}">
+                <img  class="img-fluid rounded mx-auto d-block mb-3" src="{{ asset(Auth::user()->perfil->url_imagen)}}" width="300">
             @else
                 <img src="/upload-perfiles/default.png" class="img-fluid rounded mx-auto d-block" alt="">
             @endif
@@ -37,11 +37,9 @@
                 <span class="font-weight-bold">Teléfono: </span>
                 {{$usuario->perfil->telefono}}
             </p>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <a name="" id="" class="btn btn-warning" href="{{  route('perfils.edit', ['perfil'=>Auth::user()->id]) }}" role="button">Editar</a>
+            <p>
+                <a name="" id="" class="btn btn-warning" href="{{  route('perfils.edit', ['perfil'=>Auth::user()->id]) }}" role="button">Editar</a>
+            </p>
         </div>
     </div>
 </div>

@@ -28,7 +28,7 @@ class EventoSeeder extends Seeder
 
         Evento::create([
             'cliente_id'=>'2',
-            'user_id'=>'3',
+            'user_id'=>'1',
             'title'=>'Social',
             'subTitle'=>'Boda',
             'start'=>Carbon::create('2024', '04', '20'),
@@ -41,7 +41,7 @@ class EventoSeeder extends Seeder
 
         Evento::create([
             'cliente_id'=>'3',
-            'user_id'=>'3',
+            'user_id'=>'1',
             'title'=>'Social',
             'subTitle'=>'Boda',
             'start'=>Carbon::create('2024', '11', '29'),
@@ -54,7 +54,7 @@ class EventoSeeder extends Seeder
 
         Evento::create([
             'cliente_id'=>'4',
-            'user_id'=>'3',
+            'user_id'=>'1',
             'title'=>'Social',
             'subTitle'=>'Boda',
             'start'=>Carbon::create('2024', '09', '20'),

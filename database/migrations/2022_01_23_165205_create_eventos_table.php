@@ -24,8 +24,8 @@ class CreateEventosTable extends Migration
             $table->integer('invitados');
             $table->string('color');
             $table->string('layout')->nullable();
-            $table->string('contrat')->nullable();
-            $table->date('closed_at')->nullable();
+            $table->dateTime('contract')->nullable();
+            $table->dateTime('closed_at')->nullable();
             $table->timestamps();
         });
     }

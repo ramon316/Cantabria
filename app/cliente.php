@@ -4,11 +4,13 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
 
 class cliente extends Model
 {
     //
     use HasFactory;
+    use Notifiable;
 
     protected $fillable =[
         'nombre', 'telefono','email', 'calle', 'numero', 'colonia', 'cp'
