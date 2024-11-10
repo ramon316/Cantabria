@@ -11,4 +11,9 @@ class cuenta extends Model
 
     /* ocultamos la informaicón solo el nombre de la cuenta */
     protected $visible = ['cuenta'];
+
+    public function pagos()
+    {
+        return $this->hasMany(pago::class);
+    }
 }

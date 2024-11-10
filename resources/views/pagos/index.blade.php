@@ -37,7 +37,7 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="tipo">Tipo de Pago:</label>
-                        <select class="form-control 
+                        <select class="form-control
                         @error('tipo')
                             is-invalid
                         @enderror" name="tipo" id="tipo">
@@ -55,10 +55,10 @@
                     <div class="form-group">
                     <label for="">Monto</label>
                     <input type="number"
-                        class="form-control 
+                        class="form-control
                         @error('monto')
                             is-invalid
-                        @enderror" 
+                        @enderror"
                         name="monto" id="monto" aria-describedby="helpId" placeholder=""
                         value="{{ old('monto') }}">
                         @error('monto')
@@ -87,11 +87,11 @@
                 </div>
 
                 <input type="hidden"
-                name="evento" id="evento" 
+                name="evento" id="evento"
                 value="{{$evento->id}}">
 
                 <input type="hidden"
-                name="cliente" id="cliente" 
+                name="cliente" id="cliente"
                 value="{{$evento->cliente_id}}">
 
 
@@ -102,6 +102,7 @@
                 </div>
             </div>
         </form>
+        @livewire('payments-list')
     </div>
 </div>
 @stop

@@ -21,4 +21,8 @@ class pago extends Model
     public function evento(){
         return $this->belongsTo(evento::class);
     }
+
+    public function cuenta(){
+        return $this->belongsTo(cuenta::class);
+    }
 }
