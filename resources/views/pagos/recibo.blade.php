@@ -26,7 +26,7 @@
 </head>
 
 <body>
-    <img src="image/logo.jpeg" alt="">
+    <img src="{{ asset('image/logo.jpeg') }}" alt="">
     <h1>Recibo de pago</h1>
     <div>
         <label for="">Por la presente, se confirma la recepción del pago realizado por el cliente en relación con el
