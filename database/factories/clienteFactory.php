@@ -2,12 +2,12 @@
 
 namespace Database\Factories;
 
-use App\cliente;
+use App\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class clienteFactory extends Factory
 {
-    protected $model = cliente::class;
+
     /**
      * Define the model's default state.
      *
@@ -24,7 +24,8 @@ class clienteFactory extends Factory
             'numero'    =>  $this->faker->buildingNumber,
             'colonia'   =>  $this->faker->streetName,
             'cp'    =>  $this->faker->postcode,
-            'user_id' => '1'
+            'user_id'   =>  User::factory(),
+
         ];
     }
 }

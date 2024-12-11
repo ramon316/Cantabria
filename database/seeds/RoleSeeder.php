@@ -179,5 +179,15 @@ class RoleSeeder extends Seeder
         /* Reports */
         Permission::create(['name'=>'reports.index', 'description'=>'Visualizar reportes'])->syncRoles([$Role1]);
 
+        /* Meets */
+        Permission::create(['name'=>'meets.index', 'description'=>'Visualizar meet'])->syncRoles([$Role1]);
+        Permission::create(['name'=>'meets.create', 'description'=>'Crear meet'])->syncRoles([$Role1]);
+        Permission::create(['name'=>'meets.store', 'description'=>'Almacenar meet'])->syncRoles([$Role1]);
+        Permission::create(['name'=>'meets.show', 'description'=>'Visualizar meet'])->syncRoles([$Role1]);
+        Permission::create(['name'=>'meets.update', 'description'=>'Modificar meet'])->syncRoles([$Role1]);
+
+        /* Logactivity */
+        Permission::create(['name'=>'logactivity.index', 'description'=>'Visualizar log de actividad'])->syncRoles([$Role1]);
+
     }
 }

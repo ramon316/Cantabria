@@ -32,6 +32,7 @@ use App\Http\Controllers\RecommendationController;
 use App\Http\Controllers\tableclothbaseController;
 use App\Http\Controllers\CotizacionServicioController;
 use App\Http\Controllers\MeetController;
+use App\Http\Controllers\LogActivityController;
 
 /*
 |--------------------------------------------------------------------------
@@ -204,10 +205,14 @@ Route::post('/meets', [MeetController::class, 'store'])->middleware('can:meets.s
 Route::get('/meets/{meet}', [MeetController::class, 'show'])->middleware('can:meets.show')->name('meets.show');
 Route::put('/meets/{meet}', [MeetController::class, 'update'])->middleware('can:meets.update')->name('meets.update');
 
+/* Logactivity */
+Route::get('/logactivity', [LogActivityController::class, 'index'])->middleware('can:logactivity.index')->name('logactivity.index');
+
 /**Eliminar cache de servicio */
 Route::get('/clear-cache', function() {
     $exitCode = Artisan::call('config:clear');
     $exitCode = Artisan::call('cache:clear');
+    
     $exitCode = Artisan::call('config:cache');
     return 'DONE'; //Return anything
 });

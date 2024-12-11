@@ -67,7 +67,11 @@ class CreateEvent extends Component
             'invitados' => $this->invitados,
         ]);
 
+        /* clean forms */
+        $this->reset();
+
         flasher('Evento creado', 'success');
+
     }
     public function render()
     {

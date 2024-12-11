@@ -53,26 +53,29 @@ class ClienteController extends Controller
     {
         //dd($request->all());
         //Primero validamos
-        $data = $request->validate([
+       $request->validate([
             'nombre'=> 'required|unique:clientes,nombre',
             'telefono'=> 'required|digits:10',
         ]);
         /**Cambiamos el nombre a nombre propio */
-        $nombre = ucwords(strtolower($data['nombre']));
+        $request['nombre'] = ucwords(strtolower($request['nombre']));
 
-        /**guardamos la información en nuestra tabla clientes */
-        DB::table('clientes')->insert([
-            'nombre'=>$nombre,
-            'telefono'=>$data['telefono'],
-            'email'=>$request['email'],
+
+        $cliente = cliente::create([
+            'user_id' => Auth::user()->id,
+            'nombre' => $request['nombre'],
+            'telefono' => $request['telefono'],
             'calle' => $request['calle'],
-            'numero' =>$request['numero'],
-            'colonia' =>$request['colonia'],
+            'numero' => $request['numero'],
+            'colonia' => $request['colonia'],
             'cp' => $request['cp'],
-            'user_id'=>Auth::user()->id,
-            'created_at'=>date('Y-m-d H:i:s'),
-            'updated_at'=>date('Y-m-d H:i:s'),
-        ]);
+            'user_id' => Auth::user()->id
+            ]);
+
+        /* save activiti
+        es importante especificar que se agrego código al modelo
+        para poder registrar la actividad with activity log*/
+
 
         /* Mostramos la alerta */
         flash()->addSuccess('Se agrego el cliente.');

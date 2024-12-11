@@ -3,7 +3,7 @@
     <div class="row">
         <div class="col-md-3">
             <div class="form-group">
-                <label for="cliente">Cliente</label> {{$cliente}}
+                <label for="cliente">Cliente</label>
                 <select class="form-control" wire:model="cliente">
                     {{-- Selección de cliente --}}
                     <option value="">--Selecciona al cliente--</option>

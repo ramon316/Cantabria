@@ -28,7 +28,7 @@ class CotizacionController extends Controller
     {
         $this->middleware('auth');
     }
-    
+
     public function index()
     {
         //
@@ -47,7 +47,7 @@ class CotizacionController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {        
+    {
         /**Retornmamos la vista*/
         $clientes = cliente::select('nombre','id')->get();
         return view('cotizacion.create')->with('clientes',$clientes);
@@ -79,7 +79,6 @@ class CotizacionController extends Controller
 
         cotizacion::create([
             'cliente_id'            =>$request['cliente'],
-            'user_id'               =>auth()->user()->id,
             'title'                 =>$request['evento'],
             'horas'                 =>$request['horas'],
             'start'                 =>$request['start'],
@@ -89,10 +88,10 @@ class CotizacionController extends Controller
             'created_at'            =>date('Y-m-d H:i:s'),
             'updated_at'            =>date('Y-m-d H:i:s'),
         ]);
-        
+
         $registroNuevo = cotizacion::latest('id')->first('id');
 
-      
+
         flash()->addSuccess('Se ha guardado la cotización.');
 
         return back();
@@ -117,7 +116,7 @@ class CotizacionController extends Controller
 
         /* Obtenemos el costo del evento */
         $costoCotizacion = $this->costoCotizacion($cotizacion);
-        
+
         return view('cotizacion.show')
         ->with('servicios',$servicios)
         ->with('cotizacion',$cotizacion)

@@ -21,5 +21,5 @@
 @stop
 
 @section('js')
-    <script src="{{ asset('js/evento.js') }}"></script>
+
 @stop

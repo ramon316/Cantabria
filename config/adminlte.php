@@ -334,6 +334,12 @@ return [
             'can'           =>  'reports.index',
         ],
         [
+            'text'        => 'Actividades',
+            'url'         => '/logactivity',
+            'icon'        => 'fas fa-clipboard',
+            'can'           =>  'logactivity.index',
+        ],
+        [
             'text'        => 'Portada',
             'icon'        => 'far fa-address-book',
             'can'           =>  'reports.index',

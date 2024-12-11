@@ -1,11 +1,8 @@
 <?php
+namespace Database\Seeders;
 
 use App\cliente;
-use App\User;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
 
 class ClienteSeeder extends Seeder
 {
@@ -16,9 +13,11 @@ class ClienteSeeder extends Seeder
      */
     public function run()
     {
+
+        cliente::factory()->count(10)->create();
         //
         //Generamos un seder para el usuario
-        cliente::create([
+        /* cliente::create([
             'nombre'=>'Evelin Acosta',
             'telefono'=>'6141234567',
             'email'=>'evelin@hotmail.com',
@@ -26,7 +25,7 @@ class ClienteSeeder extends Seeder
             'numero'=>'7799',
             'colonia'=>'Potreros',
             'cp'=>'31000',
-            'user_id'=>'1',
+            'user_id'=>1,
             'created_at'=>date('Y-m-d H:i:s'),
             'updated_at'=>date('Y-m-d H:i:s'),
         ]);
@@ -39,7 +38,7 @@ class ClienteSeeder extends Seeder
             'numero'=>'1302',
             'colonia'=>'Santo niño',
             'cp'=>'31200',
-            'user_id'=>'24',
+            'user_id'=>'1',
             'created_at'=>date('Y-m-d H:i:s'),
             'updated_at'=>date('Y-m-d H:i:s'),
         ]);
@@ -52,7 +51,7 @@ class ClienteSeeder extends Seeder
             'numero'=>'9723',
             'colonia'=>'Residencial Universidad',
             'cp'=>'31125',
-            'user_id'=>'24',
+            'user_id'=>'1',
             'created_at'=>date('Y-m-d H:i:s'),
             'updated_at'=>date('Y-m-d H:i:s'),
         ]);
@@ -65,9 +64,9 @@ class ClienteSeeder extends Seeder
             'numero'=>'2012',
             'colonia'=>'Residencial Cumbres',
             'cp'=>'31216',
-            'user_id'=>'24',
+            'user_id'=>'1',
             'created_at'=>date('Y-m-d H:i:s'),
             'updated_at'=>date('Y-m-d H:i:s'),
-        ]);
+        ]); */
     }
 }

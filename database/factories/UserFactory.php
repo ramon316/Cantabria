@@ -17,6 +17,7 @@ class UserFactory extends Factory
     {
         return [
             'name'  =>  $this->faker->name,
+            'color' =>  '#cb3414',
             'email' =>  $this->faker->email,
             'password'  =>  $this->faker->password,
             'created_at'    =>  $this->faker->dateTime,

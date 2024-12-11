@@ -9,9 +9,14 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
+/* Spatie Activity Log */
+use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\Activitylog\LogOptions;
+
 class evento extends Model
 {
     use Notifiable;
+    use LogsActivity;
 
     // Define los colores que quieres usar
     const COLOR_EMPRESARIAL = '#FF0000'; // Rojo
@@ -54,6 +59,7 @@ class evento extends Model
         parent::boot();
         static::creating(function($evento){
            $evento->setColorBaseOnTitle();
+           /* $evento->user_id = auth()->id(); */
 
         });
 
@@ -72,6 +78,25 @@ class evento extends Model
         else {
             $this->color = "008f39";
         }
+    }
+
+    /* Spatie Activity Log */
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+        ->logOnly(['cliente.nombre','user.name'])
+        ->useLogName('Eventos')
+        ->setDescriptionForEvent(function(string $eventName){
+            if ($eventName === 'created') {
+                return "Creación de cliente";
+            }elseif ($eventName === 'updated') {
+                return "Actualización de cliente";
+            } else{
+                return "Eliminación de cliente";
+            }
+        })
+        ->logOnlyDirty();
+        // Chain fluent methods for configuration options
     }
 
     public function cliente()
@@ -136,7 +161,9 @@ class evento extends Model
         return $this->belongsToMany(floralbase::class)->withPivot('napkins','plates','amount');
     }
 
-    /* Get attributes */
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
 
 
 }

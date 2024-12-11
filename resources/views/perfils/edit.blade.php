@@ -56,11 +56,10 @@
                 <div class="mt-4">
                     <p>Imagen actual:</p>
                     @if(Auth::user()?->perfil->imagen)
-                        {{-- <img src="{{ asset('upload-perfiles') . '/' . Auth::user()->perfil->imagen}}" style="width: 300px"> --}}
-
                         <img src="{{ asset($perfil->url_imagen)}}" alt="" width="300">
                     @else
-                        <img src="{{ asset('upload-perfiles') . '/' . 'default.png'}}" style="width: 300px">
+                        <img src="{{ asset('storage/perfils/default.png')}}" style="width: 300px">
+                        <span>Esta es una imagen predeterminada</span>
                     @endif
                 </div>
                 @error('imagen')

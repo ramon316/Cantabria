@@ -84,31 +84,41 @@ class PerfilController extends Controller
      */
     public function update(Request $request, Perfil $perfil)
     {
-        /* dd($request->all()); */
-        /**Validamos la información
-         * En el nombre estamos que sea unico pero que no sea el mismo que editamos
-        */
+
+        /* get the user */
+        $user = Auth::user();
+        $perfil = $user->perfil;
 
         $this->validate($request,[
             'nombre'    => ['required','min:8','unique:users,name,'. auth()->user()->id,],
-            'telefono'  =>  'numeric|digits:10',
-            'imagen'    =>  'image|max:2048',
+            'telefono'  =>  'nullable|string|max:10|unique:perfils,telefono,' . auth()->user()->id,
+            'imagen'    =>  'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        /* Eliminamos la imagen si existe*/
-        if (!empty($perfil->imagen) && $request->imagen) {
-            $flag = Storage::delete($perfil->imagen);
-            $path = $request->imagen->store('upload-perfiles');
-            $perfil->imagen = $path;
+        if ($request->has('nombre')) {
+            $user->name = $request->nombre;
+        }
+
+        if ($request->has('telefono')) {
+           $perfil->telefono = $request->telefono;
+        }
+
+        if ($request->has('imagen')) {
+            /* Verificamos si tiene imagen  */
+           if (!empty($perfil->imagen)) {
+            Storage::delete($perfil->imagen);
+           }
+           $path = $request->imagen->store('perfils');
+           $perfil->imagen = $path;
+        }
+
+        if ($perfil->isDirty()) {
             $perfil->save();
         }
 
-        if ($request->nombre) {
-            $user = User::find(auth()->user()->id);
-            $user->name = $request->nombre;
+        if ($user->isDirty()) {
             $user->save();
         }
-
 
         flash('Se actualizo el perfil');
         return back();

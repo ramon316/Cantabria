@@ -5,7 +5,6 @@ namespace App\Http\Livewire;
 use App\cliente;
 use App\cotizacion;
 use Livewire\Component;
-use Illuminate\Support\Facades\Auth;
 
 class CreateQuoter extends Component
 {
@@ -56,14 +55,15 @@ class CreateQuoter extends Component
     public function save(){
 
         $this->validate();
+
           $cotizacion =  cotizacion::create([
             'cliente_id' => $this->cliente,
-            'user_id' => Auth::user()->id,
             'title' => $this->title,
             'subtitle' => $this->subtitle,
             'start' => $this->start,
             'end' => $this->end,
             'invitados' => $this->invitados,
+            'user_id' => Auth()->user()->id
         ]);
 
         return redirect('/cotizacion/'.$cotizacion->id);

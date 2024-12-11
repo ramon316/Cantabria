@@ -128,7 +128,6 @@ class EventoController extends Controller
         /**Agregamos el evento */
         $evento = Evento::create([
             'cliente_id'            => $request['cliente'],
-            'user_id'               => auth()->user()->id,
             'title'                 => $request['evento'],
             'start'                 => $request['start'],
             'end'                   => $request['end'],
@@ -142,7 +141,7 @@ class EventoController extends Controller
         //Podemos hacerlo con modelo pero aun no le entiendo a eso
         /**Redireccionamos a home*/
         flash('Evento creado con éxito');
-        return back();
+        return redirect()->route('eventos.index');
     }
 
     /**

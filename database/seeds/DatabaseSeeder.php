@@ -1,20 +1,21 @@
 <?php
 
-use Database\Seeders\AcountSeeder;
-use Database\Seeders\ChairSeeder;
-use Database\Seeders\ChecklistSeeder;
+use Illuminate\Database\Seeder;
 use Database\Seeders\daysSeeder;
+use Database\Seeders\MeetSeeder;
+use Database\Seeders\RoleSeeder;
+use Database\Seeders\tipoSeeder;
+use Database\Seeders\ChairSeeder;
+use Database\Seeders\AcountSeeder;
+use Database\Seeders\ReasonSeeder;
+use Database\Seeders\ClienteSeeder;
+use Database\Seeders\ChecklistSeeder;
+use Database\Seeders\floralbaseSeeder;
+use Database\Seeders\tableclothSeeder;
+use Database\Seeders\RecommendationSeeder;
+use Database\Seeders\tableclothbaseSeeder;
 use Database\Seeders\event_tablecloth_seeder;
 use Database\Seeders\event_tableclothbase_seeder;
-use Database\Seeders\floralbaseSeeder;
-use Database\Seeders\MeetSeeder;
-use Database\Seeders\ReasonSeeder;
-use Database\Seeders\RecommendationSeeder;
-use Database\Seeders\RoleSeeder;
-use Database\Seeders\tableclothbaseSeeder;
-use Database\Seeders\tableclothSeeder;
-use Database\Seeders\tipoSeeder;
-use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -42,7 +43,7 @@ class DatabaseSeeder extends Seeder
         $this->call(tipoSeeder::class);
         $this->call(daysSeeder::class);
         $this->call(ReasonSeeder::class);
-        /* $this->call(MeetSeeder::class); */
+        $this->call(MeetSeeder::class);
         /* Mandamos llamar el roles */
     }
 }

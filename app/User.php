@@ -2,13 +2,14 @@
 
 namespace App;
 
+use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\Auth;
+use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Facades\Auth;
-use Spatie\Permission\Models\Role;
-use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
@@ -103,7 +104,8 @@ class User extends Authenticatable
             return asset(Auth::user()->perfil->url_imagen);
         }
         else{
-            return asset('upload-perfiles') . '/' . 'default.png';
+            /* return asset('perfils') . '/' . 'default.png'; */
+           return Storage::url('perfils/default.png');
         }
     }
     /**Recuperamos el rol del usuario */
