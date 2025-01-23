@@ -123,6 +123,8 @@ class RoleSeeder extends Seeder
                             'description'=>'Crear otro servicio'])->syncRoles([$Role1]); */
         Permission::create(['name' => 'servicios.store',
                             'description'=>'Guardar servicios'])->syncRoles([$Role1]);
+        Permission::create(['name' => 'servicios.edit',
+                            'description'=>'Editar servicios'])->syncRoles([$Role1]);
 
         /* evento - servicio */
         Permission::create(['name' => 'eventoservicios.create',

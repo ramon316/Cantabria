@@ -135,6 +135,8 @@ Route::get('/servicios/decoracion/create',[ServicioController::class,'create'])-
 Route::get('/servicios/animacion/create',[ServicioController::class,'create'])->middleware('can:animacion.create')->name('animacion.create');
 Route::get('/servicios/otroservicio/create',[ServicioController::class,'create'])->middleware('can:otroservicio.create')->name('otroservicio.create'); */
 Route::post('/servicio',[ServicioController::class,'store'])->middleware('can:servicios.store')->name('servicios.store');
+route::get('/servicios/{servicio}/edit',[ServicioController::class,'edit'])->name('servicios.edit');
+Route::put('/servicios/{servicio}',[ServicioController::class,'update'])->name('servicios.update');
 
 /* Eventos servicios */
 Route::post('/eventoservicios',[EventoServicioController::class,'store'])->middleware('can:eventoservicios.store')->name('eventoservicios.store');
@@ -212,7 +214,7 @@ Route::get('/logactivity', [LogActivityController::class, 'index'])->middleware(
 Route::get('/clear-cache', function() {
     $exitCode = Artisan::call('config:clear');
     $exitCode = Artisan::call('cache:clear');
-    
+
     $exitCode = Artisan::call('config:cache');
     return 'DONE'; //Return anything
 });

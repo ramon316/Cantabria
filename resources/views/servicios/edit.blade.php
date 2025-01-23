@@ -5,7 +5,7 @@
 @section('content_header')
 <div class="container">
     <a class="btn btn-info" href="{{route('servicios.index')}}" role="button">Regresar</a>
-    <h1 class="text-center">Agregar otros servicios</h1>
+    <h1 class="text-center">Editar servicios</h1>
 </div>
 @stop
 
@@ -13,8 +13,9 @@
 <div class="container">
     <div class="app">
 
-        <form method="POST" action="{{ route('servicios.store') }}" novalidate>
+        <form method="POST" action="{{ route('servicios.update', ['servicio'=> $servicio->id])}}" novalidate>
             @csrf
+            @method('PUT')
             <div class="row">
 
                 {{-- col 5 --}}
@@ -22,7 +23,7 @@
                     <div class="form-group">
                         <label for="nombre">Nombre:</label>
                         <input type="text" class="form-control @error('nombre') is-invalid @enderror" name="nombre"
-                            id="nombre" aria-describedby="helpNombre" placeholder="" value="{{old('nombre')}}">
+                            id="nombre" aria-describedby="helpNombre" placeholder="" value="{{$servicio->nombre}}">
                         @error('nombre')
                         <div class="invalid-feedback d-block" role="alert"> {{$message}}</div>
                         @enderror
@@ -30,24 +31,7 @@
                             identificará</small>
                     </div>
                 </div>
-                {{-- col 5 --}}
 
-                {{--Col 3 --}}
-                {{-- <div class="col-md-3">
-                    <div class="form-group">
-                        <label for="">Días del servicio</label>
-                        <select class="form-control @error('dias') is-invalid @enderror" name="dias"
-                            value="{{old('dias')}}">
-                            <option value="">--Selecciona los días--</option>
-                            @foreach($dias as $dia)
-                            <option value="{{$dia->id}}">{{$dia->days}}</option>
-                            @endforeach
-                        </select>
-                        <small id="helpNombre" class="form-text text-muted">Selecciona los día en el que es efectivo el
-                            servicio</small>
-                    </div>
-                </div> --}}
-                {{-- Col 3 --}}
 
                 {{-- Col 3 --}}
                 <div class="col-md-3">
@@ -57,7 +41,7 @@
                             value="{{old('año')}}">
                             <option value="">--Selecciona el año--</option>
                             @foreach ($años as $año)
-                            <option value="{{$año}}">{{$año}}</option>
+                            <option value="{{$año}}" {{old('año', $servicio->año ?? "") == $año ? 'selected': ''}}>{{$año}}</option>
                             @endforeach
                         </select>
                         <small id="helpaño" class="form-text text-muted">Selecciona el año en el que es efectivo el
@@ -68,7 +52,7 @@
                     <div class="form-group">
                         <label for="costo">Costo en pesos:</label>
                         <input type="number" class="form-control @error('costo') is-invalid @enderror" name="costo"
-                            id="costo" value="{{old('costo')}}">
+                            id="costo" value="{{$servicio->costo}}" disabled>
                         @error('costo')
                         <div class="invalid-feedback d-block" role="alert"> {{$message}}</div>
                         @enderror
@@ -79,44 +63,16 @@
             </div>
 
             <div class="row">
-
-
-                {{-- <div class="col-md-3">
-                    <div class="form-group">
-                        <label for="ganancia">Ganancia en pesos:</label>
-                        <input type="number" class="form-control @error('ganancia') is-invalid @enderror"
-                            name="ganancia" id="ganancia" value="{{old('ganancia')}}">
-                        @error('ganancia')
-                        <div class="invalid-feedback d-block" role="alert"> {{$message}}</div>
-                        @enderror
-                        <small id="helpNombre" class="form-text text-muted">Ingresa la ganancia de este servicio</small>
-                    </div>
-                </div> --}}
-                {{-- <div class="col-md-3">
-                    <div class="form-group">
-                        <label for="invitados">Cantidad de invitados:</label>
-                        <input type="number" class="form-control @error('invitados') is-invalid @enderror"
-                            name="invitados" id="invitados" value="{{old('invitados')}}">
-                        @error('invitados')
-                        <div class="invalid-feedback d-block" role="alert"> {{$message}}</div>
-                        @enderror
-                        <small id="helpmedida" class="form-text text-muted">Ingresa la cantidad de invitados para el que
-                            aplicara esta decoración, si es para todo tipo ingresa un cero</small>
-                    </div>
-                </div> --}}
-            </div>
-
-            <div class="row">
                 <div class="col-md-3">
                     <div class="form-group">
                         <label for="category">Categoria del servicio:</label>
                         <select class="form-control @error('category') is-invalid @enderror" name="category"
                             value="{{old('category')}}">
                             <option value="">--Selecciona una categoría--</option>
-                            <option value="alimentos">Alimentos</option>
-                            <option value="animacion">Animacion</option>
-                            <option value="decoracion">Renta y Decoracion</option>
-                            <option value="otro">Otro</option>
+                            <option value="alimentos" {{old('category',$servicio->categoria ?? "")== 'alimentos' ? 'selected' : ''}}>Alimentos</option>
+                            <option value="animacion" {{old('category',$servicio->categoria ?? "")== 'animacion' ? 'selected' : ''}}>Animación</option>
+                            <option value="decoracion" {{old('category',$servicio->categoria ?? "")== 'decoracion' ? 'selected' : ''}}>Renta y Decoracion</option>
+                            <option value="otro" {{old('category',$servicio->categoria ?? "")== 'otros' ? 'selected' : ''}}>Otro</option>
                         </select>
                         <small id="helpaño" class="form-text text-muted">Selecciona el año en el que es efectivo el
                             servicio</small>

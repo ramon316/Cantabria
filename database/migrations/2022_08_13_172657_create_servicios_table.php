@@ -18,7 +18,6 @@ class CreateServiciosTable extends Migration
             $table->string('nombre');
             $table->double('costo');
             $table->integer('invitados')->nullable();
-            $table->text('descripcion')->nullable();
             $table->string('categoria')->nullable();
             $table->integer('dias');
             $table->integer('año');

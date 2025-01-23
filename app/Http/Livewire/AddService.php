@@ -76,6 +76,7 @@ class AddService extends Component
         })
         ->orderBy('nombre','asc')
         ->where('nombre','like','%'.$this->search . '%')
+        ->where('año', '=', $this->evento->start->year)
         ->paginate(6);
 
         /* $services = servicio::where('nombre', 'LIKE', "%$this->search%")

@@ -33,12 +33,10 @@ class ServicioController extends Controller
 
         /**Generamos los años, convertimos a numero la fecha actual pero solo obtenemos el año*/
         $años = $this->añosTrait();
-        /**Generamos días  */
-        $dias = $this->diasTrait();
+
 
         return view('servicios.create')
-            ->with('años', $años)
-            ->with('dias', $dias);
+            ->with('años', $años);
     }
 
     /**
@@ -64,14 +62,10 @@ class ServicioController extends Controller
 
         servicio::create([
             'nombre'    =>  $request->nombre,
-            'porcion'   =>   $request->porcion,
-            'tipo'      =>  $request->tipo,
-            'proteina'  =>  $request->proteina,
             'costo'     =>  $request->costo,
-            'evento'    =>  $request->evento,
             'invitados' =>  $request->invitados,
             'descripcion'    =>  $request->descripcion,
-            'servicio'      =>  $request->servicio,
+            'categoria'      =>  $request->category,
             'dias'          =>  $request->dias,
             'año'           =>  $request->año,
         ]);
@@ -99,7 +93,11 @@ class ServicioController extends Controller
      */
     public function edit(servicio $servicio)
     {
-        //
+        /**Generamos los años, convertimos a numero la fecha actual pero solo obtenemos el año*/
+        $años = $this->añosTrait();
+
+        return view('servicios.edit')->with('servicio', $servicio)
+                                        ->with('años', $años);
     }
 
     /**
@@ -111,7 +109,20 @@ class ServicioController extends Controller
      */
     public function update(Request $request, servicio $servicio)
     {
-        //
+        $this->validate($request, [
+            'nombre'    => 'required',
+            'año'       =>  'required',
+            'category'  =>  'required'
+        ]);
+
+        $servicio->update([
+            'nombre'    =>  $request->nombre,
+            'categoria'      =>  $request->category,
+            'año'           =>  $request->año,
+        ]);
+
+        flash('Se actualizo el servicio', 'success');
+        return back();
     }
 
     /**
