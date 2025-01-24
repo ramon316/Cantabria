@@ -15,17 +15,9 @@ class AcountSeeder extends Seeder
     public function run()
     {
         cuenta::create([
-            'banco' =>  'BBVA',
-            'cuenta'    =>  'Azul',
-            'clabe'     =>  '123456789',
-            'moneda'    =>  'Pesos',
-            'amount'    =>  null,
-        ]);
-
-        cuenta::create([
-            'banco' =>  'Caja Chica',
-            'cuenta'    =>  'Caja Chica',
-            'clabe'     =>  '123456789',
+            'banco' =>  'Efectivo',
+            'cuenta'    =>  'Efectivo',
+            'number'     =>  '0',
             'moneda'    =>  'Pesos',
             'amount'    =>  null,
         ]);

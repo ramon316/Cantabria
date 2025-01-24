@@ -15,7 +15,7 @@
         <div class ="col-md-4">
             <div class="form-group">
               <label for="banco">Banco</label>
-              <input type="text" name="banco" id="banco" class="form-control 
+              <input type="text" name="banco" id="banco" class="form-control
               @error('banco')
                   is-invalid
               @enderror" placeholder="" aria-describedby="helpId"
@@ -30,11 +30,11 @@
             <div class="form-group">
             <label for="cuenta">Nombre de la Cuenta</label>
             <input type="text" name="cuenta" id="cuenta"
-            value="{{old('cuenta')}}" 
-            class="form-control 
+            value="{{old('cuenta')}}"
+            class="form-control
             @error('cuenta')
                 is-invalid
-            @enderror" 
+            @enderror"
             placeholder="" aria-describedby="helpId">
             @error('cuenta')
                 <div class="invalid-feedback" role="alert">{{$message}}</div>
@@ -44,18 +44,18 @@
         </div>
         <div class="col-md-4">
             <div class="form-group">
-            <label for="clabe">Clabe</label>
-            <input type="text" name="clabe" id="clabe"
-            value="{{old('clabe')}}"
+            <label for="number">Número</label>
+            <input type="text" name="number" id="number"
+            value="{{old('number')}}"
             class="form-control
-            @error('clabe')
+            @error('number')
                 is-invalid
-            @enderror" 
+            @enderror"
             placeholder="" aria-describedby="helpId">
-            @error('clabe')
+            @error('number')
                 <div class="invalid-feedback" role="alert">{{$message}}</div>
             @enderror
-            <small id="helpId" class="text-muted">Ingresa el numero Clabe de la cuenta</small>
+            <small id="helpId" class="text-muted">Ingresa el numero de la cuenta</small>
             </div>
         </div>
     </div>
@@ -78,13 +78,13 @@
 <div>
 
 
-<div class="mx-auto bg-white p-3">  
+<div class="mx-auto bg-white p-3">
 <table class="table">
     <thead class="bg-primary text-light text-center">
         <tr>
             <th>Banco</th>
             <th>Cuentas</th>
-            <th>Clabe</th>
+            <th>Número</th>
             <th>Moneda</th>
             <th>Acciones</th>
         </tr>
@@ -94,7 +94,7 @@
         <tr class="text-center">
             <td>{{$cuenta->banco}}</td>
             <td>{{$cuenta->cuenta}}</td>
-            <td>{{$cuenta->clabe}}</td>
+            <td>{{$cuenta->number}}</td>
             <td>{{$cuenta->moneda}}</td>
         </tr>
         @endforeach
@@ -106,7 +106,7 @@
 
 @section('css')
     <link rel="stylesheet" href="/css/admin_custom.css">
-    
+
 @stop
 
 @section('js')

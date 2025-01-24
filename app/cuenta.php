@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class cuenta extends Model
 {
     //
-    protected $fillable = ['banco', 'cuenta', 'clabe', 'moneda'];
+    protected $fillable = ['banco', 'cuenta', 'number', 'moneda'];
 
     /* ocultamos la informaicón solo el nombre de la cuenta */
     protected $visible = ['cuenta'];

@@ -40,25 +40,27 @@ class CuentaController extends Controller
      */
     public function store(Request $request)
     {
-    
+        //dd($request->number);
+
         $this->validate($request,[
             'banco'=>'required|string',
             'cuenta'    => 'required|string',
-            'clabe' =>  'required|size:18',
+            'number' =>  'required|numeric|digits:16',
             'moneda'    =>  'required',
+        ],[
+            'number.required' => 'El campo número es requerido',
+            'number.size' => 'El campo número debe tener 16 dígitos',
         ]);
 
         //insertamos los valores
-        DB::table('cuentas')->insert([
-            'banco'     =>      $request['banco'],
-            'cuenta'    =>      $request['cuenta'],
-            'clabe'     =>      $request['clabe'],
-            'moneda'    =>      $request['moneda'],
-            'created_at'    =>  date('Y-m-d H:i:s'),
-            'updated_at'    =>  date('Y-m-d H:i:s'),
+        $account = cuenta::create([
+            'banco' => $request->banco,
+            'cuenta' => $request->cuenta,
+            'number' => $request->number,
+            'moneda' => $request->moneda,
         ]);
 
-        return redirect()->route('cuentas.index');
+        return back();
 
     }
 

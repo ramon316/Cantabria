@@ -17,7 +17,7 @@ class CreateCuentasTable extends Migration
             $table->id();
             $table->string('banco');
             $table->string('cuenta');
-            $table->string('clabe',18);
+            $table->string('number',16);
             $table->string('moneda');
             $table->double('amount')->nullable();
             $table->timestamps();
