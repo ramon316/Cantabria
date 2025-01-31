@@ -41,11 +41,10 @@ class DiscountController extends Controller
 
         $request->validate(
             [
-                'amount'    =>  'required|numeric|max:10000|min:1',
+                'amount'    =>  'required|numeric|min:1',
             ],
             [
                 'required'  =>  'El campo descuento es obligatorio',
-                'max'   =>  'El monto máximo de descuento es $10,000.00 pesos',
             ],
         );
 

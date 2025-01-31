@@ -4,6 +4,7 @@
 
 @section('content_header')
 <div class="container">
+    <a class="btn btn-info" href="{{route('eventos.show',['evento'=>$evento->id])}}">Regresar</a>
     <h1 class="text-center">Agregar descuentos</h1>
 </div>
 @stop
@@ -24,7 +25,7 @@
                         @error('amount')
                         <div class="invalid-feedback d-block" role="alert">{{$message}}</div>
                         @enderror
-                        <small id="helpId" class="form-text text-muted mb-2">Ingresa solo números, rango de $1.00 a $10,000.00</small>
+                        <small id="helpId" class="form-text text-muted mb-2">Ingresa solo valores numéricos</small>
                         <input type="hidden" value="{{$evento->id}}" name="evento">
                         <button type="submit" class="btn btn-primary">Guardar</button>
                     </form>
