@@ -165,5 +165,9 @@ class evento extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function light(){
+        return $this->hasOne(Lights::class);
+    }
+
 
 }

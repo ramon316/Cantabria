@@ -4,13 +4,14 @@
 
 @section('content_header')
 <div class="row">
-    <div class="col-md-8">
+    <div class="col-md-1">
+        <a class="btn btn-info" href="{{ route('eventos.index')}}" role="button">Regresar</a>
+    </div>
+    <div class="col-md-7">
         <h1 class="text-center">Evento de {{$evento->cliente->nombre}}</h1>
     </div>
     <div class="col-md-4">
-        <div class="form-groupform-check">
             @livewire('status-event', ['evento' => $evento], key($evento->id))
-        </div>
     </div>
 </div>
 @stop
@@ -46,7 +47,7 @@
                             <strong>Total a pagar:</strong>$@dinero($total) pesos<br>
                             @endif
             </div>
-            <div class="col-md-3 bg-white shadow p-3 mb-5  rounded">
+            {{-- <div class="col-md-3 bg-white shadow p-3 mb-5  rounded">
                 <h4>Check List</h4>
 
                 <button type="button" class="btn
@@ -95,7 +96,6 @@
                 d-block w-100 inline mb-2">Degustación
                 </button>
 
-                {{-- Agregar aqui una excepción tiene que tener servicio y verificar si ya se registro --}}
                 @if ($banquetExist == true)
                 <button type="button" class="btn
                     @if ($evento->banquet()->count() > 0)
@@ -108,11 +108,10 @@
                 @endif
 
 
-            </div>
-        </div>
+            </div> --}}
+
 
         {{-- Botones de acciones --}}
-        <div class="row justify-content-around">
             <div class="col-md-3 bg-white shadow p-4 mb-5 rounded">
                 <h4 class="text-center">Acciones</h4>
 
@@ -185,7 +184,8 @@
                 @endif
 
             </div>
-
+        </div>
+        <div class="row justify-content-around">
             @if(count($evento->servicio))
             <div class="col-md-6 bg-white shadow p-3 mb-5 rounded text-center">
                 {{-- Realicamos el listado de los servicios --}}

@@ -17,11 +17,12 @@
 
 @section('content')
     @livewire('add-tablecloth',['evento'=>$evento])
+    @livewire('add-lights',['evento'=>$evento])
 @stop
 
 @section('css')
     <link rel="stylesheet" href="/css/admin_custom.css">
-    
+
 @stop
 
 @section('js')
