@@ -109,6 +109,18 @@
                     @enderror
                 </div>
             </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="">Nombre festejado</label>
+                    <input type="text" class="form-control" wire:model.defer="name">
+                    <small id="helpId" class="form-text text-muted">Ingresa el nombre del festejado(s)</small>
+                    @error('name')
+                    <span class="invalid-feedback d-block" role="alert">
+                        {{$message}}
+                    </span>
+                    @enderror
+                </div>
+            </div>
         </div>
 
         <div class="row">

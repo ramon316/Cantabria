@@ -92,6 +92,11 @@ class User extends Authenticatable
         return $this->hasMany<(meet::class);
     }
 
+    public function pagos()
+    {
+        return $this->hasMany(pago::class);
+    }
+
     /* public function role()
     {
         return $this->hasOne(Role::class);

@@ -20,6 +20,7 @@ class CreateEvent extends Component
     public $empresariales = ['Posada', 'Aniversario','Capacitación','Conferencia','Graduación','otros'];
     public $sociales = ['Boda','XV años','Aniversario','Graduación','otros'];
     public $subtitles = [];
+    public $name;
 
     /* Rules */
     protected $rules = [
@@ -65,6 +66,7 @@ class CreateEvent extends Component
             'start' => $this->start,
             'end' => $this->end,
             'invitados' => $this->invitados,
+            'comment' => $this->name,
         ]);
 
         /* clean forms */

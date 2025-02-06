@@ -7,11 +7,11 @@ use Livewire\Component;
 
 class PaymentsList extends Component
 {
-
+    public $evento;
 
     public function render()
     {
-        $payments = pago::all();
+        $payments = pago::where('evento_id', $this->evento->id)->get();
         return view('livewire.payments-list')->with('payments', $payments);
     }
 

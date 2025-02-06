@@ -26,6 +26,7 @@ class CreateEventosTable extends Migration
             $table->string('layout')->nullable();
             $table->dateTime('contract')->nullable();
             $table->dateTime('closed_at')->nullable();
+            $table->string('comment')->nullable();
             $table->timestamps();
         });
     }

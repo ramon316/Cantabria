@@ -13,6 +13,8 @@
                         <th>Tipo</th>
                         <th>Cuenta</th>
                         <th>Monto</th>
+                        <th>Fecha</th>
+                        <th>Usuario</th>
                         <th>Acciones</th>
                     </tr>
                     @foreach ($payments as $payment)
@@ -20,6 +22,8 @@
                         <td>{{$payment->tipo}}</td>
                         <td>{{$payment->cuenta->banco}}/{{$payment->cuenta->cuenta}}</td>
                         <td>$@dinero($payment->monto)</td>
+                        <td>{{$payment->created_at->format('d-m-Y')}}</td>
+                        <td>{{$payment->user->name}}</td>
                         <td class="text-center">
                             <i class="fas fa-trash-alt" wire:click="delete({{$payment->id}})"></i>
                         </td>

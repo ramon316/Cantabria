@@ -77,5 +77,12 @@ class tableclothbaseSeeder extends Seeder
             'tabletype' =>  'Imperial',
             'status'    =>  'bueno',
         ]);
+
+        Tableclothbase::create([
+            'color' =>  'N/A',
+            'amount'    =>  '10',
+            'tabletype' =>  'Redonda',
+            'status'    =>  'bueno',
+        ]);
     }
 }

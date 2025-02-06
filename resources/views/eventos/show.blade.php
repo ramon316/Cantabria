@@ -11,7 +11,7 @@
         <h1 class="text-center">Evento de {{$evento->cliente->nombre}}</h1>
     </div>
     <div class="col-md-4">
-            @livewire('status-event', ['evento' => $evento], key($evento->id))
+        @livewire('status-event', ['evento' => $evento], key($evento->id))
     </div>
 </div>
 @stop
@@ -23,29 +23,30 @@
             <div class="col-md-3 bg-white shadow p-4 mb-5 rounded">
                 <h4>Información del cliente</h4>
                 <strong>Cliente: </strong>{{$evento->cliente->nombre}}<br>
-                <strong>Teléfino: </strong>{{$evento->cliente->telefono}}<br>
+                <strong>Teléfono: </strong>{{$evento->cliente->telefono}}<br>
                 <strong>Email: </strong>{{$evento->cliente->email}}<br>
                 <strong>Dirección: </strong>{{$evento->cliente->calle}} #{{$evento->cliente->numero}}<br>
                 {{$evento->cliente->colonia}} C.P. {{$evento->cliente->cp}}<br>
+                <strong>Festejado(s):</strong>{{$evento->comment}}<br>
             </div>
             <div class="col-md-3 bg-white shadow p-3 mb-5  rounded">
                 <h4>Información del evento</h4>
                 <strong>Tipo: </strong>{{$evento->title}}<br>
                 <strong>Subtipo: </strong>{{$evento->subtitle}}<br>
-                <strong>Horas: </strong>{{$evento->horas}} horas<br>
+                <strong>Horas: </strong>{{$evento->time}}<br>
                 <strong>Fecha: </strong>{{$evento->start->format('d-m-Y')}}<br>
                 <strong>Invitados: </strong>{{$evento->invitados}}<br>
                 <strong>Precio evento: </strong>$@dinero($costoEvento) pesos<br>
+                @if ($discount<>0)
+                <strong>Descuento:</strong>$@dinero($discount) pesos<br>
+                <strong>Total a pagar:</strong>$@dinero($total) pesos<br>
+                @endif
                 @if ($abonoEvento <> 0)
                     <strong>Abonos:</strong> $@dinero($abonoEvento) pesos<br>
-                    @endif
-                    @if ($diferenciaEvento <> 0 )
-                        <strong>Restante:</strong> $@dinero($diferenciaEvento) pesos<br>
-                        @endif
-                        @if ($discount<>0)
-                            <strong>Descuento:</strong>$@dinero($discount) pesos<br>
-                            <strong>Total a pagar:</strong>$@dinero($total) pesos<br>
-                            @endif
+                @endif
+                @if ($diferenciaEvento <> 0 )
+                    <strong>Saldo:</strong> $@dinero($diferenciaEvento) pesos<br>
+                @endif
             </div>
             {{-- <div class="col-md-3 bg-white shadow p-3 mb-5  rounded">
                 <h4>Check List</h4>
@@ -111,7 +112,7 @@
             </div> --}}
 
 
-        {{-- Botones de acciones --}}
+            {{-- Botones de acciones --}}
             <div class="col-md-3 bg-white shadow p-4 mb-5 rounded">
                 <h4 class="text-center">Acciones</h4>
 
@@ -192,7 +193,7 @@
                 <table class="table table-sm">
                     <thead>
                         <tr>
-                            <th>Nombre</th>
+                            <th>Nombre Servicios</th>
                             <th>Cantidad</th>
                             <th>Costo</th>
                             <th>Cortesía</th>
@@ -223,7 +224,7 @@
                 <table class="table table-sm">
                     <thead>
                         <tr>
-                            <th>Fecha</th>
+                            <th>Fecha Pago</th>
                             <th>Monto</th>
                             <th>Tipo</th>
                         </tr>

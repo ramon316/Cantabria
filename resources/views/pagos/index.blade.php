@@ -6,7 +6,7 @@
 <div class="container-fluid">
     <div class="row m-3 ">
       <div class="col-md-1">
-        <a  class="btn btn-success" href="{{route('eventos.show',['evento'=>$evento->id])}}">Regresar</a>
+        <a  class="btn btn-info" href="{{route('eventos.show',['evento'=>$evento->id])}}">Regresar</a>
       </div>
       <div class="col-md-11">
         <h1 class="text-center">Captura de pagos</h1>
@@ -102,7 +102,7 @@
                 </div>
             </div>
         </form>
-        @livewire('payments-list')
+        @livewire('payments-list',['evento'=>$evento])
     </div>
 </div>
 @stop

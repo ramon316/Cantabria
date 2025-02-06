@@ -40,7 +40,7 @@ class tableclothSeeder extends Seeder
             'name'  =>  'Lentejuela',
             'amount'    =>  '10',
             'tonality'  =>  'Plata',
-            'tabletype' =>  'redonda',
+            'tabletype' =>  'Redonda',
         ]);
 
         tablecloth::create([
@@ -152,7 +152,7 @@ class tableclothSeeder extends Seeder
             'tonality'  =>  'plata',
             'tabletype' =>  'Cuadrada',
         ]);
-    
+
         tablecloth::create([
             'name'  =>  'Liso',
             'amount'    =>  '10',
@@ -214,15 +214,157 @@ class tableclothSeeder extends Seeder
         tablecloth::create([
             'name'  =>  'Encaje',
             'amount'    =>  '10',
-            'tonality'  =>  'doreado',
+            'tonality'  =>  'dorado',
             'tabletype' =>  'Redonda',
+        ]);
+
+        tablecloth::create([
+            'name'  =>  'Rombo',
+            'amount'    =>  '12',
+            'tonality'  =>  'Dorado',
+            'tabletype' =>  'Imperial',
+        ]);
+
+        tablecloth::create([
+            'name'  =>  'Corrugado',
+            'amount'    =>  '10',
+            'tonality'  =>  'Dorado',
+            'tabletype' =>  'Imperial',
+        ]);
+
+        tablecloth::create([
+            'name'  =>  'Olas',
+            'amount'    =>  '13',
+            'tonality'  =>  'Dorado',
+            'tabletype' =>  'Imperial',
+        ]);
+
+        tablecloth::create([
+            'name'  =>  'Liso',
+            'amount'    =>  '10',
+            'tonality'  =>  'Dorado',
+            'tabletype' =>  'Imperial',
+        ]);
+
+
+        tablecloth::create([
+            'name'  =>  'Encaje',
+            'amount'    =>  '10',
+            'tonality'  =>  'dorado',
+            'tabletype' =>  'Imperial',
+        ]);
+
+        tablecloth::create([
+            'name'  =>  'Petalo',
+            'amount'    =>  '5',
+            'tonality'  =>  'dorado',
+            'tabletype' =>  'Imperial',
+        ]);
+
+
+        tablecloth::create([
+            'name'  =>  'Nube',
+            'amount'    =>  '5',
+            'tonality'  =>  'dorado',
+            'tabletype' =>  'Imperial',
+        ]);
+
+        tablecloth::create([
+            'name'  =>  'Rose gold',
+            'amount'    =>  '10',
+            'tonality'  =>  'dorado',
+            'tabletype' =>  'Imperial',
+        ]);
+
+
+        tablecloth::create([
+            'name'  =>  'Corrugado',
+            'amount'    =>  '10',
+            'tonality'  =>  'plata',
+            'tabletype' =>  'Imperial',
+        ]);
+
+
+        tablecloth::create([
+            'name'  =>  'Lentejuela',
+            'amount'    =>  '9',
+            'tonality'  =>  'plata',
+            'tabletype' =>  'Imperial',
+        ]);
+
+
+        tablecloth::create([
+            'name'  =>  'Encaje',
+            'amount'    =>  '10',
+            'tonality'  =>  'plata',
+            'tabletype' =>  'Imperial',
+        ]);
+
+        tablecloth::create([
+            'name'  =>  'Liso',
+            'amount'    =>  '10',
+            'tonality'  =>  'plata',
+            'tabletype' =>  'Imperial',
         ]);
 
         tablecloth::create([
             'name'  =>  'Lentejuela',
             'amount'    =>  '10',
+            'tonality'  =>  'ivory',
+            'tabletype' =>  'Imperial',
+        ]);
+
+        tablecloth::create([
+            'name'  =>  'Roseton',
+            'amount'    =>  '10',
+            'tonality'  =>  'ivory',
+            'tabletype' =>  'Imperial',
+        ]);
+
+        tablecloth::create([
+            'name'  =>  'Lineas',
+            'amount'    =>  '10',
+            'tonality'  =>  'ivory',
+            'tabletype' =>  'Imperial',
+        ]);
+
+
+        tablecloth::create([
+            'name'  =>  'Lineas de arena',
+            'amount'    =>  '10',
+            'tonality'  =>  'ivory',
+            'tabletype' =>  'Imperial',
+        ]);
+
+
+        tablecloth::create([
+            'name'  =>  'Lineas',
+            'amount'    =>  '11',
             'tonality'  =>  'negro',
             'tabletype' =>  'Imperial',
         ]);
+
+        tablecloth::create([
+            'name'  =>  'Lentejuela',
+            'amount'    =>  '12',
+            'tonality'  =>  'negro',
+            'tabletype' =>  'Imperial',
+        ]);
+
+        tablecloth::create([
+            'name'  =>  'Lentejuela',
+            'amount'    =>  '12',
+            'tonality'  =>  'Ivory',
+            'tabletype' =>  'Redonda',
+        ]);
+
+        tablecloth::create([
+            'name'  =>  'Corrugado',
+            'amount'    =>  '12',
+            'tonality'  =>  'Azul',
+            'tabletype' =>  'Redonda',
+        ]);
+
+
     }
 }

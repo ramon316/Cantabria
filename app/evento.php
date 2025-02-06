@@ -4,14 +4,15 @@ namespace App;
 
 use App\Tipo;
 
+use Illuminate\Support\Carbon;
+use Spatie\Activitylog\LogOptions;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Database\Eloquent\Casts\Attribute;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /* Spatie Activity Log */
 use Spatie\Activitylog\Traits\LogsActivity;
-use Spatie\Activitylog\LogOptions;
+use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class evento extends Model
 {
@@ -25,7 +26,7 @@ class evento extends Model
     protected $dates = ['start', 'end'];
 
     protected $fillable = [
-        'id', 'cliente_id', 'user_id', 'title', 'subtitle', 'horas', 'start', 'end', 'invitados', 'color', 'layout', 'contract', 'closed_at',
+        'id', 'cliente_id', 'user_id', 'title', 'subtitle', 'horas', 'start', 'end', 'invitados', 'color', 'layout', 'contract', 'closed_at', 'comment'
     ];
 
     protected $casts = [
@@ -97,6 +98,27 @@ class evento extends Model
         })
         ->logOnlyDirty();
         // Chain fluent methods for configuration options
+    }
+
+    /* New property for the time of the event */
+    public function getTimeAttribute()
+    {
+        $start = Carbon::parse($this->start);
+        $end = Carbon::parse($this->end);
+
+        $diff = $start->diff($end);
+
+        $hours = $diff->h;
+        $minutes = $diff->i;
+
+        if ($minutes <> 0) {
+            return "{$hours} horas y {$minutes} minutos";
+        }
+        else {
+            return "{$hours} horas";
+        }
+
+
     }
 
     public function cliente()
