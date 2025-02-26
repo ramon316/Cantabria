@@ -116,12 +116,12 @@
     <div class="fondo">
         <div class="pagina">{{-- Pagina 1 --}}
             <div class="row">
-                <label>En la ciudad de Chihuahua, estado de Chihuahua, a {{$fecha->fechaActual}}, comparece
-                    <strong>CANTABRIA EVENTOS Y SERVICIOS S.A. DE C.V.</strong> por medio de su apoderado legal
-                    <strong>C. YULIANA ELISA ANAYA ESTRADA</strong>, a quien en lo sucesivo se le designará por su
-                    nombre o como <strong>"EL ARRENDADOR”</strong>, y por otra parte <strong>C.
-                        {{Str::upper($evento->cliente->nombre)}}</strong>, a quien en lo sucesivo se le designará como
-                    <strong>“ARRENDATARIO”</strong>, y manifiestan lo siguiente:</label>
+                <label>En la ciudad de Chihuahua, estado de Chihuahua, a {{$fecha->fechaActualMayusc}}, comparece
+                    <strong>CANTABRIA EVENTOS Y SERVICIOS S.A. DE C.V.</strong> por medio de su representante legal <strong>C. YULIANA ELISA ANAYA ESTRADA</strong>, a quien en lo sucesivo se le
+                    designará por su nombre o como <strong>“EL ARRENDADOR”</strong>, y por otra parte
+                    <strong>{{Str::upper($evento->cliente->nombre)}}</strong>, a quien en lo sucesivo se le designará
+                    como <strong>“ARRENDATARIO”</strong>, y manifiestan lo siguiente:
+                </label>
             </div>
             <div class="row centrado">
                 <label>QUE ES SU DESEO CELEBRAR UN CONTRATO DE ARRENDAMIENTO DE SALON DE EVENTOS Y LO SUJETAN AL TENOR
@@ -172,8 +172,9 @@
                 <label><strong>SEGUNDA.- </strong>Manifiesta <strong>"EL ARRENDATARIO"</strong></label>
             </div>
             <div class="row primeralinea">
-                <label><strong>a) </strong>Ser mayor de edad y que cuenta con la capacidad y facultades suficientes para
-                    obligarse en los términos de este contrato. </label>
+                <label><strong>b) </strong>Tener nacionalidad Mexicana, con domicilio en
+                    <strong>{{STR::upper($evento->cliente->calle)}} {{$evento->cliente->numero}},  {{STR::upper($evento->cliente->colonia)}} {{$evento->cliente->cp}} CHIHUAHUA, CHIH.</strong>
+                        </label>
             </div>
             <div class="row primeralinea">
                 <label><strong>b) </strong>Tener nacionalidad Mexicana, con domicilio en {{$evento->cliente->calle}} no. {{$evento->cliente->numero}}, {{$evento->cliente->colonia}},
@@ -203,7 +204,7 @@
                         arrendamiento de las instalaciones del Salón de eventos denominado CANTABRIA EVENTOS ubicado en
                         calle Sierra Magisterial esquina con calle Texas, colonia los Nogales, en esta Ciudad de
                         Chihuahua, para la organización de un evento social, con una capacidad máxima de
-                        <strong>{{$evento->invitados}} {{$evento->invitadosLetra}}</strong>invitados, y una duración
+                        <strong>{{$evento->invitados}} ({{str::upper($valores->invitadosLetra)}})</strong> personas, y una duración
                         máxima de <strong>{{$fechas->hours}} horas, el cual se llevará a cabo de las {{
                             $fechas->fechaInicio}} a las {{$fechas->fechaFin}}</strong></label>
                 </div>
@@ -213,25 +214,24 @@
                 <div>
                     <ul>
                         <li>Renta de Instalaciones en el horario indicado</li>
-                        <li>Moviliario</li>
+                        <li>Sillas y mesas</li>
                         <li>Pista de baile</li>
                         <li>Escenario</li>
-                        <li>Refresco y hielo ilimitado </li>
-                        <li>Permiso de presidencia </li>
-                        <li>Vaso de cristal </li>
-                        <li>Mantelería de fina </li>
-                        <li>Estacionamiento privado </li>
-                        <li>Personal de seguridad </li>
-                        <li>Personal de limpieza </li>
-                        <li>Personal de Mantenimiento </li>
-                        <li>Meseros </li>
-                        <li>Barman </li>
+                        <li>Refresco y hielo ilimitado</li>
+                        <li>Permiso de gobernación</li>
+                        <li>Vaso de cristal</li>
+                        <li>Mantelería de fina</li>
+                        <li>Estacionamiento privado</li>
+                        <li>Personal de seguridad</li>
+                        <li>Personal de limpieza</li>
+                        <li>Meseros</li>
+                        <li>Barman</li>
                         <li>Capitán de meseros</li>
-                        <li>Descorche</li>
-                        <li>Suministro de bebidas a cargo del servicio de meseros (no brindamos el servicio de botella
-                            en mesa)</li>
-                        <li>Áreas de Fumadores </li>
-                        <li>Coordinación Básica </li>
+                        <li>Descorche libre</li>
+                        <li>Áreas de Fumadores</li>
+                        <li>Suministro de bebidas a cargo del servicio de meseros (no brindamos el servicio de botella en mesa)</li>
+                        <li>Coordinación Básica</li>
+                        <li>Una prueba de mantelería y sillas previa al evento</li>
                     </ul>
                 </div>
             </div>
@@ -239,24 +239,22 @@
                 <div class="pagina">{{-- Página 3 --}}
                     {{-- Mostramos el servicio de decoración si es que existe --}}
                     <div class="row centrado">
-                        @if($servicesExist->decor)
-                        <label>PRODUCCIÓN FLORAL HÍDRICA:</label>
+                        @if(!is_null($servicesExist->decor))
+                        <label>PRODUCCIÓN FLORAL:</label>
                         <ul>
-                            <li>Centros de Mesa con base floral</li>
-                            <li>Mesa Principal</li>
+                            <li>Centros de Mesa hídridos</li>
                             <li>Recibidor </li>
                             <li>Lobby </li>
-                            <li>Áreas de Fumar</li>
-                            <li>Un Ramo formal </li>
-                            <li>Un Ramo informal </li>
-                            <li>Un Arreglo para el Automóvil</li>
-                            <li>Tres Bouttonier</li>
+                            <li>Una prueba loral previa al eventof</li>
+                            <label for="">(Incluye decoración artificial y natural. No incluuye follaje extrafino ni flor extrafina)</label>
+
                         </ul>
-                        <small>(No incluye flor ni follaje extrafino)</small>
                     </div>
                     @endif
                     <div class="sangria">
+                        @if (is_null($servicios))
                         <label>Los servicios que fueron incluidos son los siguientes:</label><br>
+                        @endif
                         @foreach ($servicios as $servicio)
                         @if($servicio->pivot->regalo === 0)
                         {{$servicio->nombre}}<br>
@@ -267,11 +265,15 @@
                         {{$servicio->nombre}}<br> - Servicios de regalo
                         @endif
                         @endforeach
+                        @foreach ($servicios as $servicio)
+                        @if($servicio->nombre == 'Decoración')
+                        @endif
+                        @endforeach
                         <br>
                     </div>
                         <div class="row primeralinea">
                             <label><strong>TERCERA.-</strong> El precio del arrendamiento es por la cantidad de
-                                <strong>$@dinero($valores->costo) ({{$valores->costoTexto}} 00/100)</strong>, más
+                                <strong>$@dinero($valores->costo) ({{$valores->costoTexto}} 00/100 m.n.)</strong>, más
                                 impuesto del valor agregado en caso de requerir factura. </label>
                         </div>
                         <div class="row primeralinea">
@@ -280,7 +282,7 @@
                         </div>
                         <div class="row sangria">
                             <label>a) <strong>$@dinero($valores->costoAnticipo) ({{$valores->costoAnticipoTexto}}
-                                    00/100)</strong> al momento de la firma del presente contrato, fungiendo el
+                                    00/100 m.n.)</strong> al momento de la firma del presente contrato, fungiendo el
                                 mismo como el más amplio recibo que en derecho proceda. </label>
                         </div>
                         <div class="row sangria">

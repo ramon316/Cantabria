@@ -6,13 +6,12 @@
                 <div class="row">
                     {{-- type of light --}}
                     <div class="col-md-2 mt-1">
-                        <select class="form-control" wire:model="color1">
-                            <option value="">--Control 1--</option>
-                            @foreach ($this->lights as $light)
-                            <option value="{{$light}}">{{$light}}</option>
-                            @endforeach
-                        </select>
-                        @error('color1')
+                        <div class="form-group">
+                          <label for="">Ubicación</label>
+                          <input type="text" class="form-control" name="place" id="place" aria-describedby="helpId" placeholder="Lugar" wire:model.defer = "place">
+                          <small id="helpId" class="form-text text-muted">Ingresa la ubicación de las luces</small>
+                        </div>
+                        @error('place')
                         <div class="p-2 mt-2 text-xs text-danger">
                             {{$message}}
                         </div>
@@ -20,13 +19,14 @@
                     </div>
                     {{-- name of light --}}
                     <div class="col-md-2 mt-1">
-                        <select class="form-control" wire:model="color2">
-                            <option value="">--Control 2--</option>
-                            @foreach ($this->lights as $light)
-                            <option value="{{$light}}">{{$light}}</option>
+                        <label for="">Control</label>
+                        <select class="form-control" wire:model="control">
+                            <option value="">--Controles--</option>
+                            @foreach ($this->controls as $control)
+                            <option value="{{$control}}">{{$control}}</option>
                             @endforeach
                         </select>
-                        @error('color2')
+                        @error('control')
                         <div class="p-2 mt-2 text-xs text-danger">
                             {{$message}}
                         </div>
@@ -34,13 +34,14 @@
                     </div>
                     {{-- color of light --}}
                     <div class="col-md-2 mt-1">
-                        <select class="form-control" wire:model="color3">
-                            <option value="">--Control 3--</option>
-                            @foreach ($this->lights as $light)
-                            <option value="{{$light}}">{{$light}}</option>
+                        <label for="">Color</label>
+                        <select class="form-control" wire:model="color">
+                            <option value="">--Color--</option>
+                            @foreach ($this->lights as $color)
+                            <option value="{{$color}}">{{$color}}</option>
                             @endforeach
                         </select>
-                        @error('color3')
+                        @error('color')
                         <div class="p-2 mt-2 text-xs text-danger">
                             {{$message}}
                         </div>
@@ -51,5 +52,32 @@
                         <input class="btn btn-primary" type="button" value="Agregar" wire:click="addLight">
                     </div>
                 </div>
+            </div>
+            <div class="card-body">
+                @if ($LightsCollections->count())
+                <table class="table table-bordered table-hover">
+                    <tbody class="text-center">
+                        <tr class="expandable-body">
+                            <th>Ubicación</th>
+                            <th>Control</th>
+                            <th>Color</th>
+                            <th>Eliminar</th>
+                        </tr>
+                        @foreach ($LightsCollections as $light)
+                        <tr data-widget="expandable-table" aria-expanded="false">
+                            <td>{{$light->place}}</td>
+                            <td>{{$light->control}}</td>
+                            <td>{{$light->color}}</td>
+                            <td class="text-center">
+                                <i class="fas fa-trash" role="button"
+                                    wire:click="deleteLight({{$light->id}})"></i>
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+                @else
+                    Este evento no cuenta con iluminación registrada.
+                @endif
             </div>
         </div>

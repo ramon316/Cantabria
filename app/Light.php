@@ -5,19 +5,20 @@ namespace App;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Lights extends Model
+class Light extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'color1',
-        'color2',
-        'color3',
+        'place',
+        'control',
+        'color',
         'evento_id',
     ];
 
     protected $lights = [
-        'R','G',
+        'R',
+        'G',
         'B',
         'W',
         '1',
@@ -34,9 +35,20 @@ class Lights extends Model
         '12',
     ];
 
+    protected $control = [
+        'control 1',
+        'control 2',
+        'control 3',
+    ];
+
     public function getLights()
     {
         return $this->lights;
+    }
+
+    public function getControls()
+    {
+        return $this->control;
     }
 
     public function evento()

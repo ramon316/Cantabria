@@ -13,7 +13,7 @@ class cotizacion extends Model
     use LogsActivity;
     //
     protected $fillable =[
-        'cliente_id', 'user_id', 'title', 'subtitle', 'start', 'end', 'invitados'
+        'cliente_id', 'user_id', 'title', 'subtitle', 'start', 'end', 'invitados','comment', 'validez'
     ];
 
     protected $dates = [

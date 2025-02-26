@@ -28,6 +28,7 @@ class CotizacionIndex extends Component
         ->paginate(10);
 
         $this->hoy = Carbon::now();
+        
 
         return view('livewire.cotizacion-index')->with('cotizaciones', $cotizaciones)->with('hoy', $this->hoy);
     }

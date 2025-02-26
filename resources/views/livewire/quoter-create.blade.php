@@ -7,6 +7,7 @@
                     <h3 class="card-title">{{$cliente->nombre}}</h3>
                     <h6> - {{$cotizacion->start->format('d-m-Y')}}</h6>
                     <h6>{{$cotizacion->title}} - {{$cotizacion->subtitle}}</h6>
+                    <h6>Festejado(s):{{$cotizacion->comment}}</h6>
                 </div>
                 <div class="card-body">
                     <h6>Servicios agregados</h6>
@@ -26,7 +27,7 @@
                             <tr>
                                 <td scope="row">{{$service->nombre}}</td>
                                 <td>{{$service->pivot->cantidad}}</td>
-                                <td>$@dinero($service->pivot->costo  * $service->pivot->cantidad) </td>
+                                <td>$@dinero($service->pivot->costo) </td>
                                 <td>
                                     @if ($service->pivot->regalo)
                                     Si

@@ -43,6 +43,8 @@
                         <td>
                             @if (!empty($evento->contrat))
                             <a href="{{ Storage::url('contratos' . '/' . $evento->contrat)}}"><i class="fas fa-file-pdf fa-2xl"></i></a>
+                            @else
+                            <p for="">Sin contrato</p>
                             @endif
                         </td>
                         <td>{{Str::upper($evento->title)}}</td>

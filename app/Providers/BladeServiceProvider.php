@@ -26,7 +26,7 @@ class BladeServiceProvider extends ServiceProvider
     {
         /**Agregamos nuestra directiva de dinero */
         Blade::directive('dinero', function($dinero){
-            return "<?php echo number_format($dinero); ?>";
+            return "<?php echo number_format($dinero,2); ?>";
         });
     }
 }

@@ -26,7 +26,7 @@ class evento extends Model
     protected $dates = ['start', 'end'];
 
     protected $fillable = [
-        'id', 'cliente_id', 'user_id', 'title', 'subtitle', 'horas', 'start', 'end', 'invitados', 'color', 'layout', 'contract', 'closed_at', 'comment'
+     'cliente_id', 'user_id', 'title', 'subtitle', 'start', 'end', 'invitados', 'color', 'layout', 'contract', 'closed_at', 'comment'
     ];
 
     protected $casts = [
@@ -187,8 +187,8 @@ class evento extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function light(){
-        return $this->hasOne(Lights::class);
+    public function lights(){
+        return $this->hasMany(Light::class);
     }
 
 

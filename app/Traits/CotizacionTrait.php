@@ -72,11 +72,12 @@ trait CotizacionTrait
    {
       $allServices = $cotizacion->servicio;
       $decorationService = $this->decoracionExistTrait($cotizacion);
+
       /* dd($decorationService); */
 
       /* obtenemos  los serviccios sin decoración y renta */
       /* Si existe tenemos que encontrar todos los servicios pero si no entonces los obtenemos  */
-      if ($decorationService == null) {
+      if (is_null($decorationService)) {
          $servicios = $cotizacion->servicio()->where('id', '!=', $this->rentaExistTrait($cotizacion)->id)->
          where('regalo', '!=', '1')->get();
       } else {

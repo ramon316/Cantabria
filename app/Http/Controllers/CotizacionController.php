@@ -68,7 +68,6 @@ class CotizacionController extends Controller
             'start'=> 'required',
             'end'   => 'required',
             'invitados' => 'required|numeric|min:1',
-            'validez'   =>  'required',
         ]);
         //dd($request['cliente']);
         /* Vamos a validar la fecha de validez antes de guardarlo. */
@@ -175,7 +174,7 @@ class CotizacionController extends Controller
         /* obtener los servicios de cortesia */
         $servicesCortesy = $this->servicesCortesyTrait($cotizacion);
 
-        $costoTexto = NumerosALetras::convertir($costo,'Pesos',false,'Centavos');
+        $costoTexto = strtoupper(NumerosALetras::convertir($costo,'Pesos',false,'Centavos'));
         $today = Carbon::parse(date('d-m-Y'))->translatedFormat('l j \d\e F \d\e Y');
         $eventDay = Carbon::parse($cotizacion->start)->translatedFormat('l j \d\e F \d\e Y');
         $end  = Carbon::parse($cotizacion->end)->translatedFormat('l j \d\e F \d\e Y');

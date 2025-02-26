@@ -6,6 +6,7 @@ use App\NumerosALetras;
 use App\pago;
 use App\evento;
 use App\cliente;
+use App\cuenta;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -15,6 +16,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use App\Traits\EventoTrait;
+Carbon::setLocale('es');
 
 class PagoController extends Controller
 {
@@ -72,15 +74,27 @@ class PagoController extends Controller
             'created_at'    =>  date('Y-m-d H:i:s'),
             'updated_at'    =>  date('Y-m-d H:i:s'),
         ]);
-        /* Formar date */
+        /* pay type*/
+        $cuenta = cuenta::find($request['cuenta'])->pluck('banco')->first();
+
+        if ($cuenta == "Efectivo") {
+            $tipo = 'Efectivo';
+        }
+        else{
+            $tipo = 'Transferencia';
+        }
+
 
         /* Información del evento  */
         $evento = evento::find($request['evento']);
+        /* Folio event */
+        $folio = "F" . str_pad($evento->id,4,"0",STR_PAD_LEFT);
         /* Monto restante */
         $pendiente = $this->diferenciaEvento($evento);
         $pendienteText = NumerosALetras::convertir($this->diferenciaEvento($evento));
 
-        $today = Carbon::now()->format('d_m_Y');
+        $today = Carbon::now()->format('d-m-Y');
+        $hoy = Carbon::now()->isoFormat('d \d\e MMMM \d\e Y');
         $now = Carbon::now()->format('d-m-Y');
         $nowText = $this->formatearFecha($now);
 
@@ -88,15 +102,15 @@ class PagoController extends Controller
         $cliente = cliente::find($request['cliente'])->pluck('nombre')->first();
         $clienteSlug = Str::slug($cliente);
         /* Información del usuario  */
-        $user = Auth::user()->pluck('name')->first();
+        $user = Auth::user()->name;
         /* Monto */
         $monto = $request['monto'];
         $montoTexto= NumerosALetras::convertir($request['monto'],'',false,'');
         /* Name */
         $name = $clienteSlug . '_' .$today . '.pdf';
         /* Generación de pdf */
-        $pdf = PDF::loadView('/pagos/recibo',compact('cliente','user','evento','nowText','monto', 'montoTexto', 'pendiente','pendienteText'));
-        $result =  $pdf->setPaper('a5','landscape')->stream($name);
+        $pdf = PDF::loadView('/pagos/recibo',compact('cliente','user','evento','nowText','monto', 'montoTexto', 'pendiente','pendienteText', 'hoy','tipo','folio'));
+        $result =  $pdf->setPaper('a4')->stream($name);
 
         $content = $pdf->download()->getOriginalContent();
         $save = Storage::disk('local')->put('receipts'. '/' . $name, $content);

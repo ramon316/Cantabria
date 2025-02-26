@@ -64,7 +64,8 @@ Trait EventoTrait{
    public function diferenciaEvento(evento $evento){
     $costoEvento = $this->costoEvento($evento);
     $abonoEvento = $this->abonoEvento($evento);
-    $diferenciaEvento = $costoEvento - $abonoEvento;
+    $discount = $evento->discount->amount ?? 0;
+    $diferenciaEvento = $costoEvento - $abonoEvento - $discount;
     return $diferenciaEvento;
    }
 

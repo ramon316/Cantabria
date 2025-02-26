@@ -15,9 +15,9 @@ return new class extends Migration
     {
         Schema::create('lights', function (Blueprint $table) {
             $table->id();
-            $table->string('color1');
-            $table->string('color2');
-            $table->string('color3');
+            $table->string('place');
+            $table->string('control');
+            $table->string('color');
             $table->foreignId('evento_id')->references('id')->on('eventos')->constrained()->onDelete('cascade');
             $table->timestamps();
         });

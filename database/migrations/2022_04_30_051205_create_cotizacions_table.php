@@ -23,6 +23,7 @@ class CreateCotizacionsTable extends Migration
             $table->dateTime('end');
             $table->integer('invitados');
             $table->date('validez')->nullable();
+            $table->string('comment')->nullable();
             $table->timestamps();
         });
     }

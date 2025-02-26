@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\cliente;
+use Carbon\Carbon;
 use App\cotizacion;
 use Livewire\Component;
 
@@ -15,6 +16,7 @@ class CreateQuoter extends Component
     public $start;
     public $end;
     public $invitados;
+    public $comment;
     public $empresariales = ['Posada', 'Aniversario','Capacitación','Conferencia','Graduación','otros'];
     public $sociales = ['Boda','XV años','Aniversario','Graduación','otros'];
     public $subtitles = [];
@@ -56,6 +58,9 @@ class CreateQuoter extends Component
 
         $this->validate();
 
+        /* Generamos la fecha de validez */
+        $valid = Carbon::now()->addDays(30);
+
           $cotizacion =  cotizacion::create([
             'cliente_id' => $this->cliente,
             'title' => $this->title,
@@ -63,6 +68,8 @@ class CreateQuoter extends Component
             'start' => $this->start,
             'end' => $this->end,
             'invitados' => $this->invitados,
+            'validez' => $valid,
+            'comment' => $this->comment,
             'user_id' => Auth()->user()->id
         ]);
 

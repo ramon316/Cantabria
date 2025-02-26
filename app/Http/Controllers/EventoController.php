@@ -306,10 +306,11 @@ class EventoController extends Controller
             //dd($anticipo['0']['anticipo']['monto'])
 
             /* format the date */
-            $fechaInicio = $this->formatearFecha($evento->start,true);
-            $fechaFin = $this->formatearFecha($evento->end,true);
+            $fechaInicio = $this->formatearFecha($evento->start,false, true);
+            $fechaFin = $this->formatearFecha($evento->end,false,true);
             $hours = $evento->start->diffInHours($evento->end);
             $fechaActual = $this->formatearFecha(Carbon::now());
+            $fechaActualMayusc = $this->formatearFecha(Carbon::now(), true);
 
             /* EXIST SERVICEs */
             /* if exist return service, else 0 */
@@ -398,6 +399,7 @@ class EventoController extends Controller
             $fecha->fecha7diasantes = $fecha7diasantes;
             $fecha->fecha15diasantes = $fecha15diasantes;
             $fecha->fecha3meses = $fecha3meses;
+            $fecha->fechaActualMayusc = $fechaActualMayusc;
 
 
             $valores->invitadosLetra = $invitadosLetra;
@@ -504,12 +506,44 @@ class EventoController extends Controller
      * @param string $fecha
      * @return string
      */
-    public function formatearFecha($fecha, $incluirHora = false)
+    public function formatearFecha($fecha, $mayuscula = false, $incluirHora = false)
     {
         // Crear una instancia de Carbon a partir de la fecha
         $carbonFecha = Carbon::parse($fecha);
 
         // Obtener las partes de la fecha en formato numérico
+        $diaNumero = $carbonFecha->day;
+        $mesNombreMayusc = STR::upper($carbonFecha->translatedFormat('F')); // Nombre del mes en español
+        $mesNombre = $carbonFecha->translatedFormat('F'); // Nombre del mes en español
+        $anioNumero = $carbonFecha->year;
+
+        // Convertir las partes de la fecha en texto
+        $diaTexto = STR::upper($this->convertirNumeroATexto($diaNumero));
+        $anioTexto = STR::upper($this->convertirNumeroATexto($anioNumero));
+
+        // Construir el formato con o sin hora
+        if ($incluirHora) {
+            // Formatear la hora y convertirla a texto
+            $hora = $carbonFecha->format('H:i');
+            $horaTexto = $this->convertirNumeroATexto($carbonFecha->hour) . " horas";
+            return "{$hora} horas del {$carbonFecha->day} de {$mesNombre} del {$carbonFecha->year} ({$diaTexto} DE {$mesNombreMayusc} DE {$anioTexto})";
+        }
+
+        if ($mayuscula) {
+            return strtoupper("{$diaTexto} de {$mesNombre} de {$anioTexto}");
+        }
+        else{
+            // Formato sin hora
+        return "{$carbonFecha->day} de {$mesNombre} del {$carbonFecha->year} ({$diaTexto} DE {$mesNombreMayusc} DE {$anioTexto})";
+        }
+
+
+    }
+
+
+    public function dateText($date)
+    {
+        $carbonFecha = Carbon::parse($date);
         $diaNumero = $carbonFecha->day;
         $mesNombre = $carbonFecha->translatedFormat('F'); // Nombre del mes en español
         $anioNumero = $carbonFecha->year;
@@ -518,16 +552,7 @@ class EventoController extends Controller
         $diaTexto = $this->convertirNumeroATexto($diaNumero);
         $anioTexto = $this->convertirNumeroATexto($anioNumero);
 
-        // Construir el formato con o sin hora
-        if ($incluirHora) {
-            // Formatear la hora y convertirla a texto
-            $hora = $carbonFecha->format('H:i');
-            $horaTexto = $this->convertirNumeroATexto($carbonFecha->hour) . " horas";
-            return "{$hora} horas del {$carbonFecha->day} de {$mesNombre} del {$carbonFecha->year} ({$horaTexto} del {$diaTexto} de {$mesNombre} del {$anioTexto})";
-        }
-
-        // Formato sin hora
-        return "{$carbonFecha->day} de {$mesNombre} del {$carbonFecha->year} ({$diaTexto} de {$mesNombre} del {$anioTexto})";
+        return "{$diaTexto} de {$mesNombre} del {$anioTexto}";
     }
 
 }

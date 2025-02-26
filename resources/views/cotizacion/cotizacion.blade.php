@@ -28,7 +28,7 @@
         }
 
         .pagina {
-            margin-top: 100px;
+            margin-top: 80px;
         }
 
         h3 {
@@ -74,12 +74,12 @@
     <div class="fondo">
         <div class="pagina">
             <div class="row">
-                <p class="mayuscula"><strong>Cliente: {{ $cotizacion->cliente->nombre }}</strong></p>
-                <p class="mayuscula"><strong>Fecha del Evento: </strong>{{ $eventDay }}</p>
-                <p class="mayuscula"><strong>Evento: </strong>{{ $cotizacion->title }}</p>
-                <p class="mayuscula"><strong>Teléfono: </strong>{{ $cotizacion->cliente->telefono }}</p>
-                <p class="mayuscula"><strong>Número de personas: </strong>{{ $cotizacion->invitados }} personas</p>
-                <p class="mayuscula"><strong>Fecha de Cotización: </strong>{{ $today }}</p>
+                <p><strong>Cliente: {{ $cotizacion->cliente->nombre }}</strong></p>
+                <p><strong>Fecha del Evento: </strong>{{ $eventDay }}</p>
+                <p><strong>Tipo de Evento: </strong>{{$cotizacion->subtitle}} - {{$cotizacion->comment}}</p>
+                <p><strong>Teléfono: </strong>{{ $cotizacion->cliente->telefono }}</p>
+                <p><strong>Número de personas: </strong>{{ $cotizacion->invitados }} personas</p>
+                <p><strong>Fecha de Cotización: </strong>{{ $today }}</p>
             </div>
             <hr>
             <div class="row">
@@ -89,75 +89,75 @@
             <div class="row">
                 <ul>
                     <li>Renta de Instalaciones en el horario indicado</li>
-                    <li>Moviliario</li>
+                    <li>Sillas y mesas</li>
                     <li>Pista de baile</li>
                     <li>Escenario</li>
-                    <li>Refresco y hielo ilimitado </li>
-                    <li>Permiso de presidencia </li>
-                    <li>Vaso de cristal </li>
-                    <li>Mantelería de fina </li>
-                    <li>Estacionamiento privado </li>
-                    <li>Personal de seguridad </li>
-                    <li>Personal de limpieza </li>
-                    <li>Personal de Mantenimiento </li>
-                    <li>Meseros </li>
-                    <li>Barman </li>
+                    <li>Refresco y hielo ilimitado</li>
+                    <li>Permiso de gobernación</li>
+                    <li>Vaso de cristal</li>
+                    <li>Mantelería de fina</li>
+                    <li>Estacionamiento privado</li>
+                    <li>Personal de seguridad</li>
+                    <li>Personal de limpieza</li>
+                    <li>Meseros</li>
+                    <li>Barman</li>
                     <li>Capitán de meseros</li>
-                    <li>Descorche</li>
-                    <li>Suministro de bebidas a cargo del servicio de meseros (no brindamos el servicio de botella
-                        en mesa)</li>
-                    <li>Áreas de Fumadores </li>
-                    <li>Coordinación Básica </li>
+                    <li>Descorche libre</li>
+                    <li>Áreas de Fumadores</li>
+                    <li>Suministro de bebidas a cargo del servicio de meseros (no brindamos el servicio de botella en
+                        mesa)</li>
+                    <li>Coordinación Básica</li>
+                    <li>Una prueba de mantelería y sillas previa al evento</li>
                 </ul>
             </div>
         </div>
-        <div class="page-break">
-        </div>
+
         <div class="pagina">
             {{-- Verificamos si existe la decoración --}}
             @if ($ExistDecoracion != null)
-                <div class="row">
-                    <label>PRODUCCIÓN FLORAL HIBRIDA:</label>
-                    <ul>
-                        <li>Centro de Mesa</li>
-                        <li>Mesa Principal</li>
-                        <li>Recibidor</li>
-                        <li>Lobby</li>
-                    </ul>
-                    <label>(No incluye flor ni follaje extrafino)</label>
-                    <label class="textCenter">Cotización válida únicamente para
-                        <strong>{{ $cotizacion->invitados }}</strong> invitados, sujeto a disponibilidad.</label>
-                </div>
+            <div class="row">
+                <label>Producción Floral Hibrida:</label>
+                <ul>
+                    <li>Centro de Mesa</li>
+                    <li>Mesa Principal</li>
+                    <li>Recibidor</li>
+                    <li>Lobby</li>
+                </ul>
+                <label>(No incluye flor ni follaje extrafino)</label>
+                <label class="textCenter">Cotización válida únicamente para
+                    <strong>{{ $cotizacion->invitados }}</strong> invitados, sujeto a disponibilidad.</label>
+            </div>
             @endif
             @if ($servicios->isnotempty())
             <div class="row marginTop">
-                <label>SERVICIO EXTRA:</label>
+                <label>Servicio Adicional:</label>
                 @foreach ($servicios as $servicio)
-                    <ul>
-                        <li>{{ $servicio->nombre }}: $@dinero($servicio->pivot->costo * $servicio->pivot->cantidad)</li>
-                    </ul>
+                <ul>
+                    <li>{{ $servicio->nombre }}: $@dinero($servicio->pivot->costo * $servicio->pivot->cantidad)</li>
+                </ul>
                 @endforeach
             </div>
             @endif
 
             @if ($servicesCortesy->isnotempty())
-                <div class="row marginTop">
-                    <label>SERVICIOS DE CORTESIA:</label>
-                    @foreach ($servicesCortesy as $service)
-                        <ul>
-                            <li>{{ $service->nombre }}{{-- : $@dinero($service->pivot->costo * $service->pivot->cantidad) --}}</li>
-                        </ul>
-                    @endforeach
-                </div>
+            <div class="row marginTop">
+                <label>SERVICIOS DE CORTESIA:</label>
+                @foreach ($servicesCortesy as $service)
+                <ul>
+                    <li>{{ $service->nombre }}{{-- : $@dinero($service->pivot->costo * $service->pivot->cantidad) --}}
+                    </li>
+                </ul>
+                @endforeach
+            </div>
             @endif
 
             <div class="row marginTop">
-                <label><strong>Inversión $@dinero($costo) - ({{ $costoTexto }} 00/100 M.N)</strong></label>
+                <label><strong>Inversión $@dinero($costo) - ({{ $costoTexto }} 00/100 m.n.)</strong></label>
             </div>
             <div class="row marginTop">
                 <label>Términos y condiciones</label>
                 <ul>
-                    <li>Anticipo de $15,000.00 (Son quince mil pesos 00/100)</li>
+                    <li>Anticipo de $15,000.00 (QUINCE MIL PESOS 00/100 m.n.)</li>
                     <li>Cotización vigente al {{$end}}. Sujeto a disponibilidad.</li>
                     <li>Alimentos y decoración exclusivo de Cantabria Salón de Eventos (no se permiten
                         proveedores externos)</li>
