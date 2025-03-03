@@ -4,9 +4,13 @@ use Livewire\Livewire;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\MeetController;
 use App\Http\Controllers\OtroController;
+use App\Http\Controllers\PagoController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\ChairController;
+use App\Http\Controllers\CuentaController;
 use App\Http\Controllers\EventoController;
 use App\Http\Controllers\PerfilController;
 use App\Http\Controllers\reportController;
@@ -26,13 +30,12 @@ use App\Http\Controllers\DecoracionController;
 use App\Http\Controllers\floralbaseController;
 use App\Http\Controllers\InterestedController;
 use App\Http\Controllers\ManteleriaController;
+use App\Http\Controllers\LogActivityController;
 use App\Http\Controllers\ProveedoresController;
 use App\Http\Controllers\EventoServicioController;
 use App\Http\Controllers\RecommendationController;
 use App\Http\Controllers\tableclothbaseController;
 use App\Http\Controllers\CotizacionServicioController;
-use App\Http\Controllers\MeetController;
-use App\Http\Controllers\LogActivityController;
 
 /*
 |--------------------------------------------------------------------------
@@ -53,55 +56,55 @@ Route::get('/reload-captcha', [InterestedController::class, 'reloadCaptcha'])->n
 Auth::routes(['register'=>false]);
 
 /**Calendario */
-Route::get('/home', 'HomeController@index')->middleware('can:home.index')->name('home.index');
+Route::get('/home', [HomeController::class,'index'])->middleware('can:home.index')->name('home.index');
 //metodo de almacenamiento
-Route::post('/home', 'HomeController@store')->name('home.store');
+Route::post('/home', [HomeController::class,'store'])->name('home.store');
 
 /**Eventos */
 /**Para ver el contrato */
-Route::get('/eventos/contrato', function () {
+/* Route::get('/eventos/contrato', function () {
     return view('/eventos/contrato');
-});
+}); */
 
-Route::get('/eventos', 'EventoController@index')->middleware('can:eventos.index')->name('eventos.index');
-Route::post('/eventos', 'EventoController@store')->middleware('can:eventos.store')->name('eventos.store');
-Route::get('/eventos/create','EventoController@create')->middleware('can:eventos.create')->name('eventos.create');
+Route::get('/eventos', [EventoController::class,'index'])->middleware('can:eventos.index')->name('eventos.index');
+Route::post('/eventos', [EventoController::class,'store'])->middleware('can:eventos.store')->name('eventos.store');
+Route::get('/eventos/create',[EventoController::class,'create'])->middleware('can:eventos.create')->name('eventos.create');
 /* Route::post('/eventos/confirm','EventoController@confirm')->middleware('can:eventos.confirm')->name('eventos.confirm'); */
-Route::get('/eventos/list','EventoController@list')->name('eventos.list');
-Route::get('/eventos/{evento}/contrato','EventoController@contrato')->middleware('can:eventos.contrato')->name('eventos.contrato');
-Route::get('/eventos/{evento}/edit', 'EventoController@edit')->middleware('can:eventos.edit')->name('eventos.edit');
-Route::delete('/eventos/{evento}', 'EventoController@destroy')->middleware('can:eventos.destroy')->name('eventos.destroy');
-Route::get('/eventos/{evento}/pago','EventoController@pago')->middleware('can:eventos.pago')->name('eventos.pago');
-Route::get('/eventos/{evento}', 'EventoController@show')->middleware('can:eventos.show')->name('eventos.show');
+Route::get('/eventos/list',[EventoController::class,'list'])->middleware('can:eventos.list')    ->name('eventos.list');
+Route::get('/eventos/{evento}/contrato',[EventoController::class,'contrato'])->middleware('can:eventos.contrato')->name('eventos.contrato');
+Route::get('/eventos/{evento}/edit', [EventoController::class,'edit'])->middleware('can:eventos.edit')->name('eventos.edit');
+Route::delete('/eventos/{evento}', [EventoController::class,'destroy'])->middleware('can:eventos.destroy')->name('eventos.destroy');
+Route::get('/eventos/{evento}/pago',[EventoController::class,'pago'])->middleware('can:eventos.pago')->name('eventos.pago');
+Route::get('/eventos/{evento}', [EventoController::class,'show'])->middleware('can:eventos.show')->name('eventos.show');
 Route::put('/eventos/{evento}', [EventoController::class, 'layout'])->name('eventos.layout');
 
 /* Clientes */
-Route::get('/clientes','ClienteController@index')->middleware('can:clientes.index')->name('clientes.index');
-Route::get('/clientes/create','ClienteController@create')->middleware('can:clientes.create')->name('clientes.create');
-Route::post('/clientes', 'ClienteController@store')->middleware('can:clientes.store')->name('clientes.store');
-Route::get('/clientes/{cliente}/edit', 'ClienteController@edit')->middleware('can:clientes.edit')->name('clientes.edit');
-Route::put('/clientes/{cliente}', 'ClienteController@update')->middleware('can:clientes.update')->name('clientes.update');
-Route::delete('clientes/{cliente}', 'ClienteController@destroy')->middleware('can:clientes.destroy')->name('clientes.destroy');
+Route::get('/clientes',[ClienteController::class,'index'])->middleware('can:clientes.index')->name('clientes.index');
+Route::get('/clientes/create',[ClienteController::class,'create'])->middleware('can:clientes.create')->name('clientes.create');
+Route::post('/clientes', [ClienteController::class,'store'])->middleware('can:clientes.store')->name('clientes.store');
+Route::get('/clientes/{cliente}/edit', [ClienteController::class,'edit'])->middleware('can:clientes.edit')->name('clientes.edit');
+Route::put('/clientes/{cliente}', [ClienteController::class,'update'])->middleware('can:clientes.update')->name('clientes.update');
+Route::delete('clientes/{cliente}', [ClienteController::class,'destroy'])->middleware('can:clientes.destroy')->name('clientes.destroy');
 /* Clientes Resource */
  /*Route::resource('/clientes', ClienteController::class)->except(['index', 'create', 'edit'])->names('clientes');
  *//**Usuarios */
-Route::get('/usuarios', 'UsuarioController@index')->middleware('can:usuarios.index')->name('usuarios.index');
-Route::get('/usuarios/create', 'UsuarioController@create')->middleware('can:usuarios.create')->name('usuarios.create');
-Route::post('/usuarios','UsuarioController@store')->middleware('can:usuarios.store')->name('usuarios.store');
+Route::get('/usuarios', [UsuarioController::class,'index'])->middleware('can:usuarios.index')->name('usuarios.index');
+Route::get('/usuarios/create', [UsuarioController::class,'create'])->middleware('can:usuarios.create')->name('usuarios.create');
+Route::post('/usuarios',[UsuarioController::class,'store'])->middleware('can:usuarios.store')->name('usuarios.store');
 Route::get('/usuarios/{usuario}/edit', [UsuarioController::class, 'edit'])->middleware('can:usuarios.edit')->name('usuarios.edit');
 Route::put('/usuarios/{usuario}', [UsuarioController::class, 'update'])->middleware('can:usuarios.update')->name('usuarios.update');
 
 /**Perfil */
-Route::get('/perfils', 'PerfilController@index')->middleware('can:perfils.index')->name('perfils.index');
-Route::get('/perfils/edit/{perfil}','PerfilController@edit')->middleware('can:perfils.edit')->name('perfils.edit');
-Route::put('/perfils/{perfil}', 'PerfilController@update')->middleware('can:perfils.update')->name('perfils.update');
+Route::get('/perfils', [PerfilController::class,'index'])->middleware('can:perfils.index')->name('perfils.index');
+Route::get('/perfils/edit/{perfil}',[PerfilController::class,'edit'])->middleware('can:perfils.edit')->name('perfils.edit');
+Route::put('/perfils/{perfil}', [PerfilController::class,'update'])->middleware('can:perfils.update')->name('perfils.update');
 
 /**Cotización */
-Route::get('/cotizacion', 'CotizacionController@index')->middleware('can:cotizacion.index')->name('cotizacion.index');
-Route::get('/cotizacion/create', 'CotizacionController@create')->middleware('can:cotizacion.create')->name('cotizacion.create');
+Route::get('/cotizacion', [CotizacionController::class,'index'])->middleware('can:cotizacion.index')->name('cotizacion.index');
+Route::get('/cotizacion/create', [CotizacionController::class,'create'])->middleware('can:cotizacion.create')->name('cotizacion.create');
 Route::post('/cotizacion',[CotizacionController::class, 'store'])->middleware('can:cotizacion.store')->name('cotizacion.store');
 Route::get('/cotizacion/{cotizacion}',[CotizacionController::class, 'show'])->middleware('can:cotizacion.show')->name('cotizacion.show');
-Route::get('/cotizacion/{cotizacion}/trabajo','CotizacionController@cotizacion')->middleware('can:cotizacion.trabajo')->name('cotizacion.trabajo');
+Route::get('/cotizacion/{cotizacion}/trabajo',[CotizacionController::class,'cotizacion'])->middleware('can:cotizacion.trabajo')->name('cotizacion.trabajo');
 Route::delete('/cotizacion/{cotizacion}',[CotizacionController::class,'destroy'])->middleware('can:cotizacion.destroy')->name('cotizacion.destroy');
 /**Probamos la cotizacion */
 Route::get('/cotizacion/cotizacion/{cotizacion}', [CotizacionController::class, 'cotizacion'])->name('cotizacion.cotizacion');
@@ -113,12 +116,12 @@ Route::get('/cotizacionservicio/{cotizacion}/create',[CotizacionServicioControll
 Route::post('/cotizacionservicio',[CotizacionServicioController::class,'store'])->middleware('can:cotizacionservicio.store')->name('cotizacionservicio.store');
 
 /**Pagos */
-Route::get('/pagos','PagoController@index')->middleware('can:pagos.index')->name('pagos.index');
-Route::post('/pagos','PagoController@store')->middleware('can:pagos.store')->name('pagos.store');
+Route::get('/pagos',[PagoController::class,'index'])->middleware('can:pagos.index')->name('pagos.index');
+Route::post('/pagos',[PagoController::class,'store'])->middleware('can:pagos.store')->name('pagos.store');
 
 /**Cuentas */
-Route::get('/cuentas', 'CuentaController@index')->middleware('can:cuentas.index')->name('cuentas.index');
-Route::post('/cuentas','CuentaController@store')->middleware('can:cuentas.store')->name('cuentas.store');
+Route::get('/cuentas', [CuentaController::class,'index'])->middleware('can:cuentas.index')->name('cuentas.index');
+Route::post('/cuentas',[CuentaController::class,'store'])->middleware('can:cuentas.store')->name('cuentas.store');
 
 /**Manteleria */
 Route::get('/manteleria/{evento}',[ManteleriaController::class,'create'])->middleware('can:manteleria.create')->name('manteleria.create');
