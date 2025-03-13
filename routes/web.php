@@ -70,7 +70,7 @@ Route::get('/eventos', [EventoController::class,'index'])->middleware('can:event
 Route::post('/eventos', [EventoController::class,'store'])->middleware('can:eventos.store')->name('eventos.store');
 Route::get('/eventos/create',[EventoController::class,'create'])->middleware('can:eventos.create')->name('eventos.create');
 /* Route::post('/eventos/confirm','EventoController@confirm')->middleware('can:eventos.confirm')->name('eventos.confirm'); */
-Route::get('/eventos/list',[EventoController::class,'list'])->middleware('can:eventos.list')    ->name('eventos.list');
+Route::get('/eventos/list',[EventoController::class,'list'])->middleware('can:eventos.list')->name('eventos.list');
 Route::get('/eventos/{evento}/contrato',[EventoController::class,'contrato'])->middleware('can:eventos.contrato')->name('eventos.contrato');
 Route::get('/eventos/{evento}/edit', [EventoController::class,'edit'])->middleware('can:eventos.edit')->name('eventos.edit');
 Route::delete('/eventos/{evento}', [EventoController::class,'destroy'])->middleware('can:eventos.destroy')->name('eventos.destroy');
@@ -188,7 +188,7 @@ Route::post('floralbase', [floralbaseController::class, 'store'])->middleware('c
 Route::put('floralbase/{floralbase}',[floralbaseController::class, 'update'])->middleware('can:floralbase.update')->name('floralbase.update');
 Route::get('floralbase/{floralbase}', [floralbaseController::class, 'show'])->middleware('can:floralbase.show')->name('floralbase.show');
 /* Chair */
-Route::resource('chairs', ChairController::class)->names('chairs');
+Route::resource('chairs', ChairController::class)->middleware('can:chairs.index')->names('chairs');
 /* Discounts */
 Route::get('discount/{evento}',[DiscountController::class, 'create'])->name('discounts.create');
 Route::post('discount/', [DiscountController::class, 'store'])->name('discounts.store');

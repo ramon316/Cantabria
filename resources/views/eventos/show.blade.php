@@ -11,7 +11,9 @@
         <h1 class="text-center">Evento de {{$evento->cliente->nombre}}</h1>
     </div>
     <div class="col-md-4">
-        @livewire('status-event', ['evento' => $evento], key($evento->id))
+        @role('Administrador')
+            @livewire('status-event', ['evento' => $evento], key($evento->id))
+        @endrole
     </div>
 </div>
 @stop
@@ -29,6 +31,7 @@
                 {{$evento->cliente->colonia}} C.P. {{$evento->cliente->cp}}<br>
                 <strong>Festejado(s):</strong>{{$evento->comment}}<br>
             </div>
+            @hasanyrole('Administrador|Ventas|Planeacion|Florista')
             <div class="col-md-3 bg-white shadow p-3 mb-5  rounded">
                 <h4>Información del evento</h4>
                 <strong>Tipo: </strong>{{$evento->title}}<br>
@@ -48,74 +51,13 @@
                     <strong>Saldo:</strong> $@dinero($diferenciaEvento) pesos<br>
                 @endif
             </div>
-            {{-- <div class="col-md-3 bg-white shadow p-3 mb-5  rounded">
-                <h4>Check List</h4>
-
-                <button type="button" class="btn
-                @if (empty($evento->Checklist->contrato))
-                btn-secondary
-                @else
-                btn-info
-                @endif
-                d-block w-100 inline mb-2">Contrato
-                </button>
-
-                <button type="button" class="btn
-                @if (empty($evento->Checklist->ademdum))
-                btn-secondary
-                @else
-                btn-info
-                @endif
-                d-block w-100 inline mb-2">Ademdum
-                </button>
-
-                <button type="button" class="btn
-                @if ($evento->tablecloth()->count() > 0))
-                btn-info
-                @else
-                btn-secondary
-                @endif
-                d-block w-100 inline mb-2">Mantelería
-                </button>
-
-                <button class="btn
-                @if ($evento->floralbase()->count() > 0)
-                    btn-info
-                @else
-                    btn-secondary
-                @endif
-                d-block w-100 inline mb-2" href="{{ route('basefloral.create',['evento'=>$evento->id])}}"
-                    role="button">Bases florales</button>
-
-
-                <button type="button" class="btn
-                @if (empty($evento->Checklist->degustacion))
-                btn-secondary
-                @else
-                btn-info
-                @endif
-                d-block w-100 inline mb-2">Degustación
-                </button>
-
-                @if ($banquetExist == true)
-                <button type="button" class="btn
-                    @if ($evento->banquet()->count() > 0)
-                    btn-info
-                    @else
-                    btn-secondary
-                    @endif
-                d-block w-100 inline mb-2">Banquete
-                </button>
-                @endif
-
-
-            </div> --}}
-
+            @endhasanyrole
 
             {{-- Botones de acciones --}}
             <div class="col-md-3 bg-white shadow p-4 mb-5 rounded">
                 <h4 class="text-center">Acciones</h4>
 
+                @hasanyrole('Administrador|Planeacion|Florista|Ventas')
                 <a href="" class="btn
                 @if (empty($evento->layout))
                     btn-danger
@@ -125,12 +67,14 @@
                 d-block w-100 inline mb-2" role="button" data-controls-modal="exampleModal" data-toggle="modal"
                     data-target="#exampleModal" data-bs-backdrop="static" data-bs-keyboard="false">Layout
                 </a>
+                @endhasanyrole
 
-
+                @hasanyrole('Administrador|Ventas|Planeacion')
                 <a class="btn btn-info d-block w-100 inline mb-2"
                     href="{{ route('eventos.pago',['evento'=>$evento->id]) }}" role="button">Generar Pago</a>
+                @endhasanyrole
 
-
+                @role('Administrador')
                 <a class="btn
                 @if ($discount <> 0)
                     btn-info
@@ -140,12 +84,15 @@
                 d-block w-100 inline mb-2" href=" {{ route('discounts.create',['evento' => $evento->id]) }} "
                     role="button">Agregar descuento
                 </a>
+                @endrole
 
-
+                @hasanyrole('Administrador|Planeacion')
                 <a class="btn btn-info d-block w-100 inline mb-2"
                     href="{{  route('eventoservicios.create',['evento'=>$evento]) }}" role="button">Agregar o eliminar
                     Servicio</a>
+                @endhasanyrole
 
+                @hasanyrole('Administrador|Planeacion')
                 @if (count($evento->tablecloth) >0)
                 <a class="btn btn-info d-block w-100 inline mb-2"
                     href="{{ route('manteleria.create',['evento'=>$evento->id]) }}" role="button">Manteleria y
@@ -155,8 +102,10 @@
                     href="{{ route('manteleria.create',['evento'=>$evento->id]) }}" role="button">Manteleria y
                     sillas</a>
                 @endif
+                @endhasanyrole
 
                 {{-- Bases florales --}}
+                @hasanyrole('Administrador|Florista|Planeacion')
                 <a class="btn
                 @if ($evento->floralbase()->count() > 0)
                     btn-info
@@ -165,13 +114,17 @@
                 @endif
                 d-block w-100 inline mb-2" href="{{ route('basefloral.create',['evento'=>$evento->id])}}"
                     role="button">Bases florales</a>
+                @endhasanyrole
 
+                @role('Administrador')
                 @if($monto >= 15000 && $admin)
                 <a class="btn btn-info d-block w-100 inline mb-2"
                     href="{{ route('eventos.contrato',['evento'=>$evento->id]) }}" role="button">Generar Contrato</a>
                 @endif
+                @endrole
 
                 {{-- Banquete --}}
+                @hasanyrole('Administrador|Banquete')
                 @if ($banquetExist == true)
                 <a class="btn
                 @if ($evento->banquet()->count()>0)
@@ -183,9 +136,12 @@
                     role="button">Agregar banquete
                 </a>
                 @endif
+                @endhasanyrole
 
             </div>
         </div>
+
+        @role('Administrador')
         <div class="row justify-content-around">
             @if(count($evento->servicio))
             <div class="col-md-6 bg-white shadow p-3 mb-5 rounded text-center">
@@ -217,6 +173,9 @@
             </div>
             @endif
         </div>
+        @endrole
+
+        @hasanyrole('Administrador|Ventas|Planeacion')
         <div class="row justify-content-around">
             @if (count($pagos))
             <div class="col-md-6 bg-white shadow p-3 mb-5 rounded text-center">
@@ -243,10 +202,12 @@
 
             @endif
         </div>
+        @endhasanyrole
 
         {{-- Comentarios Livewire --}}
-
+        @hasanyrole('Administrador|Ventas|Planeacion')
         @livewire('comments-index', ['evento' => $evento])
+        @endhasanyrole
         {{-- @livewire('component', ['user' => $user], key($user->id)) --}}
     </div>
 </div>

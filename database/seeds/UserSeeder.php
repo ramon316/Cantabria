@@ -19,21 +19,48 @@ class UserSeeder extends Seeder
     {
 
         User::create([
-            'name' => 'Ramon316',
-            'email' => 'ramon316@hotmail.com',
+            'name' => 'Administrador',
+            'email' => 'administrador@cantabriaeventos.com',
             'color' => '#cb3414',
-            'password' => Hash::make('IkKkEoqg(Sh51iWL'),
+            'password' => Hash::make('Administrador'),
             'created_at' => date('Y-m-d H:i:s'),
             'updated_at' => date('Y-m-d H:i:s'),
         ])->assignRole('Administrador');
 
         User::create([
-            'name' => 'Yuliana Anaya',
-            'email' => 'yuliana.anaya@cantabriaeventos.com',
+            'name' => 'Planeación',
+            'email' => 'planeacion@cantabriaeventos.com',
             'color' => '#4833ca',
-            'password' => Hash::make('Mq5vzbmj03'),
+            'password' => Hash::make('Planeacion'),
             'created_at' => date('Y-m-d H:i:s'),
             'updated_at' => date('Y-m-d H:i:s'),
-        ])->assignRole('Administrador');
+        ])->assignRole('Planeacion');
+
+        User::create([
+            'name' => 'Ventas',
+            'email' => 'ventas@cantabriaeventos.com',
+            'color' => '#4833ca',
+            'password' => Hash::make('Ventas'),
+            'created_at' => date('Y-m-d H:i:s'),
+            'updated_at' => date('Y-m-d H:i:s'),
+        ])->assignRole('Ventas');
+
+        User::create([
+            'name' => 'Florista',
+            'email' => 'florista@cantabriaeventos.com',
+            'color' => '#4833ca',
+            'password' => Hash::make('Florista'),
+            'created_at' => date('Y-m-d H:i:s'),
+            'updated_at' => date('Y-m-d H:i:s'),
+        ])->assignRole('Florista');
+
+        User::create([
+            'name' => 'Banquete',
+            'email' => 'banquete@cantabriaeventos.com',
+            'color' => '#4833ca',
+            'password' => Hash::make('Banquete'),
+            'created_at' => date('Y-m-d H:i:s'),
+            'updated_at' => date('Y-m-d H:i:s'),
+        ])->assignRole('Banquete');
     }
 }

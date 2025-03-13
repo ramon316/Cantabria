@@ -244,7 +244,7 @@ return [
             'text'        => 'Calendario',
             'url'         => '/home',
             'icon'        => 'fas fa-calendar-week',
-            'can'          =>   'home.index'
+            'can'          => 'home.index'
         ],
         [
             'text'        => 'Clientes',
@@ -262,7 +262,7 @@ return [
             'text'        => 'Reuniónes',
             'url'         => '/meets',
             'icon'        => 'fas fa-handshake',
-            //'can'         =>  '',
+            'can'         =>  'meets.index',
         ],
         [
             'text'        => 'Servicios',
@@ -298,7 +298,7 @@ return [
             'text'        => 'Inventario',
             'url'         => '',
             'icon'        => 'fas fa-truck-loading',
-            'can'           =>  'inventory.tablecloth',
+            'can'           =>  'home.index',
             'submenu'     => [
                 [
                     'text'          =>'Bases florales',
@@ -313,7 +313,7 @@ return [
                 [
                     'text'          =>'Sillas',
                     'url'           => 'chairs',
-                    'can'           =>  'inventory.tablecloth'
+                    'can'           =>  'chairs.index'
                 ],
                 [
                     'text'          =>'Manteles',
@@ -323,7 +323,7 @@ return [
                 [
                     'text'          =>'Varios',
                     'url'           => 'others',
-                    'can'           =>  'inventory.tablecloth'
+                    'can'           =>  'others.index'
                 ],
             ],
         ],
@@ -339,7 +339,7 @@ return [
             'icon'        => 'fas fa-clipboard',
             'can'           =>  'logactivity.index',
         ],
-        [
+        /* [
             'text'        => 'Portada',
             'icon'        => 'far fa-address-book',
             'can'           =>  'reports.index',
@@ -351,7 +351,7 @@ return [
                     'can'           =>  'inventory.tablecloth'
                 ],
             ],
-        ],
+        ], */
     ],
 
     /*

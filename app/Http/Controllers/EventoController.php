@@ -54,8 +54,7 @@ class EventoController extends Controller
      */
     public function index()
     {
-        $eventos = evento::paginate(10);
-        return view('eventos.index', compact('eventos'));
+        return view('eventos.index');
     }
 
     /**
@@ -249,7 +248,18 @@ class EventoController extends Controller
 
     public function list()
     {
+        /* Verificamos si el usuario tien un rol de banquete
+        De esa manera solo mostraremos los eventos de la lista
+        que cuenten con el servicio de banquete */
+        if (Auth::user()->hasRole('Banquete')) {
+            $eventos = evento::wherehas('servicio', function ($query) {
+                $query->where('nombre', 'LIKE', '%Banquete%');
+            })->get();
+        } else {
+            $eventos = evento::where('start', '>=', date('Y-m-d'))->get();
+        }
         //Se muestras solo sus eventos creados, se utiliza eventos por que asi se llamo a la función del metodo USER.
+
         $eventos = evento::where('start', '>=', date('Y-m-d'))->get();
         /* Obtenemos la colección de meets */
         $meets = meet::where('start', '>=', date('Y-m-d'))->get();
@@ -306,8 +316,8 @@ class EventoController extends Controller
             //dd($anticipo['0']['anticipo']['monto'])
 
             /* format the date */
-            $fechaInicio = $this->formatearFecha($evento->start,false, true);
-            $fechaFin = $this->formatearFecha($evento->end,false,true);
+            $fechaInicio = $this->formatearFecha($evento->start, false, true);
+            $fechaFin = $this->formatearFecha($evento->end, false, true);
             $hours = $evento->start->diffInHours($evento->end);
             $fechaActual = $this->formatearFecha(Carbon::now());
             $fechaActualMayusc = $this->formatearFecha(Carbon::now(), true);
@@ -408,8 +418,8 @@ class EventoController extends Controller
             Trabaja verificando si la relación existe y aparte
             que la propiedad no sea vacia. */
             // if (isEmpty($evento->contract) && !empty($evento->cliente?->email)) {
-                /* Procedemos a mandar el correo  */
-                /* $cliente = cliente::find($evento->cliente_id);
+            /* Procedemos a mandar el correo  */
+            /* $cliente = cliente::find($evento->cliente_id);
                 $cliente->notify(new contractInformation());
                 $evento->contract = Carbon::now()->format('Y-m-d H:i:s');
                 $evento->save();
@@ -423,9 +433,9 @@ class EventoController extends Controller
              */
             $name = $evento->id . '_' . $slugName . '_' . $today . '_contrato.pdf';
             if ($evento->title == "Social") {
-                $pdf = PDF::loadView('/eventos/contrato', compact('evento', 'fecha', 'fechas', 'servicios', 'servicesExist','valores'));
+                $pdf = PDF::loadView('/eventos/contrato', compact('evento', 'fecha', 'fechas', 'servicios', 'servicesExist', 'valores'));
             } else {
-                $pdf = PDF::loadView('/eventos/contratoEmpresa', compact('evento', 'fechas', 'fecha',  'servicios', 'servicesExist','valores'));
+                $pdf = PDF::loadView('/eventos/contratoEmpresa', compact('evento', 'fechas', 'fecha',  'servicios', 'servicesExist', 'valores'));
             }
 
             /* storage pdf */
@@ -531,13 +541,10 @@ class EventoController extends Controller
 
         if ($mayuscula) {
             return strtoupper("{$diaTexto} de {$mesNombre} de {$anioTexto}");
-        }
-        else{
+        } else {
             // Formato sin hora
-        return "{$carbonFecha->day} de {$mesNombre} del {$carbonFecha->year} ({$diaTexto} DE {$mesNombreMayusc} DE {$anioTexto})";
+            return "{$carbonFecha->day} de {$mesNombre} del {$carbonFecha->year} ({$diaTexto} DE {$mesNombreMayusc} DE {$anioTexto})";
         }
-
-
     }
 
 
@@ -554,5 +561,4 @@ class EventoController extends Controller
 
         return "{$diaTexto} de {$mesNombre} del {$anioTexto}";
     }
-
 }
