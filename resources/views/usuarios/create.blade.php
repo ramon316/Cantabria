@@ -16,7 +16,7 @@
         <!--Esta es el apartado de los mensajes-->
         @if(session('mensaje'))
         <div class="alert {{session('estilo')}}" role="alert">
-        <strong>{{session('mensaje')}}</strong> 
+        <strong>{{session('mensaje')}}</strong>
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
@@ -45,6 +45,16 @@
                     <div class="invalid-feedback d-block" role="alert"> {{$message}}</div>
                 @enderror
                 <small id="helpNombre" class="form-text text-muted">Ingresa el correo del usuario.</small>
+            </div>
+
+            <div class="form-group">
+                <label for="roles">Rol del usuario:</label>
+                <select name="Rol" id="" class="form-control" :selected="old('Rol')">
+                    <option value="">--Selecciona un rol--</option>
+                    @foreach ($allRolesInDatabase as $Role)
+                    <option value="{{$Role}}">{{$Role}}</option>
+                    @endforeach
+                </select>
             </div>
 
             <div class="form-group">
@@ -79,7 +89,7 @@
         </form>
     </div>
 </div>
-    
+
 @stop
 
 @section('css')

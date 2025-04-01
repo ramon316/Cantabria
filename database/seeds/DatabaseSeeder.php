@@ -29,11 +29,12 @@ class DatabaseSeeder extends Seeder
         $this->call(RoleSeeder::class);
         $this->call(UserSeeder::class);
         /* Comentar a partir de aquí para limpiar la DB */
-        $this->call(ClienteSeeder::class);
+       /*  $this->call(ClienteSeeder::class);
         $this->call(EventoSeeder::class);
         $this->call(ServicioSeeder::class);
         $this->call(AcountSeeder::class);
         $this->call(ChecklistSeeder::class);
+        $this->call(MeetSeeder::class); */
         /* Comentar hasta aquí */
         $this->call(tableclothbaseSeeder::class);
         $this->call(tableclothSeeder::class);
@@ -43,7 +44,6 @@ class DatabaseSeeder extends Seeder
         $this->call(tipoSeeder::class);
         $this->call(daysSeeder::class);
         $this->call(ReasonSeeder::class);
-        $this->call(MeetSeeder::class);
         /* Mandamos llamar el roles */
     }
 }

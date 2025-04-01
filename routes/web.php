@@ -93,6 +93,7 @@ Route::get('/usuarios/create', [UsuarioController::class,'create'])->middleware(
 Route::post('/usuarios',[UsuarioController::class,'store'])->middleware('can:usuarios.store')->name('usuarios.store');
 Route::get('/usuarios/{usuario}/edit', [UsuarioController::class, 'edit'])->middleware('can:usuarios.edit')->name('usuarios.edit');
 Route::put('/usuarios/{usuario}', [UsuarioController::class, 'update'])->middleware('can:usuarios.update')->name('usuarios.update');
+Route::delete('/usuarios/{usuario}', [UsuarioController::class, 'destroy'])->middleware('can:usuarios.destroy')->name('usuarios.destroy');
 
 /**Perfil */
 Route::get('/perfils', [PerfilController::class,'index'])->middleware('can:perfils.index')->name('perfils.index');

@@ -20,7 +20,7 @@
                     <tr>
                         <th>Nombre</th>
                         <th>Correo</th>
-                        <th>Categoría</th>
+                        <th>Role</th>
                         <th>Opciones</th>
                     </tr>
                 </thead>
@@ -29,16 +29,15 @@
                     <tr>
                         <td>{{ $usuario->name }}</td>
                         <td>{{ $usuario->email }}</td>
-                        <td>@if ($usuario->hasRole('Administrador'))
-                                Administrador
-                            @elseif ($usuario->hasRole('Usuario'))
-                                Usuario
-                            @else
-                                Sin Rol
-                            @endif
-                        </td>
-                        <td width="10px">
-                            <a class="btn btn-primary" href="{{ route('usuarios.edit', ['usuario' =>$usuario->id]) }}">Modificar</a>
+                        <td>{{ $usuario->getRoleNames()->first() }}</td>
+                        <td width="100px" class="d-flex gap-1">
+                            <a class="btn btn-primary mr-2" href="{{ route('usuarios.edit', ['usuario' =>$usuario->id]) }}">Modificar</a>
+                            {{-- <a class="btn btn-danger" href="">Eliminar</a> --}}
+                            <form action="{{ route('usuarios.destroy', $usuario)}}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger">Eliminar</button>
+                            </form>
                         </td>
                     </tr>
                     @endforeach
