@@ -365,6 +365,18 @@ class tableclothSeeder extends Seeder
             'tabletype' =>  'Redonda',
         ]);
 
+        tablecloth::create([
+            'name'  =>  'Rose gold',
+            'amount'    =>  '10',
+            'tonality'  =>  'Negro',
+            'tabletype' =>  'Imperial',
+        ]);
+        tablecloth::create([
+            'name'  =>  'Rose gold',
+            'amount'    =>  '10',
+            'tonality'  =>  'Ivory',
+            'tabletype' =>  'Imperial',
+        ]);
 
     }
 }

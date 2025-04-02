@@ -414,6 +414,21 @@ class floralbaseSeeder extends Seeder
             'amount'    =>  '5',
             'category'  =>  'Otros',
         ]);
+        floralbase::create([
+            'name'      =>  'Portería',
+            'amount'    =>  '5',
+            'category'  =>  'Dorada',
+        ]);
+        floralbase::create([
+            'name'      =>  'Portería',
+            'amount'    =>  '5',
+            'category'  =>  'Negra',
+        ]);
+        floralbase::create([
+            'name'      =>  'Portería',
+            'amount'    =>  '5',
+            'category'  =>  'Plateada',
+        ]);
 
     }
 }
