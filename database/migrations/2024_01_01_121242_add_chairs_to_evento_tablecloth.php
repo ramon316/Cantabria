@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('evento_tablecloth', function (Blueprint $table) {
-            $table->integer('chairs');
+            $table->integer('chairs')->nullable()->after('amount');
         });
     }
 

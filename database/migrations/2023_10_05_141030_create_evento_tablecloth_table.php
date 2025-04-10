@@ -18,7 +18,7 @@ class CreateEventoTableclothTable extends Migration
             $table->foreignId('evento_id')->references('id')->on('eventos')->constrained()->onDelete('cascade');
             $table->foreignId('tablecloth_id')->references('id')->on('tablecloths')->onDelete('cascade');
             $table->foreignId('tableclothbase_id')->references('id')->on('tableclothbases')->onDelete('cascade');
-            $table->foreignId('chair_id')->references('id')->on('chairs')->onDelete('cascade');
+            $table->foreignId('chair_id')->nullable()->references('id')->on('chairs')->onDelete('cascade');
             $table->integer('amount');
             $table->timestamps();
         });

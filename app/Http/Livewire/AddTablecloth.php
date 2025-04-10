@@ -28,6 +28,8 @@ class AddTablecloth extends Component
     public $tablecolorbases = [];
     public $chairtypes = [];
     public $chaircolors = [];
+    public $chairUpdates = [];
+    public $availableColors=[];
 
     protected $listeners = ['render'];
 
@@ -46,10 +48,7 @@ class AddTablecloth extends Component
         'name'  => 'required',
         'color' =>  'required',
         'colorbase' =>  'required',
-        'chairtype' =>  'required',
-        'chaircolor'    =>  'required',
         'amount'    =>  'required|numeric|min:1',
-        'chairs'    =>  'required|numeric|min:1'
         ];
 
     public function mount(){
@@ -58,33 +57,110 @@ class AddTablecloth extends Component
         $this->tablecolorbases = collect();
         $this->chairtypes = collect();
         $this->chaircolors = collect();
+
+        // Cargar los datos existentes para los registros
+    $records = DB::table('evento_tablecloth')
+    ->join('eventos', 'eventos.id', '=', 'evento_tablecloth.evento_id')
+    ->join('tablecloths', 'evento_tablecloth.tablecloth_id', '=', 'tablecloths.id')
+    ->join('tableclothbases', 'evento_tablecloth.tableclothbase_id', '=', 'tableclothbases.id')
+    ->leftJoin('chairs', 'evento_tablecloth.chair_id', '=', 'chairs.id')
+    ->where('eventos.id', '=', $this->evento->id)
+    ->select([
+        'evento_tablecloth.id',
+        'evento_tablecloth.chairs as chairs_count',
+        'chairs.typechair',
+        'chairs.color as chair_color',
+    ])
+    ->get();
+
+// Inicializar $chairUpdates con los valores existentes
+foreach ($records as $record) {
+    if ($record->typechair && $record->chair_color) {
+        $this->chairUpdates[$record->id] = [
+            'chairtype' => $record->typechair,
+            'chaircolor' => $record->chair_color,
+            'chairs' => $record->chairs_count
+        ];
+
+        // También inicializar los colores disponibles para este tipo de silla
+        $this->availableColors[$record->id] = chair::where('typechair', $record->typechair)
+            ->select('color')
+            ->distinct()
+            ->orderBy('color')
+            ->get()
+            ->pluck('color')
+            ->toArray();
+    }
+}
+
+
     }
 
     public function render()
     {
+
         $this->tabletypes = tablecloth::select('tabletype')->distinct('tabletype')->get();
         $this->tablenames = tablecloth::where('tabletype', $this->type)->orderby('name')->select('name')->distinct('name')->get();
         $this->tablecolors = tablecloth::where('name', $this->name)->where('tabletype', $this->type)->orderby('tonality')->select('tonality')->distinct('tonality')->get();
         $this->chairtypes = chair::select('typechair')->distinct('typechair')->orderby('typechair')->get();
         $this->chaircolors = chair::select('color')->whereTypechair($this->chairtype)->orderby('color')->get();
+        $this->tablecolorbases = tableclothbase::where('tabletype', $this->type)->orderby('color')->select('color')->distinct('color')->get();
         /* find tablecloths rows */
-        $records = DB::select('Select
+        /* $records = DB::select('Select
         evento_tablecloth.id,
         tablecloths.tabletype,
         tablecloths.name,
         tablecloths.tonality,
         tableclothbases.color,
-        chairs.typechair,
-        chairs.color as chaircolor,
         evento_tablecloth.amount,
+        chairs.typechair,
+        chairs.color,
         evento_tablecloth.chairs
-        from evento_tablecloth JOIN eventos on eventos.id = evento_tablecloth.evento_id
+        from evento_tablecloth
+        JOIN eventos on eventos.id = evento_tablecloth.evento_id
         join tablecloths on evento_tablecloth.tablecloth_id = tablecloths.id
         join tableclothbases on evento_tablecloth.tableclothbase_id = tableclothbases.id
         join chairs on evento_tablecloth.chair_id = chairs.id
-        where eventos.id = ' . $this->evento->id);
+        where eventos.id = ' . $this->evento->id); */
+        $records = DB::table('evento_tablecloth')
+        ->join('eventos', 'eventos.id', '=', 'evento_tablecloth.evento_id')
+        ->join('tablecloths', 'evento_tablecloth.tablecloth_id', '=', 'tablecloths.id')
+        ->join('tableclothbases', 'evento_tablecloth.tableclothbase_id', '=', 'tableclothbases.id')
+        ->leftJoin('chairs', 'evento_tablecloth.chair_id', '=', 'chairs.id')
+        ->where('eventos.id', '=', $this->evento->id)
+        ->select([
+            'evento_tablecloth.id',
+            'tablecloths.tabletype',
+            'tablecloths.name',
+            'tablecloths.tonality',
+            'tableclothbases.color as base_color',
+            'evento_tablecloth.amount',
+            'evento_tablecloth.chairs',
+            'chairs.typechair',
+            'chairs.color as chair_color',
+        ])
+        ->get();
 
-        return view('livewire.add-tablecloth')->with('records', $records);
+        // Inicializa $availableColors para todos los registros
+    foreach ($records as $record) {
+        if (!isset($this->availableColors[$record->id])) {
+            $this->availableColors[$record->id] = [];
+        }
+
+        // Si ya tenemos un tipo de silla seleccionado, cargamos los colores
+        if (isset($this->chairUpdates[$record->id]['chairtype'])) {
+            $this->availableColors[$record->id] = chair::where('typechair', $this->chairUpdates[$record->id]['chairtype'])
+                ->select('color')
+                ->distinct()
+                ->orderBy('color')
+                ->get()
+                ->pluck('color')
+                ->toArray();
+        }
+    }
+
+        return view('livewire.add-tablecloth')
+        ->with('records', $records);
     }
 
     public function UpdatedType($type){
@@ -100,8 +176,60 @@ class AddTablecloth extends Component
                             /* comparar si el type existe en el nuevo tablecolors */
     }
 
-    public function UpdatedColor(){
-        $this->tablecolorbases = tableclothbase::where('tabletype', $this->type)->get();
+
+    public function UpdatedChairUpdates($value, $key)
+{
+    $parts = explode('.', $key);
+    $recordId = $parts[0];
+    $field = $parts[1];
+
+    // Si estamos actualizando el tipo de silla, actualizar los colores disponibles
+    // Si estamos actualizando el tipo de silla, actualizar los colores disponibles
+    if ($field === 'chairtype') {
+        // Obtener los colores disponibles para este tipo de silla
+        $this->availableColors[$recordId] = chair::where('typechair', $value)
+            ->select('color')
+            ->distinct()
+            ->orderBy('color')
+            ->get()
+            ->pluck('color')
+            ->toArray();
+    }
+}
+
+    public function updateChairs()
+    {
+        foreach ($this->chairUpdates as $recordId => $data) {
+            // Validar que tenemos todos los datos necesarios
+            if (empty($data['chairtype']) || empty($data['chaircolor']) || empty($data['chairs'])) {
+                continue; // Saltar registros incompletos
+            }
+
+            // Encontrar la silla correspondiente
+            $chair = chair::select('id')
+                ->whereTypechair($data['chairtype'])
+                ->whereColor($data['chaircolor'])
+                ->first();
+
+            if (!$chair) {
+                continue; // No se encontró la silla
+            }
+
+            // Actualizar el registro
+            DB::table('evento_tablecloth')
+                ->where('id', $recordId)
+                ->update([
+                    'chair_id' => $chair->id,
+                    'chairs' => $data['chairs'],
+                    'updated_at' => date('Y-m-d H:i:s')
+                ]);
+        }
+
+        // Limpiar después de actualizar
+       /*  $this->chairUpdates = []; */
+        $this->emit('render');
+
+        flasher('Sillas actualizadas correctamente', 'success');
     }
 
     public function addTablecloth(){
@@ -110,7 +238,7 @@ class AddTablecloth extends Component
         /* take the amount */
         $amount= $data['amount'];
         /* take chairs */
-        $chairs = $data['chairs'];
+       /*  $chairs = $data['chairs']; */
 
         /* find tablecloth id */
         $tablecloth  = tablecloth::select('id')->
@@ -126,21 +254,21 @@ class AddTablecloth extends Component
         first();
 
         /* find the chair */
-        $chair = chair::select('id')->
+        /* $chair = chair::select('id')->
         whereTypechair($data['chairtype'])->
         whereColor($data['chaircolor'])->
-        first();
+        first(); */
 
         /* Insert into row */
-        if (isset($amount, $tablecloth, $tablecolorbase, $chair)) {
+        if (isset($amount, $tablecloth, $tablecolorbase)) {
             $register = DB::table('evento_tablecloth')->
             insert([
                 'evento_id' => $this->evento->id,
                 'tablecloth_id' =>  $tablecloth->id,
                 'tableclothbase_id' =>  $tablecolorbase->id,
-                'chair_id'  =>  $chair->id,
+                /* 'chair_id'  =>  $chair->id, */
                 'amount'    =>  $amount,
-                'chairs'    =>  $chairs,
+                /* 'chairs'    =>  $chairs, */
                 'created_at'    =>  date('Y-m-d H:i:s'),
                 'updated_at'    =>  date('Y-m-d H:i:s'),
             ]);
@@ -186,5 +314,6 @@ class AddTablecloth extends Component
         $this->emit('render');
 
     }
+
 
 }

@@ -8,9 +8,9 @@
                     <div class="col-md-2 mt-1">
                         <select class="form-control" wire:model="type">
                             <option value="">--Tipo de mesa--</option>
-                           @foreach ($tabletypes as $tipo)
-                               <option value="{{$tipo->tabletype}}">{{$tipo->tabletype}}</option>
-                           @endforeach
+                            @foreach ($tabletypes as $tipo)
+                            <option value="{{$tipo->tabletype}}">{{$tipo->tabletype}}</option>
+                            @endforeach
                         </select>
                         @error('type')
                         <div class="p-2 mt-2 text-xs text-danger">
@@ -24,10 +24,10 @@
                             @if ($tablenames->count()==0)
                             <option value="">--Sin valores--</option>
                             @else
-                                <option value="">--Nombre del mantel--</option>
-                                @foreach ($tablenames as $tablename)
-                                    <option value="{{$tablename->name}}">{{$tablename->name}}</option>
-                                @endforeach
+                            <option value="">--Nombre del mantel--</option>
+                            @foreach ($tablenames as $tablename)
+                            <option value="{{$tablename->name}}">{{$tablename->name}}</option>
+                            @endforeach
                             @endif
                         </select>
                         @error('name')
@@ -39,14 +39,14 @@
                     {{-- color tablecloth --}}
                     <div class="col-md-2 mt-1">
                         <select class="form-control" wire:model="color">
-                        @if ($tablecolors->count() == 0 or $tablenames->count() == 0)
+                            @if ($tablecolors->count() == 0 or $tablenames->count() == 0)
                             <option>--Sin valores--</option>
-                        @else
+                            @else
                             <option value="">--Tonalidad de mantel--</option>
                             @foreach ($tablecolors as $tablecolor)
-                                <option value="{{$tablecolor->tonality}}">{{$tablecolor->tonality}}</option>
+                            <option value="{{$tablecolor->tonality}}">{{$tablecolor->tonality}}</option>
                             @endforeach
-                        @endif
+                            @endif
                         </select>
                         @error('color')
                         <div class="p-2 mt-2 text-xs text-danger">
@@ -57,14 +57,15 @@
                     {{-- Color de la base --}}
                     <div class="col-md-2 mt-1">
                         <select class="form-control" wire:model="colorbase">
-                        @if ($tablecolorbases->count() == 0 or $tablenames->count() == 0 or $tabletypes->count()==0)
+                            @if ($tablecolorbases->count() == 0 and $tablenames->count() == 0 and
+                            $tabletypes->count()==0)
                             <option>--Sin valores--</option>
-                        @else
+                            @else
                             <option value="">--Color de base--</option>
                             @foreach ($tablecolorbases as $tablecolorbase)
-                                <option value="{{$tablecolorbase->color}}">{{$tablecolorbase->color}}</option>
+                            <option value="{{$tablecolorbase->color}}">{{$tablecolorbase->color}}</option>
                             @endforeach
-                        @endif
+                            @endif
                         </select>
                         @error('color')
                         <div class="p-2 mt-2 text-xs text-danger">
@@ -73,15 +74,15 @@
                         @enderror
                     </div>
                     {{-- Tipo de silla --}}
-                    <div class="col-md-2 mt-1">
+                    {{-- <div class="col-md-2 mt-1">
                         <select class="form-control" wire:model='chairtype'>
                             @if ($chairtypes->count() == 0)
-                                <option value="">--Sin valores--</option>
+                            <option value="">--Sin valores--</option>
                             @else
                             <option value="">--Tipo silla--</option>
-                                @foreach ($chairtypes as $chairtype)
-                                    <option value="{{$chairtype->typechair}}">{{$chairtype->typechair}}</option>
-                                @endforeach
+                            @foreach ($chairtypes as $chairtype)
+                            <option value="{{$chairtype->typechair}}">{{$chairtype->typechair}}</option>
+                            @endforeach
                             @endif
                         </select>
                         @error('chairtype')
@@ -89,16 +90,16 @@
                             {{$message}}
                         </div>
                         @enderror
-                    </div>
+                    </div> --}}
                     {{-- Color de silla --}}
-                    <div class="col-md-2 mt-1">
+                    {{-- <div class="col-md-2 mt-1">
                         <select class="form-control" wire:model='chaircolor'>
                             @if ($chaircolors->count() == 0)
-                                <option value="">--Sin valor--</option>
+                            <option value="">--Sin valor--</option>
                             @else
                             <option value="">--Color silla--</option>
                             @foreach ($chaircolors as $chaircolor)
-                                <option value="{{$chaircolor->color}}">{{$chaircolor->color}}</option>
+                            <option value="{{$chaircolor->color}}">{{$chaircolor->color}}</option>
                             @endforeach
                             @endif
                         </select>
@@ -107,7 +108,7 @@
                             {{$message}}
                         </div>
                         @enderror
-                    </div>
+                    </div> --}}
                     <div class="col-md-2 mt-1">
                         <input class="form-control" type="number" placeholder="Cantidad de mesas" wire:model='amount'>
                         @error('amount')
@@ -116,14 +117,14 @@
                         </div>
                         @enderror
                     </div>
-                    <div class="col-md-2 mt-1">
+                    {{-- <div class="col-md-2 mt-1">
                         <input class="form-control" type="number" placeholder="Cantidad de sillas" wire:model='chairs'>
                         @error('chairs')
                         <div class="p-2 mt-2 text-xs text-danger">
                             {{$message}}
                         </div>
                         @enderror
-                    </div>
+                    </div> --}}
                     <div class="col text-right mt-1">
                         <button class="btn btn-primary" wire:click='addTablecloth'>Agregar</button>
                     </div>
@@ -152,18 +153,44 @@
                             <td>{{$record->tabletype}}</td>
                             <td>{{$record->name}}</td>
                             <td>{{$record->tonality}}</td>
-                            <td>{{$record->color}}</td>
-                            <td>{{$record->typechair}}</td>
-                            <td>{{$record->chaircolor}}</td>
+                            <td>{{$record->base_color}}</td>
+                            <td>
+                                <select name="chairType" id="" class="form-control"
+                                    wire:model="chairUpdates.{{ $record->id }}.chairtype">
+                                    <option value="">--</option>
+
+                                    @foreach ($chairtypes as $type)
+                                    <option value="{{$type->typechair}}">{{$type->typechair}}</option>
+                                    @endforeach
+                                </select>
+                            </td>
+                            <td>
+                                <select name="chairType" id="" class="form-control"
+                                    wire:model='chairUpdates.{{$record->id}}.chaircolor'>
+                                    <option value="">--</option>
+                                    @if(isset($chairUpdates[$record->id]['chairtype']) &&
+                                    isset($availableColors[$record->id]))
+                                    @foreach($availableColors[$record->id] as $color)
+                                    <option value="{{ $color }}">{{ $color }}</option>
+                                    @endforeach
+                                    @endif
+                                </select>
+                            </td>
                             <td>{{$record->amount}}</td>
-                            <td>{{$record->chairs}}</td>
-                            <td><a class="btn btn-danger" wire:click="deleteTablecloth({{$record->id}})">Eliminar</a></td>
+                            <td>
+                                <input type="number" name="chairs" class="form-control" wire:model='chairUpdates.{{$record->id}}.chairs'>
+                            </td>
+                            <td><a class="btn btn-danger" wire:click="deleteTablecloth({{$record->id}})">Eliminar</a>
+                            </td>
                         </tr>
                         @endforeach
+                        <div>
+                            <button wire:click='updateChairs' class="btn btn-primary">Actualizar Sillas</button>
+                        </div>
                     </tbody>
                 </table>
                 @else
-                    Este evento aun no cuenta con mantelería registrada.
+                Este evento aun no cuenta con mantelería registrada.
                 @endif
             </div>
         </div>
