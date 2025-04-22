@@ -89,6 +89,8 @@ class RoleSeeder extends Seeder
 
         /* manteleria */
         Permission::create(['name' => 'manteleria.create','description'=>'Capturar mantelería'])->syncRoles([$RoleAdministrador, $RolePlaneacion]);
+        Permission::create(['name' => 'manteleria.formato','description'=>'Generar formato de mantelería'])->syncRoles([$RoleAdministrador, $RolePlaneacion]);
+        Permission::create(['name' => 'manteleria.store','description'=>'Guardar mantelería'])->syncRoles([$RoleAdministrador, $RolePlaneacion]);
 
         /* Base Floral */
         Permission::create(['name' => 'basefloral.create','description'=>'Capturar bases florales'])->syncRoles([$RoleAdministrador, $RolePlaneacion, $RoleFlorista]);

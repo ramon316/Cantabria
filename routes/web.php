@@ -127,9 +127,10 @@ Route::post('/cuentas',[CuentaController::class,'store'])->middleware('can:cuent
 /**Manteleria */
 Route::get('/manteleria/{evento}',[ManteleriaController::class,'create'])->middleware('can:manteleria.create')->name('manteleria.create');
 Route::post('/manteleria',[ManteleriaController::class,'store'])->middleware('can:manteleria.store')->name('manteleria.store');
+Route::get('/manteleria/{evento}/formato',[ManteleriaController::class,'formato'])->middleware('can:manteleria.formato')->name('manteleria.formato');
 
 /* Base floral */
-route::get('/basefloral/{evento}',[BaseFloralController::class,'create'])->name('basefloral.create');
+route::get('/basefloral/{evento}',[BaseFloralController::class,'create'])->middleware('can:basefloral.create')->name('basefloral.create');
 
 /**Servicios */
 Route::get('/servicios',[ServicioController::class,'index'])->middleware('can:servicios.index')->name('servicios.index');

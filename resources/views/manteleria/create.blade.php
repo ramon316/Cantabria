@@ -11,9 +11,6 @@
       <div class="col-md-9">
         <h1 class="text-center">Guardar Mantelería del evento</h1>
       </div>
-      <div class="col-md-2">
-        <a href="" class="btn btn-info">Imprimir Mantelería</a>
-      </div>
     </div>
 </div>
 @stop

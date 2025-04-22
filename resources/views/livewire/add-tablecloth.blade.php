@@ -131,6 +131,18 @@
                 </div>
             </div>
             <div class="card-body">
+                <div class="row">
+                    <div>
+                        <button wire:click='updateChairs' class="btn btn-primary">Actualizar Sillas</button>
+                    </div>
+                    <div class="col-md-2">
+                        @if ($evento->tablecloth()->count() > 0 )
+                        <a href="{{ route('manteleria.formato',['evento'=>$evento->id]) }}"
+                            class="btn btn-info">Imprimir Mantelería</a>
+                        @endif
+                    </div>
+
+                </div>
                 @if (count($records) >= 1)
                 <table class="table table-striped">
                     <thead>
@@ -178,15 +190,13 @@
                             </td>
                             <td>{{$record->amount}}</td>
                             <td>
-                                <input type="number" name="chairs" class="form-control" wire:model='chairUpdates.{{$record->id}}.chairs'>
+                                <input type="number" name="chairs" class="form-control"
+                                    wire:model='chairUpdates.{{$record->id}}.chairs'>
                             </td>
                             <td><a class="btn btn-danger" wire:click="deleteTablecloth({{$record->id}})">Eliminar</a>
                             </td>
                         </tr>
                         @endforeach
-                        <div>
-                            <button wire:click='updateChairs' class="btn btn-primary">Actualizar Sillas</button>
-                        </div>
                     </tbody>
                 </table>
                 @else
