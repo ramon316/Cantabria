@@ -54,19 +54,14 @@ class ServicioController extends Controller
         $this->validate($request, [
             'nombre'    => 'required',
             'costo'     => 'required|numeric|min:1',
-            'dias'      =>  'required',
             'año'       =>  'required',
             'category'  =>  'required'
-
         ]);
 
         servicio::create([
             'nombre'    =>  $request->nombre,
             'costo'     =>  $request->costo,
-            'invitados' =>  $request->invitados,
-            'descripcion'    =>  $request->descripcion,
             'categoria'      =>  $request->category,
-            'dias'          =>  $request->dias,
             'año'           =>  $request->año,
         ]);
 
