@@ -18,6 +18,7 @@ class AddService extends Component
     /* Variables */
     public $search = '';
     public $servicioName = '';
+    public $servicioId;
     public $count = 1;
     public $gift;
     public $evento;
@@ -32,6 +33,7 @@ class AddService extends Component
     public function Addservice(servicio $servicio)
     {
         $this->servicioName = $servicio->nombre;
+        $this->servicioId = $servicio->id;
     }
 
     public function close()
@@ -40,14 +42,15 @@ class AddService extends Component
         $this->gift = '';
     }
 
-    public function save($value, $name, $gift)
+    public function save($value, $id, $gift)
     {
+
         /* Verify the value of $gift not empty */
         if ($gift == "") {
             $gift = 0;
         }
 
-        $service = servicio::where('nombre', 'LIKE', $name)->first();
+        $service = servicio::find($id);
         $this->evento->servicio()->attach($service->id, ['cantidad' => $value, 'costo' => $service->costo, 'regalo' => $gift]);
         $this->emit('render');
         /* Cerramos el modal */

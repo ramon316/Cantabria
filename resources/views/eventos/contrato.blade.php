@@ -19,7 +19,7 @@
 
         body {
             /* font-family: 'Tahoma'; */
-            font-family: Tahoma, "Trebuchet MS", sans-serif;
+            /*font-family: Tahoma, "Trebuchet MS", sans-serif;*/
             background-size: cover;
             background-repeat: no-repeat;
             margin: 0;

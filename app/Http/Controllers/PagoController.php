@@ -63,7 +63,7 @@ class PagoController extends Controller
             'monto'=>   'required|integer',
             'cuenta'    =>  'required',
         ]);
-        //return $request;
+
         DB::table('pagos')->insert([
             'cliente_id'    =>  $request['cliente'],
             'user_id'       =>  Auth::user()->id,
@@ -96,10 +96,10 @@ class PagoController extends Controller
         $today = Carbon::now()->format('d-m-Y');
         $hoy = Carbon::now()->isoFormat('d \d\e MMMM \d\e Y');
         $now = Carbon::now()->format('d-m-Y');
-        $nowText = $this->formatearFecha($now);
+        $nowText = $this->formatearFecha($evento->start);
 
         /* Información de cliente */
-        $cliente = cliente::find($request['cliente'])->pluck('nombre')->first();
+        $cliente = cliente::where('id', $request['cliente'])->value('nombre');
         $clienteSlug = Str::slug($cliente);
         /* Información del usuario  */
         $user = Auth::user()->name;

@@ -50,7 +50,6 @@ class ServicioController extends Controller
         //Ahora vamos a realizar la validación dependiendo de cada servicio
         //dd($request->all());
 
-
         $this->validate($request, [
             'nombre'    => 'required',
             'costo'     => 'required|numeric|min:1',

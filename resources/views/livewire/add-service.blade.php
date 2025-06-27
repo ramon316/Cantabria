@@ -30,7 +30,7 @@
                             <tr data-widget="expandable-table" aria-expanded="false">
                                 <td>{{$servicio->nombre}}</td>
                                 <td>{{$servicio->pivot->cantidad}}</td>
-                                <td>@dinero($servicio->costo)</td>
+                                <td>@dinero($servicio->costo * $servicio->pivot->cantidad)</td>
                                 <td>
                                     @if ($servicio->pivot->regalo)
                                     Si
@@ -138,7 +138,7 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal" wire:click='close'>Cerrar</button>
                     <button type="button" class="btn btn-primary"
-                        wire:click="save({{$count}},'{{$servicioName}}', '{{$gift}}')">Guardar</button>
+                        wire:click="save({{$count}},'{{$servicioId}}', '{{$gift}}')">Guardar</button>
                 </div>
             </div>
         </div>
