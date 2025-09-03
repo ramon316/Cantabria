@@ -160,7 +160,7 @@
                         <tr>
                             <td scope="row">{{$servicio->nombre}}</td>
                             <td>{{$servicio->pivot->cantidad}}</td>
-                            <td>$@dinero($servicio->pivot->costo)</td>
+                            <td>$@dinero($servicio->pivot->costo * $servicio->pivot->cantidad)</td>
                             <td>@if ($servicio->pivot->regalo == 1)
                                 Si
                                 @else

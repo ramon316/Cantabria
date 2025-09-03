@@ -9,6 +9,7 @@ use Livewire\WithPagination;
 class ServicesIndex extends Component
 {
     use WithPagination;
+    protected $paginationTheme = 'bootstrap';
 
     public $perPage = 10;
     public $sortField = 'nombre';

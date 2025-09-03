@@ -103,13 +103,14 @@ class PagoController extends Controller
         $clienteSlug = Str::slug($cliente);
         /* Información del usuario  */
         $user = Auth::user()->name;
+        $role = Auth::user()->getRoleNames()->first();
         /* Monto */
         $monto = $request['monto'];
         $montoTexto= NumerosALetras::convertir($request['monto'],'',false,'');
         /* Name */
         $name = $clienteSlug . '_' .$today . '.pdf';
         /* Generación de pdf */
-        $pdf = PDF::loadView('/pagos/recibo',compact('cliente','user','evento','nowText','monto', 'montoTexto', 'pendiente','pendienteText', 'hoy','tipo','folio'));
+        $pdf = PDF::loadView('/pagos/recibo',compact('cliente','user','evento','nowText','monto', 'montoTexto', 'pendiente','pendienteText', 'hoy','tipo','folio','role'));
         $result =  $pdf->setPaper('a4')->stream($name);
 
         $content = $pdf->download()->getOriginalContent();

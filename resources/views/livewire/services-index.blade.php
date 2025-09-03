@@ -40,7 +40,7 @@
         </div>
 
         <div class="card-footer">
-            {{$services->links('pagination::bootstrap-4')}}
+            {{$services->links()}}
         </div>
     </div>
 </div>

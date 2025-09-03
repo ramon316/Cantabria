@@ -28,6 +28,10 @@
         .label-left {
             float: left;
         }
+        .role{
+            font-size: 11px;
+            margin-left: 7rem;
+        }
     </style>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -59,13 +63,13 @@
         <label for="">El monto total de la transacción es el siguiente:</label>
     </div>
     <div>
-        <label>Monto: $@dinero($monto) ({{$montoTexto}} 00/100 m.n.) pesos.</label><br>
+        <label>Monto: $@dinero($monto) ({{$montoTexto}} 00/100 pesos m.n.)</label><br>
         <label>Tipo de pago: {{$tipo}}</label><br>
-        <label for="">Saldo: $@dinero($pendiente) ({{$pendienteText}} 00/100 m.n.) pesos.</label>
+        <label for="">Saldo: $@dinero($pendiente) ({{$pendienteText}} 00/100 pesos m.n.)</label>
     </div>
     <div>
-        <label for="">Recibido por: <strong>{{$user}}</strong></label>
-    </div>
+        <label for="">Recibido por: <strong>{{$user}}</strong> </label><br>
+    <div class="role">{{ $role }}</div>
     <br><br><br>
     <div>
         Firma y Sello:
