@@ -24,6 +24,12 @@ trait CotizacionTrait
             $costoCotizacion = $servicio->pivot->costo  * $servicio->pivot->cantidad + $costoCotizacion;
          }
       }
+
+      // Restar descuento si existe
+      if ($cotizacion->discount) {
+         $costoCotizacion = $costoCotizacion - $cotizacion->discount->amount;
+      }
+
       return $costoCotizacion;
    }
 

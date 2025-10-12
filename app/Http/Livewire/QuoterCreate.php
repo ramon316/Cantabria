@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\servicio;
+use App\Discount;
 use App\Traits\CotizacionTrait;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -17,8 +18,10 @@ class QuoterCreate extends Component
     public $cotizacion;
     public $search = '';
     public $servicioName = '';
+    public $servicioId = '';
     public $count = 1;
     public $gift;
+    public $descuento = 0;
 
     protected $listeners = ['render'];
 
@@ -30,6 +33,7 @@ class QuoterCreate extends Component
     public function Addservice(servicio $servicio)
     {
        $this->servicioName = $servicio->nombre;
+       $this->servicioId = $servicio->id;
     }
 
     public function deleteService($id)
@@ -44,13 +48,14 @@ class QuoterCreate extends Component
         $this->servicioName = '';
     }
 
-    public function save($value, $name)
+    public function save($value, $id)
     {
         /* Verify the value of $gift not empty */
         if ($this->gift == "") {
             $this->gift = 0;
         }
-        $service = servicio::where('nombre', 'LIKE', $name)->first();
+
+        $service = servicio::find($id);
         $this->cotizacion->servicio()->attach($service->id, ['cantidad' => $value, 'costo' => $service->costo, 'regalo' => $this->gift]);
         $this->emit('render');
         /* Cerramos el modal */
@@ -60,8 +65,30 @@ class QuoterCreate extends Component
         $this->count = 1;
     }
 
-    public function mount(){
+    public function saveDiscount()
+    {
+        $discount = $this->cotizacion->discount;
 
+        if ($discount) {
+            // Actualizar descuento existente
+            $discount->update(['amount' => $this->descuento]);
+        } else {
+            // Crear nuevo descuento
+            $this->cotizacion->discount()->create([
+                'amount' => $this->descuento,
+                'cotizacion_id' => $this->cotizacion->id
+            ]);
+        }
+
+        $this->emit('render');
+        session()->flash('message', 'Descuento guardado correctamente');
+    }
+
+    public function mount(){
+        // Cargar descuento existente si hay
+        if ($this->cotizacion->discount) {
+            $this->descuento = $this->cotizacion->discount->amount;
+        }
     }
     public function render()
     {
@@ -73,6 +100,7 @@ class QuoterCreate extends Component
         })
         ->orderBy('nombre','asc')
         ->where('nombre','like','%'.$this->search . '%')
+        ->where('año', '=', $this->cotizacion->start->year)
         ->paginate(6);
 
         return view('livewire.quoter-create')->

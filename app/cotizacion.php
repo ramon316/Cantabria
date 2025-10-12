@@ -63,4 +63,10 @@ class cotizacion extends Model
    public function servicio(){
     return $this->belongsToMany(servicio::class)->withPivot('servicio_id','cantidad','costo','regalo');
    }
+
+   /* Relación descuento */
+   public function discount()
+   {
+       return $this->hasOne(Discount::class, 'cotizacion_id');
+   }
 }

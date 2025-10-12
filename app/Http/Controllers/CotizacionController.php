@@ -165,7 +165,19 @@ class CotizacionController extends Controller
         /* Verificamos la deccoración, si existe retornamos el servicio */
         $ExistDecoracion = $this->decoracionExistTrait($cotizacion);
 
-        /* Obtenemos el precio de la cotización */
+        /* Obtenemos el descuento si existe */
+        $descuento = $cotizacion->discount ? $cotizacion->discount->amount : 0;
+
+        /* Obtenemos el precio de la cotización sin descuento */
+        $costoSinDescuento = 0;
+        $serviciosAll = $cotizacion->servicio()->get();
+        foreach ($serviciosAll as $servicio) {
+            if ($servicio->pivot->regalo == 0) {
+                $costoSinDescuento += $servicio->pivot->costo * $servicio->pivot->cantidad;
+            }
+        }
+
+        /* Obtenemos el precio de la cotización con descuento */
         $costo = $this->costoCotizacion($cotizacion);
 
         /* obtenemos los servicios del evento */
@@ -179,7 +191,7 @@ class CotizacionController extends Controller
         $eventDay = Carbon::parse($cotizacion->start)->translatedFormat('l j \d\e F \d\e Y');
         $end  = Carbon::parse($cotizacion->end)->translatedFormat('l j \d\e F \d\e Y');
         // return $cotizacion;
-        $pdf=PDF::loadView('/cotizacion/cotizacion',compact('cotizacion','costo','costoTexto','servicios','today','eventDay', 'end','ExistDecoracion','servicesCortesy'));
+        $pdf=PDF::loadView('/cotizacion/cotizacion',compact('cotizacion','costo','costoTexto','servicios','today','eventDay', 'end','ExistDecoracion','servicesCortesy','descuento','costoSinDescuento'));
         $pdf->setPaper('letter','portrait');
         $name = $cotizacion->id.'_'.$cotizacion->cliente->nombre.'_cotizacion.pdf';
         /**return $pdf->download($name); en caso de que deseamos descargarlo directamente */

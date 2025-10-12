@@ -151,9 +151,17 @@
             </div>
             @endif
 
+            @if ($descuento > 0)
+            <div class="row marginTop">
+                <label>Subtotal: $@dinero($costoSinDescuento)</label>
+                <label>Descuento: -$@dinero($descuento)</label>
+                <label><strong>Inversión Total: $@dinero($costo) - ({{ $costoTexto }} 00/100 m.n.)</strong></label>
+            </div>
+            @else
             <div class="row marginTop">
                 <label><strong>Inversión $@dinero($costo) - ({{ $costoTexto }} 00/100 m.n.)</strong></label>
             </div>
+            @endif
             <div class="row marginTop">
                 <label>Términos y condiciones</label>
                 <ul>
@@ -164,9 +172,8 @@
                 </ul>
                 <label>Formas de pago:</label>
                 <ul>
-                    <li>Sin factura: solo pago en efectivo</li>
-                    <li>Con factura: + IVA, cheques, transferencia y pago con tarjeta (solo aceptamos VISA y
-                        Master Card. Se agrega comisión adicional en pago con tarjeta)</li>
+                    <li>Sin factura: Solo pago en efectivo</li>
+                    <li>Con factura: Cheques y transferencia</li>
                 </ul>
             </div>
         </div>

@@ -19,7 +19,7 @@
                             <tr class="expandable-body">
                                 <th>Servicio</th>
                                 <th>Cantidad</th>
-                                <th>Costo ind.</th>
+                                <th>Costo</th>
                                 <th>Regalo</th>
                                 <th>Eliminar</th>
                             </tr>
@@ -27,7 +27,7 @@
                             <tr>
                                 <td scope="row">{{$service->nombre}}</td>
                                 <td>{{$service->pivot->cantidad}}</td>
-                                <td>$@dinero($service->pivot->costo) </td>
+                                <td>$@dinero($service->pivot->costo * $service->pivot->cantidad) </td>
                                 <td>
                                     @if ($service->pivot->regalo)
                                     Si
@@ -46,6 +46,20 @@
                     </table>
                 </div>
                 <div class="card-footer">
+                    <div class="form-group">
+                        <label for="descuento">Descuento:</label>
+                        <div class="input-group">
+                            <input type="number" class="form-control" id="descuento" placeholder="Ingrese el monto del descuento" wire:model="descuento" min="0" step="0.01">
+                            <div class="input-group-append">
+                                <button class="btn btn-success" type="button" wire:click="saveDiscount">Guardar Descuento</button>
+                            </div>
+                        </div>
+                        @if (session()->has('message'))
+                            <div class="alert alert-success mt-2">
+                                {{ session('message') }}
+                            </div>
+                        @endif
+                    </div>
                     <h3>Inversión del Evento: $@dinero($costQuoter)</h3>
                     <a href="{{route('cotizacion.cotizacion', ['cotizacion' => $cotizacion->id])}}}" class="btn btn-primary">Generar Cotización</a>
                 </div>
@@ -128,7 +142,7 @@
                     <button type="button" class="btn btn-secondary" data-dismiss="modal"
                         wire:click='close'>Cerrar</button>
                     <button type="button" class="btn btn-primary"
-                        wire:click="save({{$count}},'{{$servicioName}}', '{{$gift}}')">Guardar</button>
+                        wire:click="save({{$count}},'{{$servicioId}}', '{{$gift}}')">Guardar</button>
                 </div>
             </div>
         </div>
