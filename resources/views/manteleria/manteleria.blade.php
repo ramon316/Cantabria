@@ -123,7 +123,7 @@
                 <p class="strong">CONFIRMACIÓN DE MANTELERÍA DEL EVENTO</p>
             </div>
             <div class="row">
-                <p><strong>Folio: {{$evento->id}}</strong></p>
+                <p><strong>Folio: {{$evento->folioFormateado}}</strong></p>
                 <p> <strong>Fecha de Generación: {{$today}}</strong></p>
 
             </div>

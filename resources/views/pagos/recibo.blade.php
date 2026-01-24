@@ -56,7 +56,7 @@
         <label>Cliente: {{$cliente}}</label><br>
         <label>Tipo de evento: {{$evento->subtitle}}</label><br>
         <label>Fecha del evento: {{$nowText}}</label><br>
-        <label>Folio del contrato: {{$folio}}</label>
+        <label>Folio del contrato: {{$evento->folioFormateado}}</label>
     </div>
     <br><br>
     <div>

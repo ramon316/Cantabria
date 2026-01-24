@@ -87,8 +87,6 @@ class PagoController extends Controller
 
         /* Información del evento  */
         $evento = evento::find($request['evento']);
-        /* Folio event */
-        $folio = "F" . str_pad($evento->id,4,"0",STR_PAD_LEFT);
         /* Monto restante */
         $pendiente = $this->diferenciaEvento($evento);
         $pendienteText = NumerosALetras::convertir($this->diferenciaEvento($evento));
@@ -110,7 +108,7 @@ class PagoController extends Controller
         /* Name */
         $name = $clienteSlug . '_' .$today . '.pdf';
         /* Generación de pdf */
-        $pdf = PDF::loadView('/pagos/recibo',compact('cliente','user','evento','nowText','monto', 'montoTexto', 'pendiente','pendienteText', 'hoy','tipo','folio','role'));
+        $pdf = PDF::loadView('/pagos/recibo',compact('cliente','user','evento','nowText','monto', 'montoTexto', 'pendiente','pendienteText', 'hoy','tipo','role'));
         $result =  $pdf->setPaper('a4')->stream($name);
 
         $content = $pdf->download()->getOriginalContent();

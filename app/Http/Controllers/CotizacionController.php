@@ -31,14 +31,16 @@ class CotizacionController extends Controller
 
     public function index()
     {
-        //
-        /**Obtenemos el id del usuario */
-        $UsuarioId= auth()->user()->id;
-        // return dd($UsuarioID);
-        /**buscamos las cotizaciones de este usuario para pasarlas a la paginación */
-        $cotizaciones = cotizacion::where('user_id',$UsuarioId)->paginate(10);
-        // return $cotizaciones;
-        return view('cotizacion.index')->with('cotizaciones',$cotizaciones);
+        // Si el usuario es administrador, muestra todas las cotizaciones
+        if (auth()->user()->hasRole('Administrador')) {
+            $cotizaciones = cotizacion::paginate(10);
+        } else {
+            // Si no es administrador, muestra solo sus cotizaciones
+            $UsuarioId = auth()->user()->id;
+            $cotizaciones = cotizacion::where('user_id', $UsuarioId)->paginate(10);
+        }
+
+        return view('cotizacion.index')->with('cotizaciones', $cotizaciones);
     }
 
     /**

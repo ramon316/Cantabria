@@ -1,13 +1,45 @@
 <div>
     {{-- A good traveler has no fixed plans and is not intent upon arriving. --}}
+    @if (session()->has('error'))
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            {{ session('error') }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    @endif
+    @if (session()->has('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ session('success') }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    @endif
     <div class="row">
         <div class="col-md-5">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">{{$cliente->nombre}}</h3>
-                    <h6> - {{$cotizacion->start->format('d-m-Y')}}</h6>
-                    <h6>{{$cotizacion->title}} - {{$cotizacion->subtitle}}</h6>
-                    <h6>Festejado(s):{{$cotizacion->comment}}</h6>
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                            <h3 class="card-title">{{$cliente->nombre}}</h3>
+                            <h6> - {{$cotizacion->start->format('d-m-Y')}}</h6>
+                            <h6>{{$cotizacion->title}} - {{$cotizacion->subtitle}}</h6>
+                            <h6>Festejado(s):{{$cotizacion->comment}}</h6>
+                        </div>
+                        @can('eventos.create')
+                        <div>
+                            <button class="btn btn-success" wire:click="createEventFromQuotation" wire:loading.attr="disabled">
+                                <span wire:loading.remove wire:target="createEventFromQuotation">
+                                    <i class="fas fa-calendar-plus"></i> Crear Evento
+                                </span>
+                                <span wire:loading wire:target="createEventFromQuotation">
+                                    <i class="fas fa-spinner fa-spin"></i> Creando...
+                                </span>
+                            </button>
+                        </div>
+                        @endcan
+                    </div>
                 </div>
                 <div class="card-body">
                     <h6>Servicios agregados</h6>

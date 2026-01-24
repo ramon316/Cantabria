@@ -121,6 +121,18 @@
                     @enderror
                 </div>
             </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="folio">Folio (Opcional)</label>
+                    <input type="number" class="form-control" wire:model.defer="folio" placeholder="Dejar vacío para auto-generar">
+                    <small class="form-text text-muted">Si se deja vacío, se asignará automáticamente</small>
+                    @error('folio')
+                    <span class="invalid-feedback d-block" role="alert">
+                        {{$message}}
+                    </span>
+                    @enderror
+                </div>
+            </div>
         </div>
 
         <div class="row">

@@ -20,15 +20,25 @@ class CotizacionIndex extends Component
 
     public function render()
     {
-        $cotizaciones = cotizacion::join('clientes','clientes.id', '=', 'cotizacions.cliente_id')
-        ->select('clientes.nombre', 'cotizacions.title', 'cotizacions.start', 'cotizacions.created_at', 'cotizacions.id','cotizacions.user_id', 'cotizacions.validez')
-        ->where('clientes.nombre', 'LIKE', "%$this->search%")
-        ->where('cotizacions.user_id', '=', Auth()->user()->id)
-        ->orderBy('cotizacions.created_at','desc')
+        $query = cotizacion::join('clientes','clientes.id', '=', 'cotizacions.cliente_id')
+        ->join('users', 'users.id', '=', 'cotizacions.user_id')
+        ->select(
+            'cotizacions.*',
+            'clientes.nombre',
+            'users.name as usuario_nombre'
+        )
+        ->where('clientes.nombre', 'LIKE', "%$this->search%");
+
+        // Si el usuario no es administrador, filtrar solo sus cotizaciones
+        if (!auth()->user()->hasRole('Administrador')) {
+            $query->where('cotizacions.user_id', '=', Auth()->user()->id);
+        }
+
+        $cotizaciones = $query->orderBy('cotizacions.created_at','desc')
         ->paginate(10);
 
         $this->hoy = Carbon::now();
-        
+
 
         return view('livewire.cotizacion-index')->with('cotizaciones', $cotizaciones)->with('hoy', $this->hoy);
     }

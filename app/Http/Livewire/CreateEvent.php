@@ -17,6 +17,7 @@ class CreateEvent extends Component
     public $start;
     public $end;
     public $invitados;
+    public $folio;
     public $empresariales = ['Posada', 'Aniversario','Capacitación','Conferencia','Graduación','otros'];
     public $sociales = ['Boda','XV años','Aniversario','Graduación','otros'];
     public $subtitles = [];
@@ -30,6 +31,7 @@ class CreateEvent extends Component
         'start' => 'required|unique:eventos',
         'end' => 'required',
         'invitados' => 'required|min:1',
+        'folio' => 'nullable|integer|unique:eventos,folio',
     ];
 
     protected $validationAttributes = [
@@ -38,6 +40,7 @@ class CreateEvent extends Component
         'subtitle' => 'subtipo de evento',
         'start' => 'fecha de inicio',
         'end' => 'fecha de finalización',
+        'folio' => 'folio',
     ];
 
     public function mount(){
@@ -67,6 +70,7 @@ class CreateEvent extends Component
             'end' => $this->end,
             'invitados' => $this->invitados,
             'comment' => $this->name,
+            'folio' => $this->folio,
         ]);
 
         /* clean forms */

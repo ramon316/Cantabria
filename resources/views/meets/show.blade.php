@@ -3,6 +3,7 @@
 @section('title', 'Reuniones')
 
 @section('content_header')
+    <a href="{{ route('meets.index') }}" class="btn btn-info">Regresar</a>
     <h1 class="text-center">Retroalimentación de la Reunión</h1>
 @stop
 
@@ -12,7 +13,8 @@
             <div class="card-header">
                 <h3 for="">{{$meet->reason->reason}} para {{$meet->user->name}}</h3>
                 <h3 class="card-title">Reunión con el cliente {{ $meet->cliente->nombre }} el día
-                    {{ $meet->start->format('d-m-Y H:i a') }}</h3>
+                    {{ $meet->start->format('d-m-Y H:i a') }}</h3><br
+                <h3 class="card-title">El teléfono del cliente es {{$meet->cliente->telefono}}</h3>
             </div>
             <div class="card-body">
                 <form action="{{ route('meets.update', ['meet' => $meet]) }}" method="post">
@@ -22,12 +24,12 @@
                         <div class="col-md-3">
                             <label for="">Resultado de la reunión</label>
                             <select name="contrato" id="" class="form-control">
-                                <option value="" @if (is_null($meet->contrato)) selected                             
+                                <option value="" @if (is_null($meet->contrato)) selected
                                 @endif>--Selecciona una opción--</option>
                                 <option value="1" @if ($meet->contrato === 1) selected @endif>
                                     Si contrato</option>
                                 <option value="0" @if ($meet->contrato === 0) selected @endif>
-                                    No contrato</option>>No contrato</option>
+                                    No contrato</option>
                             </select>
                             @error('contrato')
                                 <div class="invalid-feedback d-block" role="alert">{{ $message }}</div>

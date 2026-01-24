@@ -17,7 +17,7 @@
                             wire:model="fin">
                         <p class="text-center font-weight-light">Fecha final</p>
                     </div>
-                    @role('Administrador')
+                    @role('Administrador|Ventas|Planeacion')
                         <div class="col-2">
                             <a class="btn btn-primary" href=" {{ route('meets.create') }}">Crear Reunión</a>
                         </div>
@@ -60,8 +60,16 @@
                                     </td>
                                     <td>
                                         @can('eventos.show')
-                                            <a class="btn btn-primary"
-                                                href="{{ route('meets.show', ['meet' => $meet->id]) }}">Ver</a>
+                                            <button class="btn btn-warning btn-sm"
+                                                wire:click="$emit('editMeet', {{ $meet->id }})"
+                                                title="Editar reunión">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                            <a class="btn btn-primary btn-sm"
+                                                href="{{ route('meets.show', ['meet' => $meet->id]) }}"
+                                                title="Ver detalles">
+                                                <i class="fas fa-eye"></i>
+                                            </a>
                                         @endcan
                                     </td>
                                 </tr>
@@ -76,5 +84,8 @@
             </div>
         </div>
     </div>
+
+    {{-- Modal de edición --}}
+    @livewire('edit-meet')
 
 </div>

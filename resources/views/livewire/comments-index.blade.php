@@ -17,8 +17,7 @@
                     </div>
                     <div class=" col-md-2 mr-2 text-bold mb-2">
                         <p>{{date('d-m-Y',strtotime($comment->created_at))}}</p>
-                        @if ($comment->user_id == Auth()->user()->id || Auth()->user()->getRoleNames()->first()
-                        =="Administrador")
+                        @if ( Auth()->user()->getRoleNames()->first()=="Administrador")
                         <button class="btn btn-danger" wire:click="delete({{$comment}})">Eliminar</button>
                         @endif
                     </div>

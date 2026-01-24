@@ -248,44 +248,56 @@ class EventoController extends Controller
 
     public function list()
     {
+        /* Fecha límite: un año histórico desde hoy */
+        $fechaLimite = Carbon::now()->subYear();
+        $hoy = Carbon::today();
+
         /* Verificamos si el usuario tien un rol de banquete
         De esa manera solo mostraremos los eventos de la lista
         que cuenten con el servicio de banquete */
         if (Auth::user()->hasRole('Banquete')) {
             $eventos = evento::wherehas('servicio', function ($query) {
                 $query->where('nombre', 'LIKE', '%Banquete%');
-            })->get();
+            })->where('start', '>=', $fechaLimite)->get();
         } else {
-            $eventos = evento::where('start', '>=', date('Y-m-d'))->get();
+            $eventos = evento::where('start', '>=', $fechaLimite)->get();
         }
-        //Se muestras solo sus eventos creados, se utiliza eventos por que asi se llamo a la función del metodo USER.
 
-        $eventos = evento::where('start', '>=', date('Y-m-d'))->get();
-        /* Obtenemos la colección de meets */
-        $meets = meet::where('start', '>=', date('Y-m-d'))->get();
+        /* Obtenemos la colección de meets desde hace un año */
+        $meets = meet::where('start', '>=', $fechaLimite)->get();
 
+        /* Inicializamos el array de respuesta */
+        $_array = [];
+
+        /* Procesamos las reuniones */
         foreach ($meets as $meet) {
+            /* Determinamos si la reunión es pasada */
+            $esPasado = Carbon::parse($meet->start)->lt($hoy);
+
             $_array[] = array(
                 'id' => $meet->id,
                 'start' => Carbon::parse($meet->start)->format('Y-m-d'),
                 'end'   =>  '',
                 'title' =>  $meet->start->format('H:i') . ' - ' . $meet->reason->reason,
                 'url'   =>  '/meets/' . $meet->id,
-                'color' =>  $meet->user->color,
+                'color' =>  $esPasado ? '#E8E8E8' : $meet->user->color, // Gris claro para reuniones pasadas
             );
         }
 
+        /* Procesamos los eventos */
         foreach ($eventos as $evento) {
+            /* Determinamos si el evento es pasado */
+            $esPasado = Carbon::parse($evento->start)->lt($hoy);
+
             $_array[] = array(
                 'id' => $evento->id,
                 'start' => Carbon::parse($evento->start)->format('Y-m-d'),
                 'end'   =>  Carbon::parse($evento->end)->format('Y-m-d'),
                 'title' =>  $evento->subtitle . ' - ' . $evento->cliente->nombre,
                 'url'   =>  '/eventos/' . $evento->id,
-                'color' =>  $evento->color,
+                'color' =>  $esPasado ? '#D3D3D3' : $evento->color, // Gris para eventos pasados
             );
         }
-
 
         return response()->json($_array);
         //Pasamos los argumentos json

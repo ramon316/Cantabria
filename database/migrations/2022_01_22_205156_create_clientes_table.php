@@ -19,7 +19,7 @@ class CreateClientesTable extends Migration
             $table->string('telefono',10);
             $table->string('email',40)->nullable();
             $table->string('calle')->nullable();
-            $table->integer('numero')->nullable();
+            $table->string('numero')->nullable();
             $table->string('colonia')->nullable();
             $table->string('cp')->nullable();
             $table->integer('user_id')->references('id')->on('users');

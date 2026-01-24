@@ -4,9 +4,12 @@ namespace App\Http\Livewire;
 
 use App\servicio;
 use App\Discount;
+use App\evento;
+use App\Events\EventCreated;
 use App\Traits\CotizacionTrait;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Illuminate\Support\Facades\DB;
 
 class QuoterCreate extends Component
 {
@@ -88,6 +91,69 @@ class QuoterCreate extends Component
         // Cargar descuento existente si hay
         if ($this->cotizacion->discount) {
             $this->descuento = $this->cotizacion->discount->amount;
+        }
+    }
+
+    public function createEventFromQuotation()
+    {
+        // Verificar que la cotización tenga servicios
+        if ($this->cotizacion->servicio()->count() === 0) {
+            session()->flash('error', 'La cotización debe tener al menos un servicio para crear un evento.');
+            return;
+        }
+
+        // Verificar que la fecha del evento no esté ocupada
+        $fechaOcupada = evento::where('start', $this->cotizacion->start)->exists();
+        if ($fechaOcupada) {
+            session()->flash('error', 'Ya existe un evento en la fecha seleccionada. Por favor, modifique la fecha de la cotización.');
+            return;
+        }
+
+        try {
+            DB::beginTransaction();
+
+            // Crear el evento con los datos de la cotización
+            $evento = evento::create([
+                'cliente_id' => $this->cotizacion->cliente_id,
+                'user_id' => auth()->user()->id,
+                'title' => $this->cotizacion->title,
+                'subtitle' => $this->cotizacion->subtitle,
+                'start' => $this->cotizacion->start,
+                'end' => $this->cotizacion->end,
+                'invitados' => $this->cotizacion->invitados,
+                'comment' => $this->cotizacion->comment,
+            ]);
+
+            // Copiar los servicios de la cotización al evento
+            $servicios = $this->cotizacion->servicio()->get();
+            foreach ($servicios as $servicio) {
+                $evento->servicio()->attach($servicio->id, [
+                    'cantidad' => $servicio->pivot->cantidad,
+                    'costo' => $servicio->pivot->costo,
+                    'regalo' => $servicio->pivot->regalo,
+                ]);
+            }
+
+            // Copiar el descuento si existe
+            if ($this->cotizacion->discount) {
+                $evento->discount()->create([
+                    'amount' => $this->cotizacion->discount->amount,
+                    'evento_id' => $evento->id,
+                ]);
+            }
+
+            // Disparar el evento de creación (esto crea automáticamente el checklist)
+            event(new EventCreated($evento));
+
+            DB::commit();
+
+            // Redirigir al evento creado con mensaje de éxito
+            session()->flash('success', 'Evento creado exitosamente desde la cotización.');
+            return redirect()->route('eventos.show', $evento);
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            session()->flash('error', 'Ocurrió un error al crear el evento: ' . $e->getMessage());
         }
     }
     public function render()

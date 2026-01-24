@@ -18,6 +18,9 @@
                         <th>Cliente</th>
                         <th>Fecha del evento</th>
                         <th>Fecha de cotización</th>
+                        @if(auth()->user()->hasRole('Administrador'))
+                        <th>Usuario</th>
+                        @endif
                         <th>Validez</th>
                         <th>Acciones</th>
                     </tr>
@@ -28,6 +31,9 @@
                         <td>{{$cotizacion->nombre}}</td>
                         <td>{{date('d-m-Y', strtotime($cotizacion->start))}}</td>
                         <td>{{date('d-m-Y', strtotime($cotizacion->created_at))}}</td>
+                        @if(auth()->user()->hasRole('Administrador'))
+                        <td>{{$cotizacion->usuario_nombre}}</td>
+                        @endif
                         <td>@if ($cotizacion->validez >= $hoy)
                             <button class="btn btn-success" href="">Activa</button>
                             @else

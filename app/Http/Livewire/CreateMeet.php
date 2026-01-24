@@ -16,6 +16,8 @@ class CreateMeet extends Component
     public $fin;
     protected $paginationTheme = 'bootstrap';
 
+    protected $listeners = ['meetUpdated' => '$refresh'];
+
     public function updatingSearch()
     {
         $this->resetPage();

@@ -26,7 +26,7 @@ class evento extends Model
     protected $dates = ['start', 'end'];
 
     protected $fillable = [
-     'cliente_id', 'user_id', 'title', 'subtitle', 'start', 'end', 'invitados', 'color', 'layout', 'contract', 'closed_at', 'comment'
+     'folio', 'cliente_id', 'user_id', 'title', 'subtitle', 'start', 'end', 'invitados', 'color', 'layout', 'contract', 'closed_at', 'comment'
     ];
 
     protected $casts = [
@@ -42,6 +42,17 @@ class evento extends Model
         return new Attribute(
             get: fn ($value) => ucwords($value),
             set: fn ($value) => $value,
+        );
+    }
+
+    /**
+     * Get the formatted folio with "F" prefix and zero-padding
+     * Example: 23 becomes "F0023"
+     */
+    public function folioFormateado(): Attribute
+    {
+        return new Attribute(
+            get: fn () => $this->folio ? 'F' . str_pad($this->folio, 4, '0', STR_PAD_LEFT) : null,
         );
     }
 
@@ -62,6 +73,14 @@ class evento extends Model
            $evento->setColorBaseOnTitle();
            /* $evento->user_id = auth()->id(); */
 
+        });
+
+        // Auto-assign folio after event is created if not provided
+        static::created(function($evento) {
+            if (is_null($evento->folio)) {
+                $evento->folio = $evento->id;
+                $evento->saveQuietly(); // Save without triggering events
+            }
         });
 
         static::updating(function($evento){

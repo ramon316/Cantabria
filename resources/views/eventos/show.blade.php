@@ -34,6 +34,7 @@
             @hasanyrole('Administrador|Ventas|Planeacion|Florista')
             <div class="col-md-3 bg-white shadow p-3 mb-5  rounded">
                 <h4>Información del evento</h4>
+                <strong>Folio: </strong>{{$evento->folioFormateado}}<br>
                 <strong>Tipo: </strong>{{$evento->title}}<br>
                 <strong>Subtipo: </strong>{{$evento->subtitle}}<br>
                 <strong>Horas: </strong>{{$evento->time}}<br>
@@ -47,9 +48,7 @@
                 @if ($abonoEvento <> 0)
                     <strong>Abonos:</strong> $@dinero($abonoEvento) pesos<br>
                 @endif
-                @if ($diferenciaEvento <> 0 )
-                    <strong>Saldo:</strong> $@dinero($diferenciaEvento) pesos<br>
-                @endif
+                <strong>Saldo:</strong> $@dinero($diferenciaEvento) pesos<br>
             </div>
             @endhasanyrole
 
@@ -57,7 +56,7 @@
             <div class="col-md-3 bg-white shadow p-4 mb-5 rounded">
                 <h4 class="text-center">Acciones</h4>
 
-                @hasanyrole('Administrador|Planeacion|Florista|Ventas')
+                @hasanyrole('Administrador|Planeacion|Florista')
                 <a href="" class="btn
                 @if (empty($evento->layout))
                     btn-danger
