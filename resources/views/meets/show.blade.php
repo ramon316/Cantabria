@@ -13,7 +13,7 @@
             <div class="card-header">
                 <h3 for="">{{$meet->reason->reason}} para {{$meet->user->name}}</h3>
                 <h3 class="card-title">Reunión con el cliente {{ $meet->cliente->nombre }} el día
-                    {{ $meet->start->format('d-m-Y H:i a') }}</h3><br
+                    {{ $meet->start->format('d-m-Y H:i a') }}</h3><br>
                 <h3 class="card-title">El teléfono del cliente es {{$meet->cliente->telefono}}</h3>
             </div>
             <div class="card-body">
@@ -23,15 +23,17 @@
                     <div class="row">
                         <div class="col-md-3">
                             <label for="">Resultado de la reunión</label>
-                            <select name="contrato" id="" class="form-control">
-                                <option value="" @if (is_null($meet->contrato)) selected
-                                @endif>--Selecciona una opción--</option>
-                                <option value="1" @if ($meet->contrato === 1) selected @endif>
-                                    Si contrato</option>
-                                <option value="0" @if ($meet->contrato === 0) selected @endif>
-                                    No contrato</option>
+                            <select name="resultado" id="" class="form-control">
+                                <option value="" @if (is_null($meet->resultado)) selected @endif>--Selecciona una opción--</option>
+                                @if (in_array($meet->reason->reason, ['Cliente nuevo primera visita', 'Cliente nuevo segunda visita']))
+                                    <option value="contrato" @if ($meet->resultado === 'contrato') selected @endif>Contrato</option>
+                                    <option value="no_contrato" @if ($meet->resultado === 'no_contrato') selected @endif>No contrato</option>
+                                @else
+                                    <option value="realizada" @if ($meet->resultado === 'realizada') selected @endif>Realizada</option>
+                                    <option value="no_realizada" @if ($meet->resultado === 'no_realizada') selected @endif>No realizada</option>
+                                @endif
                             </select>
-                            @error('contrato')
+                            @error('resultado')
                                 <div class="invalid-feedback d-block" role="alert">{{ $message }}</div>
                             @enderror
                         </div>

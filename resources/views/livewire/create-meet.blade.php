@@ -36,7 +36,7 @@
                                 <th>Cliente</th>
                                 <th>Fecha</th>
                                 <th>Motivo</th>
-                                <th>Contrato</th>
+                                <th>Resultado</th>
                                 @can('eventos.show')
                                     <th>Opciones</th>
                                 @endcan
@@ -50,13 +50,22 @@
                                     <td>{{ date('d-m-Y H:i', strtotime($meet->start)) }}</td>
                                     <td>{{ $meet->reason->reason }}</td>
                                     <td>
-                                        @if (!is_Null($meet->contrato))
-                                            @if ($meet->contrato == 1)
-                                                <button class="btn btn-success btn-sm">Si</button>
-                                           @else
-                                                <button class="btn btn-danger btn-sm">No</button>
-                                            @endif
-                                        @endif
+                                        @switch($meet->resultado)
+                                            @case('contrato')
+                                                <span class="badge badge-success">Contrato</span>
+                                                @break
+                                            @case('no_contrato')
+                                                <span class="badge badge-danger">No contrato</span>
+                                                @break
+                                            @case('realizada')
+                                                <span class="badge badge-info">Realizada</span>
+                                                @break
+                                            @case('no_realizada')
+                                                <span class="badge badge-warning">No realizada</span>
+                                                @break
+                                            @default
+                                                <span class="badge badge-secondary">Pendiente</span>
+                                        @endswitch
                                     </td>
                                     <td>
                                         @can('eventos.show')

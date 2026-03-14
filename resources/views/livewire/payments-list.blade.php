@@ -15,7 +15,9 @@
                         <th>Monto</th>
                         <th>Fecha</th>
                         <th>Usuario</th>
+                        @role('Administrador')
                         <th>Acciones</th>
+                        @endrole
                     </tr>
                     @foreach ($payments as $payment)
                     <tr data-widget="expandable-table" aria-expanded="false">
@@ -24,9 +26,11 @@
                         <td>$@dinero($payment->monto)</td>
                         <td>{{$payment->created_at->format('d-m-Y')}}</td>
                         <td>{{$payment->user->name}}</td>
+                        @role('Administrador')
                         <td class="text-center">
                             <i class="fas fa-trash-alt" wire:click="delete({{$payment->id}})"></i>
                         </td>
+                        @endrole
                     </tr>
                     @endforeach
                 </tbody>

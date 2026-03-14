@@ -16,7 +16,7 @@ class meet extends Model
         'title',
         'reason_id',
         'start',
-        'contrato',
+        'resultado',
         'color',
         'observacion',
     ];

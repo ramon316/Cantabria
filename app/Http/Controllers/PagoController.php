@@ -92,7 +92,7 @@ class PagoController extends Controller
         $pendienteText = NumerosALetras::convertir($this->diferenciaEvento($evento));
 
         $today = Carbon::now()->format('d-m-Y');
-        $hoy = Carbon::now()->isoFormat('d \d\e MMMM \d\e Y');
+        $hoy = Carbon::now()->isoFormat('D \d\e MMMM \d\e Y');
         $now = Carbon::now()->format('d-m-Y');
         $nowText = $this->formatearFecha($evento->start);
 
@@ -114,7 +114,7 @@ class PagoController extends Controller
         $content = $pdf->download()->getOriginalContent();
         $save = Storage::disk('local')->put('receipts'. '/' . $name, $content);
         return $result;
-        flash('Se agrego el pago ccon écito');
+        flash('Se agrego el pago ccon éxito');
         return back();
     }
 

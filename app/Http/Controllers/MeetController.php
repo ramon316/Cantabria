@@ -73,7 +73,6 @@ class MeetController extends Controller
 
     public function show(meet $meet)
     {
-        ds($meet);
        return view('meets.show', compact('meet'));
     }
 
@@ -81,12 +80,12 @@ class MeetController extends Controller
     {
 
         $this->validate($request, [
-            'contrato' => 'required',
+            'resultado' => 'required|in:contrato,no_contrato,realizada,no_realizada',
             'observacion' => 'required',
         ]);
 
         $meet->update([
-            'contrato' => $request['contrato'],
+            'resultado' => $request['resultado'],
             'observacion' => $request['observacion'],
         ]);
         flasher('Se ha actualizado el meet');

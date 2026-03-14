@@ -63,9 +63,9 @@
         <label for="">El monto total de la transacción es el siguiente:</label>
     </div>
     <div>
-        <label>Monto: $@dinero($monto) ({{$montoTexto}} 00/100 pesos m.n.)</label><br>
+        <label>Monto: $@dinero($monto) (son {{$montoTexto}} pesos 00/100 m.n.)</label><br>
         <label>Tipo de pago: {{$tipo}}</label><br>
-        <label for="">Saldo: $@dinero($pendiente) ({{$pendienteText}} 00/100 pesos m.n.)</label>
+        <label for="">Saldo: $@dinero($pendiente) (son {{$pendienteText}} pesos 00/100  m.n.)</label>
     </div>
     <div>
         <label for="">Recibido por: <strong>{{$user}}</strong> </label><br>

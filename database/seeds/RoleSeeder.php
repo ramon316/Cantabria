@@ -34,7 +34,7 @@ class RoleSeeder extends Seeder
         Permission::create(['name' => 'eventos.edit','description'=>'Modificar eventos'])->syncRoles([$RoleAdministrador]);
         Permission::create(['name' => 'eventos.destroy','description'=>'Eliminar eventos'])->syncRoles([$RoleAdministrador]);
         Permission::create(['name' => 'eventos.show','description'=>'Visualizar eventos'])->syncRoles([$RoleAdministrador, $RolePlaneacion, $RoleVentas, $RoleFlorista, $RoleBanquete]);
-        Permission::create(['name' => 'eventos.pago','description'=>'Recibir pago de evento'])->syncRoles([$RoleAdministrador]);
+        Permission::create(['name' => 'eventos.pago','description'=>'Recibir pago de evento'])->syncRoles([$RoleAdministrador, $RolePlaneacion, $RoleVentas]);
         Permission::create(['name' => 'eventos.contrato','description'=>'Generar contratos de eventos'])->syncRoles([$RoleAdministrador]);
         Permission::create(['name' => 'eventos.list','description'=>'Lista de eventos'])->syncRoles([$RoleAdministrador, $RolePlaneacion, $RoleVentas, $RoleFlorista, $RoleBanquete]);
         Permission::create(['name' => 'eventos.layout','description'=>'Generar layout de eventos'])->syncRoles([$RoleAdministrador, $RolePlaneacion, $RoleVentas]);
@@ -85,6 +85,7 @@ class RoleSeeder extends Seeder
 
         /* Pagos */
         Permission::create(['name' => 'pagos.index','description'=>'Capturar pagos'])->syncRoles([$RoleAdministrador, $RolePlaneacion, $RoleVentas]);
+        Permission::create(['name' => 'pagos.create','description'=>'Crear pagos'])->syncRoles([$RoleAdministrador, $RolePlaneacion, $RoleVentas]);
         Permission::create(['name' => 'pagos.store','description'=>'Guardar pagos'])->syncRoles([$RoleAdministrador, $RolePlaneacion, $RoleVentas]);
 
         /* manteleria */

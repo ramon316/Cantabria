@@ -66,6 +66,12 @@
         .textCenter {
             text-align: center;
         }
+        .page-break-before {
+            page-break-before: always;
+        }
+        .space {
+            margin-bottom: 20px;
+        }
     </style>
 </head>
 <title>Cotizacion</title>
@@ -117,12 +123,15 @@
                     <strong>{{ $cotizacion->invitados }}</strong> invitados, sujeto a disponibilidad.</label>
             </div>
             @endif
+            </div>
+            <div class="page-break-before marginTop"></div>
+            {{-- Verificamos si existe el menú --}}
             @if ($servicios->isnotempty())
             <div class="row marginTop">
                 <label>Servicio Adicional:</label>
                 @foreach ($servicios as $servicio)
                 <ul>
-                    <li>{{ $servicio->nombre }}: $@dinero($servicio->pivot->costo * $servicio->pivot->cantidad)</li>
+                    <li>@if ($servicio->pivot->cantidad != 1) {{ $servicio->pivot->cantidad }} @endif{{ $servicio->nombre }}: $@dinero($servicio->pivot->costo * $servicio->pivot->cantidad)</li>
                 </ul>
                 @endforeach
             </div>
@@ -133,7 +142,7 @@
                 <label>SERVICIOS DE CORTESIA:</label>
                 @foreach ($servicesCortesy as $service)
                 <ul>
-                    <li>{{ $service->nombre }}{{-- : $@dinero($service->pivot->costo * $service->pivot->cantidad) --}}
+                    <li>@if ($service->pivot->cantidad != 1) {{ $service->pivot->cantidad }} @endif{{ $service->nombre }}{{-- : $@dinero($service->pivot->costo * $service->pivot->cantidad) --}}
                     </li>
                 </ul>
                 @endforeach
@@ -164,6 +173,12 @@
                     <li>Sin factura: Solo pago en efectivo</li>
                     <li>Con factura: Cheques y transferencia</li>
                 </ul>
+            </div>
+            <div class="row marginTop">
+                <label class="space"><strong>Atendido por:</strong></label>
+                <p>{{ $usuario['nombre'] }} - {{ $usuario['rol'] }}</p>
+                <p>{{ $usuario['email'] }}</p>
+                <p>{{ $usuario['telefono'] }}</p>
             </div>
         </div>
 </body>

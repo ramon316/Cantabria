@@ -8,6 +8,7 @@ use App\cliente;
 use App\cotizacion;
 use App\NumerosALetras;
 use App\Traits\CotizacionTrait;
+use App\User;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
@@ -71,11 +72,8 @@ class CotizacionController extends Controller
             'end'   => 'required',
             'invitados' => 'required|numeric|min:1',
         ]);
-        //dd($request['cliente']);
-        /* Vamos a validar la fecha de validez antes de guardarlo. */
-        $validez = $request['validez'];
         $date = Carbon::now();
-        $fechaFinal = $date->addDay($validez);
+        $fechaFinal = $date->addMonth(1);
 
 
         cotizacion::create([
@@ -189,11 +187,21 @@ class CotizacionController extends Controller
         $servicesCortesy = $this->servicesCortesyTrait($cotizacion);
 
         $costoTexto = strtoupper(NumerosALetras::convertir($costo,'Pesos',false,'Centavos'));
-        $today = Carbon::parse(date('d-m-Y'))->translatedFormat('l j \d\e F \d\e Y');
+        $today = Carbon::parse($cotizacion->created_at)->translatedFormat('l j \d\e F \d\e Y');
         $eventDay = Carbon::parse($cotizacion->start)->translatedFormat('l j \d\e F \d\e Y');
-        $end  = Carbon::parse($cotizacion->end)->translatedFormat('l j \d\e F \d\e Y');
+        $end  = Carbon::parse($cotizacion->validez)->translatedFormat('l j \d\e F \d\e Y');
+
+        /* Datos del usuario que genera la cotización */
+        $user = User::find($cotizacion->user_id);
+        $usuario = [
+            'nombre' => $user->name,
+            'email' => $user->email,
+            'telefono' => $user->perfil->telefono ?? '',
+            'rol' => $user->getRoleNames()->first() ?? 'Usuario'
+        ];
+
         // return $cotizacion;
-        $pdf=PDF::loadView('/cotizacion/cotizacion',compact('cotizacion','costo','costoTexto','servicios','today','eventDay', 'end','ExistDecoracion','servicesCortesy','descuento','costoSinDescuento'));
+        $pdf=PDF::loadView('/cotizacion/cotizacion',compact('cotizacion','costo','costoTexto','servicios','today','eventDay', 'end','ExistDecoracion','servicesCortesy','descuento','costoSinDescuento','usuario'));
         $pdf->setPaper('letter','portrait');
         $name = $cotizacion->id.'_'.$cotizacion->cliente->nombre.'_cotizacion.pdf';
         /**return $pdf->download($name); en caso de que deseamos descargarlo directamente */
