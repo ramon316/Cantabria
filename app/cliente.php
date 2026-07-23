@@ -69,6 +69,11 @@ class cliente extends Model
         return $this->hasMany(meet::class);
     }
 
+    public function pagos()
+    {
+        return $this->hasMany(pago::class);
+    }
+
     public function user(){
         return $this->belongsTo(User::class);
     }

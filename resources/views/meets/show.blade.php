@@ -14,6 +14,18 @@
                 <h3 for="">{{$meet->reason->reason}} para {{$meet->user->name}}</h3>
                 <h3 class="card-title">Reunión con el cliente {{ $meet->cliente->nombre }} el día
                     {{ $meet->start->format('d-m-Y H:i a') }}</h3><br>
+                @if($futureEvents->count() > 0)
+                    <h3 class="card-title">
+                        @foreach($futureEvents as $key => $event)
+                            @if($key === 0)
+                                Cuenta con un evento el día {{ $event->start->format('d-m-Y') }}
+                            @else
+                                y otro evento el día {{ $event->start->format('d-m-Y') }}
+                            @endif
+                        @endforeach
+                    </h3>
+                <br>
+                @endif
                 <h3 class="card-title">El teléfono del cliente es {{$meet->cliente->telefono}}</h3>
             </div>
             <div class="card-body">

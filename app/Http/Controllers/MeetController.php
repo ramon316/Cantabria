@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\cliente;
 use App\meet;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\reason;
+use App\evento;
 
 class MeetController extends Controller
 {
@@ -73,7 +75,11 @@ class MeetController extends Controller
 
     public function show(meet $meet)
     {
-       return view('meets.show', compact('meet'));
+        // Get future events for this client
+        $futureEvents = evento::where('cliente_id', $meet->cliente_id)
+                                ->where('start', '>=', Carbon::today())
+                                ->get();
+       return view('meets.show', compact('meet', 'futureEvents'));
     }
 
     public function update(Request $request, meet $meet)

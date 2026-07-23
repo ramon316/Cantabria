@@ -79,7 +79,8 @@ return array (
     'normal' => $rootDir . '/lib/fonts/DejaVuSerif',
   ),
   'tahoma' => array(
-    'normal' => $fontDir . '/tahoma_normal_c1880621d4786f8a8ec66ca23f96cdac',
+    'normal' => $fontDir . '/tahoma_normal_1f635530e45d37dd5294094bb1a429f2',
+    'bold' => $fontDir . '/tahoma_bold_6a57374120d5ab9e1a7c68fef97a6cb9',
   ),
   'tahomabd' => array(
     'normal' => $fontDir . '/tahomabd_normal_5cbb095e48eaccf2a10b53782c10bd60',

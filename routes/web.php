@@ -119,6 +119,7 @@ Route::post('/cotizacionservicio',[CotizacionServicioController::class,'store'])
 /**Pagos */
 Route::get('/pagos',[PagoController::class,'index'])->middleware('can:pagos.index')->name('pagos.index');
 Route::post('/pagos',[PagoController::class,'store'])->middleware('can:pagos.store')->name('pagos.store');
+Route::get('/pagos/validar', [PagoController::class, 'validar'])->middleware('can:pagos.validar')->name('pagos.validar');
 
 /**Cuentas */
 Route::get('/cuentas', [CuentaController::class,'index'])->middleware('can:cuentas.index')->name('cuentas.index');

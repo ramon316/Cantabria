@@ -11,7 +11,13 @@ class PaymentsList extends Component
 
     public function render()
     {
-        $payments = pago::where('evento_id', $this->evento->id)->get();
+        $query = pago::with(['evento', 'cuenta', 'user'])->where('evento_id', $this->evento->id);
+
+        if (!auth()->user()->hasRole('Administrador')) {
+            $query->where('status', pago::STATUS_VALIDADO);
+        }
+
+        $payments = $query->get();
         return view('livewire.payments-list')->with('payments', $payments);
     }
 

@@ -40,6 +40,11 @@ class PagoController extends Controller
         return view('pagos.index')->with('clientes',$clientes);
     }
 
+    public function validar()
+    {
+        return view('pagos.validar');
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -87,9 +92,9 @@ class PagoController extends Controller
 
         /* Información del evento  */
         $evento = evento::find($request['evento']);
-        /* Monto restante */
-        $pendiente = $this->diferenciaEvento($evento);
-        $pendienteText = NumerosALetras::convertir($this->diferenciaEvento($evento));
+        /* Monto restante (Incluyendo pagos pendientes para el recibo) */
+        $pendiente = $this->diferenciaEvento($evento, false);
+        $pendienteText = NumerosALetras::convertir($pendiente);
 
         $today = Carbon::now()->format('d-m-Y');
         $hoy = Carbon::now()->isoFormat('D \d\e MMMM \d\e Y');

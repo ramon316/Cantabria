@@ -1,186 +1,275 @@
 <!DOCTYPE html>
 <html lang="es">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
 <head>
     <meta charset="utf-8" />
+    <title>Cotizacion</title>
     <!-- Styles -->
     <style>
-        html {
-            margin: 20pt;
+        @page {
+            margin: 40pt 30pt;
         }
 
         body {
-            background-size: cover;
-            background-repeat: no-repeat;
+            font-family: 'Helvetica', 'Arial', sans-serif;
+            font-size: 11px;
+            color: #333;
+        }
+
+        .header-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        .header-table td {
+            padding: 0;
+            vertical-align: middle;
+        }
+
+        .header-table img {
+            max-width: 150px;
+        }
+
+        .header-table h3 {
+            font-size: 20px;
             margin: 0;
-            height: 100vh;
-            /* background-image: url({{ public_path('./image/fondoCarta.jpeg') }}); */
-            font-family: Tahoma, "Trebuchet MS", sans-serif;
+            color: #000;
+            text-align: left;
+        }
+        
+        .header-table h1 {
+            font-size: 24px;
+            margin: 0;
+            color: #000;
+            text-align: right;
         }
 
-        .fondo {
-            margin-top: 70px;
-            margin-left: 2rem;
-            margin-right: 2rem;
-            text-align: justify;
+        .customer-details p {
+            margin: 0 0 4px 0;
+            line-height: 1.4;
         }
 
-        .pagina {
-            margin-top: 80px;
-        }
-
-        h3 {
-            text-align: center;
-        }
-
-        p {
-            text-align: justify;
-            line-height: 40%;
-        }
-
+        p,
         label,
         li {
-            text-align: justify;
-            line-height: 90%;
-            margin-top: 0.5%;
+            line-height: 1.5;
         }
 
-        .page-break {
-            page-break-after: always;
+        ul {
+            margin-top: 5px;
+            margin-bottom: 15px;
+            padding-left: 20px;
         }
 
         hr {
-            color: red;
+            border: 0;
+            border-top: 1px solid #ccc;
+            margin: 20px 0;
         }
 
-        .mayuscula {
-            text-transform: uppercase;
-        }
-
-        .marginTop {
-            margin-top: 2rem;
-        }
-
-        .textCenter {
-            text-align: center;
-        }
         .page-break-before {
             page-break-before: always;
         }
-        .space {
-            margin-bottom: 20px;
+
+        .services-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .services-table th,
+        .services-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        .services-table th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+
+        .text-right {
+            text-align: right;
+        }
+        .text-center {
+            text-align: center;
+        }
+
+        .total-section {
+            margin-top: 20px;
+            width: 50%;
+            margin-left: 50%;
+        }
+        
+        .total-section table{
+            width: 100%;
+        }
+
+        .total-section td {
+            padding: 6px 8px;
+            font-size: 13px;
+        }
+        .total-section .total {
+            font-weight: bold;
+            font-size: 14px;
+            border-top: 2px solid #333;
+        }
+
+        .terms-section {
+            margin-top: 30px;
+        }
+
+        .attended-by {
+            margin-top: 40px;
+        }
+
+        .attended-by p {
+            margin: 0;
+            line-height: 1.4;
         }
     </style>
 </head>
-<title>Cotizacion</title>
 
 <body>
-    <div class="fondo">
-        <div class="pagina">
-            <div class="row">
-                <p><strong>Cliente: {{ $cotizacion->cliente->nombre }}</strong></p>
-                <p><strong>Fecha del Evento: </strong>{{ $eventDay }}</p>
-                <p><strong>Tipo de Evento: </strong>{{$cotizacion->subtitle}} - {{$cotizacion->comment}}</p>
-                <p><strong>Teléfono: </strong>{{ $cotizacion->cliente->telefono }}</p>
-                <p><strong>Número de personas: </strong>{{ $cotizacion->invitados }} personas</p>
-                <p><strong>Fecha de Cotización: </strong>{{ $today }}</p>
-            </div>
-            <hr>
-            <div class="row">
-                <label>Por este medio y en respuesta a su solicitud, le presento la propuesta para la realización de su evento. Esta cotización incluye:</label>
-            </div>
-            <div class="row">
-                <ul>
-                    <li>Renta de Instalaciones en el horario indicado</li>
-                    <li>Sillas y mesas</li>
-                    <li>Pista de baile</li>
-                    <li>Escenario</li>
-                    <li>Refresco y hielo ilimitado</li>
-                    <li>Permiso de gobernación</li>
-                    <li>Vaso de cristal</li>
-                    <li>Mantelería de fina</li>
-                    <li>Estacionamiento privado con personal</li>
-                    <li>Personal de seguridad y estacionamiento</li>
-                    <li>Personal de limpieza</li>
-                    <li>Personal de Mantenimiento</li>
-                    <li>Meseros, Barman, Capitán de meseros y personal en baños</li>
-                    <li>Suministro de bebidas a cargo del servicio de meseros (no brindamos el servicio de botella en mesa)</li>
-                    <li>Áreas de Fumadores </li>
-                    <li>Coordinación Básica en el evento</li>
-                    <li>Prueba de mantelería y sillas </li>
-                </ul>
-            </div>
-            {{-- Verificamos si existe la decoración --}}
-            @if ($ExistDecoracion != null)
-            <div class="row">
-                <label>PRODUCCIÓN FLORAL HÍBRIDA:</label>
-                <ul>
-                    <li>Centros de Mesa de flor artificial y centros de mesa de flor natural (NO INCLUYE FLOR NI FOLLAJE EXTRA FINO)</li>
-                </ul>
-                <label class="textCenter">Cotización válida únicamente para
-                    <strong>{{ $cotizacion->invitados }}</strong> invitados, sujeto a disponibilidad.</label>
-            </div>
+    <table class="header-table">
+        <tr>
+            <td>
+                {{-- Si tienes un logo, puedes ponerlo aquí. Ejemplo: --}}
+                {{-- <img src="{{ public_path('./image/logo.png') }}" alt="logo"> --}}
+                <h3>Cantabria Salón de Eventos</h3>
+            </td>
+            <td>
+                <h1>Cotización</h1>
+            </td>
+        </tr>
+    </table>
+
+    <div class="customer-details">
+        <p><strong>Cliente:</strong> {{ $cotizacion->cliente->nombre }}</p>
+        <p><strong>Fecha del Evento:</strong> {{ $eventDay }}</p>
+        <p><strong>Tipo de Evento:</strong> {{$cotizacion->subtitle}} - {{$cotizacion->comment}}</p>
+        <p><strong>Teléfono:</strong> {{ $cotizacion->cliente->telefono }}</p>
+        <p><strong>Número de personas:</strong> {{ $cotizacion->invitados }} personas</p>
+        <p><strong>Fecha de Cotización:</strong> {{ $today }}</p>
+    </div>
+
+    <hr>
+
+    <div>
+        <label>Por este medio y en respuesta a su solicitud, le presento la propuesta para la realización de su evento. Esta cotización incluye:</label>
+        <ul>
+            <li>Renta de Instalaciones en el horario indicado</li>
+            <li>Sillas y mesas</li>
+            <li>Pista de baile</li>
+            <li>Escenario</li>
+            <li>Refresco y hielo ilimitado</li>
+            <li>Permiso de gobernación</li>
+            <li>Vaso de cristal</li>
+            <li>Mantelería de fina</li>
+            <li>Estacionamiento privado con personal</li>
+            <li>Personal de seguridad y estacionamiento</li>
+            <li>Personal de limpieza</li>
+            <li>Personal de Mantenimiento</li>
+            <li>Meseros, Barman, Capitán de meseros y personal en baños</li>
+            <li>Suministro de bebidas a cargo del servicio de meseros (no brindamos el servicio de botella en mesa)</li>
+            <li>Áreas de Fumadores </li>
+            <li>Coordinación Básica en el evento</li>
+            <li>Prueba de mantelería y sillas </li>
+        </ul>
+        @if ($ExistDecoracion != null)
+            <label>PRODUCCIÓN FLORAL HÍBRIDA:</label>
+            <ul>
+                <li>Centros de Mesa de flor artificial y centros de mesa de flor natural (NO INCLUYE FLOR NI FOLLAJE EXTRA FINO)</li>
+            </ul>
+            <p class="text-center">Cotización válida únicamente para <strong>{{ $cotizacion->invitados }}</strong> invitados, sujeto a disponibilidad.</p>
+        @endif
+    </div>
+
+    <div class="page-break-before"></div>
+    
+    <table class="services-table">
+        <thead>
+            <tr>
+                <th>Descripción</th>
+                <th class="text-right">Costo</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if($costoRentaDecoracion > 0)
+            <tr>
+                <td>Renta y decoración</td>
+                <td class="text-right">$@dinero($costoRentaDecoracion)</td>
+            </tr>
             @endif
-            </div>
-            <div class="page-break-before marginTop"></div>
-            {{-- Verificamos si existe el menú --}}
             @if ($servicios->isnotempty())
-            <div class="row marginTop">
-                <label>Servicio Adicional:</label>
+                <tr>
+                    <td colspan="2"><strong>Servicios Adicionales:</strong></td>
+                </tr>
                 @foreach ($servicios as $servicio)
-                <ul>
-                    <li>@if ($servicio->pivot->cantidad != 1) {{ $servicio->pivot->cantidad }} @endif{{ $servicio->nombre }}: $@dinero($servicio->pivot->costo * $servicio->pivot->cantidad)</li>
-                </ul>
+                    <tr>
+                        <td>{{ $servicio->pivot->cantidad > 1 ? $servicio->pivot->cantidad : '' }} {{ $servicio->nombre }}</td>
+                        <td class="text-right">$@dinero($servicio->pivot->costo * $servicio->pivot->cantidad)</td>
+                    </tr>
                 @endforeach
-            </div>
             @endif
-
             @if ($servicesCortesy->isnotempty())
-            <div class="row marginTop">
-                <label>SERVICIOS DE CORTESIA:</label>
+                <tr>
+                    <td colspan="2"><strong>Servicios de Cortesía:</strong></td>
+                </tr>
                 @foreach ($servicesCortesy as $service)
-                <ul>
-                    <li>@if ($service->pivot->cantidad != 1) {{ $service->pivot->cantidad }} @endif{{ $service->nombre }}{{-- : $@dinero($service->pivot->costo * $service->pivot->cantidad) --}}
-                    </li>
-                </ul>
+                    <tr>
+                        <td>{{ $service->pivot->cantidad > 1 ? $service->pivot->cantidad : '' }} {{ $service->nombre }}</td>
+                        <td class="text-right">Sin costo</td>
+                    </tr>
                 @endforeach
-            </div>
             @endif
+        </tbody>
+    </table>
 
+    <div class="total-section">
+        <table>
+            <tr>
+                <td>Subtotal:</td>
+                <td class="text-right">$@dinero($costoSinDescuento)</td>
+            </tr>
             @if ($descuento > 0)
-            <div class="row marginTop">
-                <label>Subtotal: $@dinero($costoSinDescuento)</label>
-                <label>Descuento: -$@dinero($descuento)</label>
-                <label><strong>Inversión Total: $@dinero($costo) - ({{ $costoTexto }} 00/100 m.n.)</strong></label>
-            </div>
-            @else
-            <div class="row marginTop">
-                <label><strong>Inversión $@dinero($costo) - ({{ $costoTexto }} 00/100 m.n.)</strong></label>
-            </div>
+            <tr>
+                <td>Descuento:</td>
+                <td class="text-right">-$@dinero($descuento)</td>
+            </tr>
             @endif
-            <div class="row marginTop">
-                <label>Términos y condiciones</label>
-                <ul>
-                    <li>Anticipo de $15,000.00 (QUINCE MIL PESOS 00/100 m.n.)</li>
-                    <li>Cotización vigente al {{$end}}. Sujeto a disponibilidad.</li>
-                    <li>Alimentos y decoración exclusivo de Cantabria Salón de Eventos (no se permiten
-                        proveedores externos)</li>
-                </ul>
-                <label>Formas de pago:</label>
-                <ul>
-                    <li>Sin factura: Solo pago en efectivo</li>
-                    <li>Con factura: Cheques y transferencia</li>
-                </ul>
-            </div>
-            <div class="row marginTop">
-                <label class="space"><strong>Atendido por:</strong></label>
-                <p>{{ $usuario['nombre'] }} - {{ $usuario['rol'] }}</p>
-                <p>{{ $usuario['email'] }}</p>
-                <p>{{ $usuario['telefono'] }}</p>
-            </div>
-        </div>
+            <tr class="total">
+                <td>Inversión Total:</td>
+                <td class="text-right">$@dinero($costo)</td>
+            </tr>
+            <tr>
+                <td colspan="2" class="text-right">({{ $costoTexto }} 00/100 m.n.)</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="terms-section">
+        <label>Términos y condiciones</label>
+        <ul>
+            <li>Anticipo de $15,000.00 (QUINCE MIL PESOS 00/100 m.n.)</li>
+            <li>Cotización vigente al {{$end}}. Sujeto a disponibilidad.</li>
+            <li>Alimentos y decoración exclusivo de Cantabria Salón de Eventos (no se permiten proveedores externos)</li>
+        </ul>
+        <label>Formas de pago:</label>
+        <ul>
+            <li>Sin factura: Solo pago en efectivo</li>
+            <li>Con factura: Cheques y transferencia</li>
+        </ul>
+    </div>
+
+    <div class="attended-by">
+        <p><strong>Atendido por:</strong></p>
+        <p>{{ $usuario['nombre'] }} - {{ $usuario['rol'] }}</p>
+        <p>{{ $usuario['email'] }}</p>
+        <p>{{ $usuario['telefono'] }}</p>
+    </div>
 </body>
 
 </html>

@@ -87,6 +87,7 @@ class RoleSeeder extends Seeder
         Permission::create(['name' => 'pagos.index','description'=>'Capturar pagos'])->syncRoles([$RoleAdministrador, $RolePlaneacion, $RoleVentas]);
         Permission::create(['name' => 'pagos.create','description'=>'Crear pagos'])->syncRoles([$RoleAdministrador, $RolePlaneacion, $RoleVentas]);
         Permission::create(['name' => 'pagos.store','description'=>'Guardar pagos'])->syncRoles([$RoleAdministrador, $RolePlaneacion, $RoleVentas]);
+        Permission::create(['name' => 'pagos.validar','description'=>'Validación de los pagos'])->syncRoles([$RoleAdministrador]);
 
         /* manteleria */
         Permission::create(['name' => 'manteleria.create','description'=>'Capturar mantelería'])->syncRoles([$RoleAdministrador, $RolePlaneacion]);

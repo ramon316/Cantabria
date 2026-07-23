@@ -339,6 +339,12 @@ return [
             'icon'        => 'fas fa-clipboard',
             'can'           =>  'logactivity.index',
         ],
+        [
+            'text'        => 'Validar Pagos',
+            'url'         => '/pagos/validar',
+            'icon'        => 'fas fa-check-double',
+            'can'           =>  'pagos.validar',
+        ],
         /* [
             'text'        => 'Portada',
             'icon'        => 'far fa-address-book',

@@ -51,7 +51,18 @@ class NumerosALetras extends Model
         'ochocientos ',
         'novecientos '
     ];
-    public static function convertir($number, $currency = '', $format = false, $decimals = '')
+    private static $CENTENAS_FEM = [
+        'ciento ',
+        'doscientas ',
+        'trescientas ',
+        'cuatrocientas ',
+        'quinientas ',
+        'seiscientas ',
+        'setecientas ',
+        'ochocientas ',
+        'novecientas '
+    ];
+    public static function convertir($number, $currency = '', $format = false, $decimals = '', $personas = false)
     {
         $base_number = $number;
         $converted = '';
@@ -66,7 +77,7 @@ class NumerosALetras extends Model
             if(strlen($decNumberStr) == 2){
                 $decNumberStrFill = str_pad($decNumberStr, 9, '0', STR_PAD_LEFT);
                 $decCientos = substr($decNumberStrFill, 6);
-                $decimales = self::convertGroup($decCientos);
+                $decimales = self::convertGroup($decCientos, false);
             }
         }
         $numberStr = (string) $base_number;
@@ -78,21 +89,21 @@ class NumerosALetras extends Model
             if ($millones == '001') {
                 $converted .= 'un millon ';
             } else if (intval($millones) > 0) {
-                $converted .= sprintf('%smillones ', self::convertGroup($millones));
+                $converted .= sprintf('%smillones ', self::convertGroup($millones, false));
             }
         }
         if (intval($miles) > 0) {
             if ($miles == '001') {
                 $converted .= 'mil ';
             } else if (intval($miles) > 0) {
-                $converted .= sprintf('%smil ', self::convertGroup($miles));
+                $converted .= sprintf('%smil ', self::convertGroup($miles, $personas));
             }
         }
         if (intval($cientos) > 0) {
             if ($cientos == '001') {
-                $converted .= 'un ';
+                $converted .= $personas ? 'una ' : 'un ';
             } else if (intval($cientos) > 0) {
-                $converted .= sprintf('%s ', self::convertGroup($cientos));
+                $converted .= sprintf('%s ', self::convertGroup($cientos, $personas));
             }
         }
         if($format){
@@ -110,13 +121,13 @@ class NumerosALetras extends Model
         }
         return $valor_convertido;
     }
-    private static function convertGroup($n)
+    private static function convertGroup($n, $personas = false)
     {
         $output = '';
         if ($n == '100') {
             $output = "cien ";
         } else if ($n[0] !== '0') {
-            $output = self::$CENTENAS[$n[0] - 1];
+            $output = $personas ? self::$CENTENAS_FEM[$n[0] - 1] : self::$CENTENAS[$n[0] - 1];
         }
         $k = intval(substr($n,1));
         if ($k <= 20) {

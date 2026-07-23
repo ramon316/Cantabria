@@ -14,7 +14,9 @@ Trait EventoTrait{
    public $dia;
 
    public function serviciosTrait(evento $evento){
-    $servicios = $evento->servicio;
+    $servicios = $evento->servicio()
+                        ->whereRaw("TRIM(nombre) NOT LIKE ?", ['%Renta y decoración floral%'])
+                        ->get();
     return $servicios;
    }
 
@@ -56,14 +58,22 @@ Trait EventoTrait{
       return $fechaEvento;
    }
 
-   public function abonoEvento(evento $evento){
-    $abonoEvento = pago::where('evento_id',$evento->id)->get()->sum('monto');
-    return $abonoEvento;
+   public function abonoEvento(evento $evento, $soloValidados = true){
+    $query = pago::where('evento_id',$evento->id);
+    
+    if ($soloValidados) {
+        $query->where('status', pago::STATUS_VALIDADO);
+    } else {
+        // Incluimos tanto validados como pendientes para el recibo
+        $query->whereIn('status', [pago::STATUS_VALIDADO, pago::STATUS_PENDIENTE]);
+    }
+
+    return $query->sum('monto');
    }
 
-   public function diferenciaEvento(evento $evento){
+   public function diferenciaEvento(evento $evento, $soloValidados = true){
     $costoEvento = $this->costoEvento($evento);
-    $abonoEvento = $this->abonoEvento($evento);
+    $abonoEvento = $this->abonoEvento($evento, $soloValidados);
     $discount = $evento->discount->amount ?? 0;
     $diferenciaEvento = $costoEvento - $abonoEvento - $discount;
     return $diferenciaEvento;

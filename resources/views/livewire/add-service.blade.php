@@ -24,7 +24,9 @@
                                 <th>Cantidad</th>
                                 <th>Precio</th>
                                 <th>Regalo</th>
+                                @hasanyrole('Administrador')
                                 <th>Eliminar</th>
+                                @endhasanyrole
                             </tr>
                             @foreach ($eventServices as $servicio)
                             <tr data-widget="expandable-table" aria-expanded="false">
@@ -38,10 +40,12 @@
                                     No
                                     @endif
                                 </td>
+                                @hasanyrole('Administrador')
                                 <td class="text-center">
                                     <i class="fas fa-trash" role="button"
                                         wire:click="deleteService({{$servicio->id}})"></i>
                                 </td>
+                                @endhasanyrole
                             </tr>
                             @endforeach
                         </tbody>

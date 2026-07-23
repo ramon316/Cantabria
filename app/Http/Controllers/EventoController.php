@@ -153,8 +153,10 @@ class EventoController extends Controller
     {
         $CostoEvento = $this->costoEvento($evento);
 
-        /* get all pay */
-        $pagos = pago::whereEventoId($evento->id)->get();
+        /* get all pay - Only validated ones */
+        $pagos = pago::whereEventoId($evento->id)
+            ->where('status', pago::STATUS_VALIDADO)
+            ->get();
 
         /* sum all pays */
         $monto  = 0;
@@ -309,14 +311,18 @@ class EventoController extends Controller
     /**Generamos el contrato y lo almacenamos en /storage/contratos/id_cliente-id_eventos-fecha */
     public function contrato(evento $evento)
     {
+        ini_set('display_errors', 0);
+        error_reporting(E_ALL & ~E_DEPRECATED & ~E_USER_DEPRECATED & ~E_NOTICE);
+
         /* this date is for name */
         $today = Carbon::now()->format('d_m_Y');
         $slugName = str::slug($evento->cliente->nombre, '_');
 
-        /**Validamos que el evento ya cuente con un pago de anticipo */
+        /**Validamos que el evento ya cuente con un pago de anticipo validado */
         $anticipo = DB::table('pagos')
             ->where('tipo', '=', 'anticipo')
             ->where('monto', '>=', '15000')
+            ->where('status', '=', pago::STATUS_VALIDADO)
             ->where('evento_id', '=', $evento->id)->get();
 
         $anticipo = json_decode($anticipo, true);
@@ -377,8 +383,12 @@ class EventoController extends Controller
             $fecha15diasantes = $fecha15diasantes->subDay(15);
             $fecha15diasantes = $this->formatearFecha($fecha15diasantes);
 
+            /**Tres meses después de la firma */
+            $fecha3mesesDespues = Carbon::now()->addMonths(3);
+            $fecha3mesesDespues = $this->formatearFecha($fecha3mesesDespues);
+
             /**Evento */
-            $invitadosLetra = NumerosALetras::convertir($evento->invitados, '', false, '');
+            $invitadosLetra = NumerosALetras::convertir($evento->invitados, '', false, '', true);
 
             /***Costo en texto */
             $costo = $this->costoEvento($evento);
@@ -387,7 +397,7 @@ class EventoController extends Controller
             $valores->costo = $costo;
             $valores->costoTexto = $costoTexto;
             $valores->costoAnticipo = $anticipo[0]['monto'];
-            $valores->costoAnticipoTexto = NumerosALetras::convertir($evento->costoAnticipo, 'Pesos', false, 'Centavos');
+            $valores->costoAnticipoTexto = NumerosALetras::convertir($valores->costoAnticipo, 'Pesos', false, 'Centavos');
 
 
 
@@ -422,6 +432,7 @@ class EventoController extends Controller
             $fecha->fecha15diasantes = $fecha15diasantes;
             $fecha->fecha3meses = $fecha3meses;
             $fecha->fechaActualMayusc = $fechaActualMayusc;
+            $fecha->fecha3mesesDespues = $fecha3mesesDespues;
 
 
             $valores->invitadosLetra = $invitadosLetra;
@@ -459,6 +470,9 @@ class EventoController extends Controller
             $evento->save(); */
 
 
+            if (ob_get_length()) {
+                ob_end_clean();
+            }
             return $pdf->setPaper('a4')->stream($name);
             -/* >setPaper('letter')
                 ->stream($name) */
@@ -485,7 +499,9 @@ class EventoController extends Controller
     public function pago(Evento $evento)
     {
         $CostoEvento = $this->costoEvento($evento);
-        $pagado = $evento->pagos()->sum('monto');
+        $pagado = $evento->pagos()
+            ->where('status', pago::STATUS_VALIDADO)
+            ->sum('monto');
         $cuentas = cuenta::all();
 
         return view('pagos.index')
@@ -548,7 +564,7 @@ class EventoController extends Controller
             // Formatear la hora y convertirla a texto
             $hora = $carbonFecha->format('H:i');
             $horaTexto = $this->convertirNumeroATexto($carbonFecha->hour) . " horas";
-            return "{$hora} horas del {$carbonFecha->day} de {$mesNombre} del {$carbonFecha->year} ({$diaTexto} DE {$mesNombreMayusc} DE {$anioTexto})";
+            return "{$hora} horas del día {$carbonFecha->day} de {$mesNombre} del {$carbonFecha->year} ({$diaTexto} DE {$mesNombreMayusc} DE {$anioTexto})";
         }
 
         if ($mayuscula) {

@@ -140,7 +140,7 @@
             </div>
         </div>
 
-        @role('Administrador')
+        @hasanyrole('Administrador|Planeacion')
         <div class="row justify-content-around">
             @if(count($evento->servicio))
             <div class="col-md-6 bg-white shadow p-3 mb-5 rounded text-center">
@@ -172,7 +172,7 @@
             </div>
             @endif
         </div>
-        @endrole
+        @endhasanyrole
 
         @hasanyrole('Administrador|Ventas|Planeacion')
         <div class="row justify-content-around">

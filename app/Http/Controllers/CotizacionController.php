@@ -9,6 +9,7 @@ use App\cotizacion;
 use App\NumerosALetras;
 use App\Traits\CotizacionTrait;
 use App\User;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
@@ -170,10 +171,16 @@ class CotizacionController extends Controller
 
         /* Obtenemos el precio de la cotización sin descuento */
         $costoSinDescuento = 0;
+        $costoRentaDecoracion = 0;
         $serviciosAll = $cotizacion->servicio()->get();
         foreach ($serviciosAll as $servicio) {
             if ($servicio->pivot->regalo == 0) {
                 $costoSinDescuento += $servicio->pivot->costo * $servicio->pivot->cantidad;
+            }
+
+            // Identificar el servicio de "renta y decoración" (insensible a mayúsculas/minúsculas)
+            if (Str::contains(Str::lower($servicio->nombre), 'renta y decoración')) {
+                $costoRentaDecoracion = $servicio->pivot->costo * $servicio->pivot->cantidad;
             }
         }
 
@@ -201,7 +208,7 @@ class CotizacionController extends Controller
         ];
 
         // return $cotizacion;
-        $pdf=PDF::loadView('/cotizacion/cotizacion',compact('cotizacion','costo','costoTexto','servicios','today','eventDay', 'end','ExistDecoracion','servicesCortesy','descuento','costoSinDescuento','usuario'));
+        $pdf=PDF::loadView('/cotizacion/cotizacion',compact('cotizacion','costo','costoTexto','servicios','today','eventDay', 'end','ExistDecoracion','servicesCortesy','descuento','costoSinDescuento','usuario', 'costoRentaDecoracion'));
         $pdf->setPaper('letter','portrait');
         $name = $cotizacion->id.'_'.$cotizacion->cliente->nombre.'_cotizacion.pdf';
         /**return $pdf->download($name); en caso de que deseamos descargarlo directamente */
