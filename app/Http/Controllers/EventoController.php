@@ -328,7 +328,7 @@ class EventoController extends Controller
         $anticipo = json_decode($anticipo, true);
 
         /* Agregamos los servicios de este evento */
-        $servicios = $this->serviciosTrait($evento);
+        $servicios = $this->serviciosTrait($evento, true);
 
         if (count($anticipo) >= 1) {
             //dd($anticipo['0']['anticipo']['monto'])

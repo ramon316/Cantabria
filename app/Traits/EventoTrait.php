@@ -13,11 +13,15 @@ Trait EventoTrait{
 
    public $dia;
 
-   public function serviciosTrait(evento $evento){
-    $servicios = $evento->servicio()
-                        ->whereRaw("TRIM(nombre) NOT LIKE ?", ['%Renta y decoración floral%'])
-                        ->get();
-    return $servicios;
+   public function serviciosTrait(evento $evento, $contrato = false){
+      $query = $evento->servicio();
+
+      if ($contrato) {
+          $query->whereRaw("TRIM(nombre) NOT LIKE ?", ['%Renta y decoración floral%']);
+      }
+
+      $servicios = $query->get();
+      return $servicios;
    }
 
    public function costoEvento(evento $evento){
